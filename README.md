@@ -1,5 +1,19 @@
 == README
 
+## Installation ##
+
+``` sudo apt-get install libpq-dev```
+
+### Rails commands ###
+
+1. Start the server: ``` rails s ```
+2. Start rails console: ``` rails c ```
+3. Db migration: ``` rake db :migrate ```
+4. Install dependencies: ``` bundle install ```
+5. Create Model: ``` rails g model <modelname> ```
+
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
