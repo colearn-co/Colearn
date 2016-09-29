@@ -1,0 +1,6 @@
+<div>
+	<%= form_for @post, html: {class: "post-form"} do |f| %>
+		<%= f.text_field :message %>
+		<%= f.submit "Create" %>
+	<% end %>
+</div>

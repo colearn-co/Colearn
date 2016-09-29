@@ -1,0 +1,19 @@
+<%= @post.message %> - <%= @post.user.name %>
+<div>
+	<p>Comments</p>
+		<ul id="comment-list">
+			<% @post.comments.each do |c| %>
+				<li><%= c.message %></li>
+			<% end %>
+		</ul>
+
+	<% if current_user %>
+		<div>
+				<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+					<%= f.text_field :message %>
+					<%= f.submit "Create" %>
+				<% end %>
+		</div>
+
+	<% end %>
+</div>

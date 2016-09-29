@@ -1,0 +1,11 @@
+<div>
+	<b>All Posts</b>
+	<ul>
+		<% @posts.each do |post| %>
+			<li><a href="<%= post_path(post) %>"><%= post.message %> - <%= post.user.name %></a>
+
+				
+			</li>
+		<% end %>
+	</ul>
+</div>
