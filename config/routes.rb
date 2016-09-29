@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :comments
+    resources :votes
   end
 
   # Example of regular route:

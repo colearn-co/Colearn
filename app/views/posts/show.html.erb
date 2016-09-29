@@ -14,6 +14,6 @@
 					<%= f.submit "Create" %>
 				<% end %>
 		</div>
-
+		<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
 	<% end %>
 </div>
