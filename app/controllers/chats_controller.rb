@@ -1,5 +1,7 @@
 class ChatsController < ApplicationController
 	def index
+		@chats = Chat.all
+		render :json => @chats
 	end
 	def new
 		@chatable = find_chatable
@@ -13,7 +15,7 @@ class ChatsController < ApplicationController
   		@chat.user = current_user
 
   		@chatable.chats.push(@chat)# @chatable.chats << @chat= Chat.new(chat_params)
-  		@chat.save
+  		@chat.save!
   		render :json => "done"
 	end
 private

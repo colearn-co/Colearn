@@ -15,5 +15,8 @@
 				<% end %>
 		</div>
 		<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
+		<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
+
+		<%= link_to 'request invite', post_invites_path(@post, :status => 1 ), remote: true, method: :post %>
 	<% end %>
 </div>

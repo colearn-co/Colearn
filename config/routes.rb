@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :comments
     resources :votes
     resources :chats
+    resources :invites
   end
 
   # Example of regular route:

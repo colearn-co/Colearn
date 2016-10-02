@@ -11,7 +11,7 @@
 3. Db migration: ``` rake db :migrate ```
 4. Install dependencies: ``` bundle install ```
 5. Create Model: ``` rails g model <modelname> ```
-
+6. Add field to model ``` rails g migration AddMessageToInvite ```
 
 
 This README would normally document whatever steps are necessary to get the
