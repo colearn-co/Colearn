@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
 	belongs_to :user
+	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
 	has_many :invites
 	has_many :accepted_invites, lambda { where(:status => Invite::STATUS[:accepted]) }, class_name: 'Invite'

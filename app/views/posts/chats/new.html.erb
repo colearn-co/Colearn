@@ -1,0 +1,6 @@
+<div>
+	<%= form_for @chat, url: post_chats_path(@chatable), html: {class: "chat-form"} do |f| %>
+		<%= f.text_field :message %>
+		<%= f.submit "Create" %>
+	<% end %>
+</div>
