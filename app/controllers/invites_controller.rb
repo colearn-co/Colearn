@@ -11,6 +11,9 @@ class InvitesController < ApplicationController
 
 	def update
 		@post = Post.find params[:post_id]
-		@post.update(:status => params[:status])
+		#only update if post.user is current user.
+		@invite = @post.invites.find(params[:id])	
+		@invite.update_attributes(:status => params[:status])
+		render "/#{@post.class.name.underscore}s/invites/response".downcase
 	end
 end

@@ -6,17 +6,19 @@
 				<li><%= c.message %></li>
 			<% end %>
 		</ul>
+<div>
+	<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+		<%= f.text_field :message %>
+		<%= f.submit "Create" %>
+	<% end %>
+	</div>
+	<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
+	<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
 
+	<%= link_to 'Request invite', post_invites_path(@post, :status => 1 ), remote: true, method: :post %>
 	<% if current_user %>
-		<div>
-				<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
-					<%= f.text_field :message %>
-					<%= f.submit "Create" %>
-				<% end %>
-		</div>
-		<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
-		<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
-
-		<%= link_to 'request invite', post_invites_path(@post, :status => 1 ), remote: true, method: :post %>
+		
+		<%= link_to 'Accept invite', post_invite_path(:post_id => @post.id, :status => 2 ), remote: true, method: :put %>
+		<%= link_to 'Reject invite', post_invite_path(:post_id => @post.id, :status => 3 ), remote: true, method: :put %>
 	<% end %>
 </div>

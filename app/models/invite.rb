@@ -10,6 +10,4 @@ class Invite < ActiveRecord::Base
 	scope :accepted_invites, -> {where(:status => Invite::STATUS[:accepted])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
-	after_update :add_co_user
-
 end
