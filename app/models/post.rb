@@ -6,8 +6,12 @@ class Post < ActiveRecord::Base
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :co_users, through: :accepted_invites, :source => :user
 	has_many :comments, :as => :commentable
+	has_many :skills
+	has_many :tags
+
 	after_create :add_own_user
 
+	accepts_nested_attributes_for :skills
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end

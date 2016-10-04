@@ -1,6 +1,10 @@
 <div>
 	<%= form_for @post, html: {class: "post-form"} do |f| %>
+		<%= f.text_field :title %>
 		<%= f.text_field :message %>
+		<%= f.fields_for :skills do |builder| %>
+		    <%=  builder.text_field :title %>
+		  <% end %>
 		<%= f.submit "Create" %>
 	<% end %>
 </div>

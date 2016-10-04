@@ -7,9 +7,11 @@ class PostsController < ApplicationController
 
 	def new
 		@post = Post.new
+		@post.skills.build
 	end
 
 	def create
+		puts post_params
 		current_user.posts << @post = Post.create!(post_params)
 		redirect_to posts_path
 	end
@@ -21,6 +23,6 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:message)
+		params.require(:post).permit(:title, :message, :skills_attributes => [:title])
 	end
 end
