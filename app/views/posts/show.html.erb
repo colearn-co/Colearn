@@ -1,4 +1,4 @@
-<%= @post.message %> - <%= @post.user.name %>
+<%= markdown(@post.message) %> - <%= @post.user.name %>
 <div>
 	<p>Comments</p>
 		<ul id="comment-list">
