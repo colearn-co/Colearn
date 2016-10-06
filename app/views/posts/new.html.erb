@@ -3,7 +3,7 @@
 		<%= f.label :Title %><br>
 		<%= f.text_field :title %><br>
 		<%= f.label :Description %><br>
-		<%= f.text_area :message %>
+		<%= f.text_area :message, :"data-provide" => "markdown" %>
 		<%= f.fields_for :skills do |builder| %>
 		    <%=  builder.text_field :title %>
 		  <% end %>
