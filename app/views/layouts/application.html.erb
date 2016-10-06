@@ -18,7 +18,32 @@
 <body>
 <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p>
+<div class="header ">
+    <a class="logo" href="/">
+        <img class="logo-image" src="/assets/colearn-logo.png">
+    </a>
+    <% if current_user %>
+        <div class="account-area">
+            <div class="username" >
+                <h4>welcome</h4>
+                <h4 class="username-text"><%=current_user.name%></h4>
+            </div>
+            <div class="account">
+               <%= gravatar_tag current_user.email, :size => 50 %>
 
+                <a  href="/signout/?returnURI=@request.uri" class="signout btn">Signout</a>
+            </div>
+        </div>
+    <% else %>
+    	 <div class="account-action">
+            <a href="/login/?returnURI=@request.uri" class="login btn">Login</a>
+            <a href="/login/?returnURI=@request.uri" class="sign-up btn">Sign Up</a>
+        </div>
+    	<a class="signout hidden" href="#" onclick="signOut();">Sign out</a>
+    <% end %>    
+   
+       
+</div>
 <%= yield %>
 
 </body>
