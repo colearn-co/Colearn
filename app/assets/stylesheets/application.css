@@ -12,7 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require chat.css
  */
+
 @import "font-awesome.min.css";
 
 .header {
