@@ -1,7 +1,8 @@
 class ChatsController < ApplicationController
 	def index
-		@chats = Chat.all
-		render :json => @chats
+		@chatable = find_chatable
+		@chats = @chatable.chats.get_by_params(params)
+		render "/#{@chatable.class.name.underscore}s/chats/index"
 	end
 	def new
 		@chatable = find_chatable
