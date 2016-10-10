@@ -10,8 +10,8 @@ function showChat(postId, title, username) {
 	getAllChats(postId, function(chats) {
 		var elementId = "#chat_div";
 		$(elementId).chatbox({id:"chat_div", 
-                            user:{name : "kamal"},
-                            title : "test chat",
+                            user:{username : username},
+                            title : title ? title : "Chat",
                             messageSent : function(id, user, msg) {
                                 
                                 $.post("posts/" + postId + "/chats", {
@@ -19,10 +19,10 @@ function showChat(postId, title, username) {
                                 }, function(status) {
                                 	console.log("post request success ", status); // why this is not called?
                                 });
-                                $("#" + id).chatbox("option", "boxManager").addMsg(user.name, msg);
+                                $("#" + id).chatbox("option", "boxManager").addMsg(user.username, msg);
                             }});
 		chats.reverse().forEach(function(chat) {
-			$(elementId).chatbox("option", "boxManager").addMsg("dummy-user", chat.message);
+			$(elementId).chatbox("option", "boxManager").addMsg(chat.username, chat.message);
 		});
 	});
 	 

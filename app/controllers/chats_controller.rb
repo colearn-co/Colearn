@@ -1,10 +1,11 @@
 class ChatsController < ApplicationController
 	# TODO: check why this is needed?
 	skip_before_filter  :verify_authenticity_token
-	
+
 	def index
 		@chatable = find_chatable
 		@chats = @chatable.chats.get_by_params(params)
+		
 		render :json => @chats
 		#render "/#{@chatable.class.name.underscore}s/chats/index"
 	end
