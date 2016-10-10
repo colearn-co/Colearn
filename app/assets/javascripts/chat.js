@@ -4,28 +4,27 @@
 }*/
 $( document ).ready(function() {
     console.log( "ready!" );
-
-	$("#status_message").keypress(function(e) {
-	    if(e.which == 13) {
-	 		var element = $("#status_message");
-	 		var message = element.val();
-	 		element.val("");
-	        alert('You pressed enter!' + message);
-	    }
-	});
-	$("#removeClass").click(function () {
-		$('#chat-popup').removeClass('popup-box-on');
-	});
-
 });
 
-function showChat() {
-	$("#chat_div").chatbox({id:"chat_div", 
-                                                user:{key : "value"},
-                                                title : "test chat",
-                                                messageSent : function(id, user, msg) {
-                                                    $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
-                                                }});
+function showChat(postId, title, username) {
+	getAllChats(postId, function(chats) {
+		var elementId = "#chat_div";
+		$(elementId).chatbox({id:"chat_div", 
+                            user:{name : "kamal"},
+                            title : "test chat",
+                            messageSent : function(id, user, msg) {
+                                
+                                $.post("posts/" + postId + "/chats", {
+                                	"chat[message]": msg
+                                }, function(status) {
+                                	console.log("post request success ", status); // why this is not called?
+                                });
+                                $("#" + id).chatbox("option", "boxManager").addMsg(user.name, msg);
+                            }});
+		chats.reverse().forEach(function(chat) {
+			$(elementId).chatbox("option", "boxManager").addMsg("dummy-user", chat.message);
+		});
+	});
 	 
 }
 

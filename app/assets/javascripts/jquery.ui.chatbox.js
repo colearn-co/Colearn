@@ -63,7 +63,7 @@
                     if (!self.elem.uiChatboxTitlebar.hasClass("ui-state-focus")
                         && !self.highlightLock) {
                         self.highlightLock = true;
-                        self.highlightBox();
+                       // self.highlightBox();
                     }
                 },
                 highlightBox: function() {

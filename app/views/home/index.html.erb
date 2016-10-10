@@ -8,7 +8,7 @@
 
 					
 				</li>
-				<%= link_to "Show Chat", post_chats_path(post.id), remote: true, onclick: "showChat(); return false;", class: "show_chat" %>
+				<%= link_to "Show Chat", post_chats_path(post.id), remote: true, onclick: "showChat(" +post.id.to_s + "); return false;", class: "show_chat" %>
 				<%= link_to "Hide Chat", '#', onclick: "hideChat(" + post.id.to_s + "); return false;", class: "hide_chat" %>
 				<hr>
 			<% end %>
