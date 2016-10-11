@@ -1,6 +1,6 @@
 class Invite < ActiveRecord::Base
 	STATUS = {
-		:requsted => 1,
+		:requested => 1,
 		:accepted => 2,
 		:rejected => 3
 		
@@ -8,6 +8,8 @@ class Invite < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :post
 	scope :accepted_invites, -> {where(:status => Invite::STATUS[:accepted])}
+	scope :requested_invites, -> {where(:status => Invite::STATUS[:requested])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
 end
+

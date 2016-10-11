@@ -1,28 +1,47 @@
 <h3><%= @post.title%></h3>
 <%= markdown(@post.message) %> - <%= @post.user.name %>
+</br>
+<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
+<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
+<%=  link_to "Show Chat", post_chats_path(@post.id), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
+<hr>
 <div>
 	<p>Comments</p>
-		<ul id="comment-list">
-			<% @post.comments.each do |c| %>
-				<li><%= c.message %></li>
-			<% end %>
-		</ul>
+	<ul id="comment-list">
+		<% @post.comments.each do |c| %>
+			<li><%= c.message %></li>
+		<% end %>
+	</ul>
 <div>
-	<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
-		<%= f.text_field :message %>
-		<%= f.submit "Create" %>
-	<% end %>
+
+
+<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+	<%= f.text_field :message %>
+	<%= f.submit "Post" %>
+<% end %>
+
+
+<div>
+	<div>
+		<h3>Requested invites </h3>
+		<hr>
+		<% @post.invites.requested_invites.each do |i| %>
+			<div><p><%= markdown(i.message) %></p></div>
+			<% if current_user && current_user.id == @post.user.id %>
+				<%= link_to 'Accept invite', post_invite_path(:post_id => i.post_id, :status => 2 ), remote: true, method: :put %>
+				<%= link_to 'Reject invite', post_invite_path(:post_id => i.post_id, :status => 3 ), remote: true, method: :put %>
+			<% end %>	
+		<% end %>
 	</div>
-	<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
-	<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
+	<h3>Request to Join</h3>
+	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
+		<%= f.text_area :message, :"data-provide" => "markdown"  %>
+		<%= f.submit "Request to Join" %>
+	<% end %>	
+	
+	
+</div>
 
-	<%= link_to 'Request invite', post_invites_path(@post, :status => 1 ), remote: true, method: :post %>
-	<%= link_to "Show Chat", '#', onclick: " $('#qnimate').addClass('popup-box-on'); return false;", class: "show_chat" %>
-	<% if current_user %>
-		
-		<%= link_to 'Accept invite', post_invite_path(:post_id => @post.id, :status => 2 ), remote: true, method: :put %>
-		<%= link_to 'Reject invite', post_invite_path(:post_id => @post.id, :status => 3 ), remote: true, method: :put %>
-
-	<% end %>
+<div id='chat_div<%= @post.id %>'> <!-- todo: create chat_div id using a helper method.-->
 </div>
 

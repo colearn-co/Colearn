@@ -17,7 +17,7 @@ function showChat(postId, title, username) {
 	                            	hideChat(postId)
 	                            },
 	                            messageSent : function(id, user, msg) {
-	                                $.post("posts/" + postId + "/chats", {
+	                                $.post("/posts/" + postId + "/chats", {
 	                                	"chat[message]": msg
 	                                }, function(status) {
 	                                	console.log("post request success ", status); // why this is not called?
@@ -66,7 +66,7 @@ function hideChat(postId) {
 }
 
 function getAllChats(postId, callback) {
-	$.get("posts/"+ postId + "/chats/", function(data, status) {
+	$.get("/posts/"+ postId + "/chats/", function(data, status) {
 		console.log("chat data:", data, status);
 		if (callback) {
 			callback(data);
@@ -74,7 +74,7 @@ function getAllChats(postId, callback) {
 	});
 } 
 function getChats(params, callback) {
-	$.get("posts/"+ params.postId + "/chats/", {id: params.id}, function(data, status) {
+	$.get("/posts/"+ params.postId + "/chats/", {id: params.id}, function(data, status) {
 		console.log("chat data:", data, status);
 		if (callback) {
 			callback(data);

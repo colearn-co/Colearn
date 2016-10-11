@@ -4,8 +4,9 @@ class InvitesController < ApplicationController
 		@post = Post.find(params[:post_id])
   		@invite = @post.invites.build
   		@invite.status = params[:status]
+  		@invite.message = params[:invite][:message]
   		@invite.user = current_user
-  		@invite.save
+  		@invite.save!
   		render "/#{@post.class.name.underscore}s/invites/response".downcase
 	end
 
