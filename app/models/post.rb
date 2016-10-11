@@ -9,6 +9,8 @@ class Post < ActiveRecord::Base
 	has_many :skills
 	has_many :tags
 
+	validates :title, presence: true,
+                    length: { minimum: 1 }
 	after_create :add_own_user
 
 	accepts_nested_attributes_for :skills

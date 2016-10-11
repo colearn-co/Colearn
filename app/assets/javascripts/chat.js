@@ -4,6 +4,7 @@ $( document ).ready(function() {
     console.log( "ready!" );
 });
 var chats = {};
+chats.interval = 5000;
 function showChat(postId, title, username) {
 	if (chats["currentallyShownId"] && chats["currentallyShownId"] !== postId) {
 		hideChat(chats["currentallyShownId"]);
@@ -20,13 +21,12 @@ function showChat(postId, title, username) {
 	                            	hideChat(postId)
 	                            },
 	                            messageSent : function(id, user, msg) {
-	                                chats[postId]["lastChatId"]
 	                                $.post("posts/" + postId + "/chats", {
 	                                	"chat[message]": msg
 	                                }, function(status) {
 	                                	console.log("post request success ", status); // why this is not called?
 	                                });
-	                              //  $("#" + id).chatbox("option", "boxManager").addMsg(user.username, msg);
+	                                $("#" + id).chatbox("option", "boxManager").addMsg(user.username, msg);
 	                            	
 	                            }});
 			allChats.forEach(function(chat) {
@@ -34,26 +34,29 @@ function showChat(postId, title, username) {
 				
 			});
 			chats[postId] = {added: true};
-			chats[postId]["lastChatId"] = allChats[allChats.length - 1].id;
+			chats[postId].lastChatId = allChats[allChats.length - 1].id;
+			
 			setInterval(function() {
 				console.log("Getting new message for post:" + postId, chats.postId);
 				getChats({postId: postId, id: chats[postId]["lastChatId"]}, function(newChats) {
 					console.log("Got " + newChats.length, "new messages for postId: " + postId);
 					if (newChats.length != 0) {
 						newChats.forEach(function(chat) {
-							$("#" + elementId).chatbox("option", "boxManager").addMsg(chat.username, chat.message);
+							if (chat.user_id !== current_user.id) {
+								$("#" + elementId).chatbox("option", "boxManager").addMsg(chat.username, chat.message);
+							}
 						});
-						chats[postId]["lastChatId"] = newChats[newChats.length - 1].id;	
+						chats[postId].lastChatId = newChats[newChats.length - 1].id;	
 					}
 					
 				});
-			}, 2000);
+			}, chats.interval);
 
 		});
 	} else {
 		$("#" + elementId).chatbox("option", "hidden", false)
 	}
-	chats["currentallyShownId"] = postId;
+	chats.currentallyShownId = postId;
 	 
 }
 
