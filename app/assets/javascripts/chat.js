@@ -1,10 +1,6 @@
-
-
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
 var chats = {};
 chats.interval = 5000;
+
 function showChat(postId, title, username) {
 	if (chats["currentallyShownId"] && chats["currentallyShownId"] !== postId) {
 		hideChat(chats["currentallyShownId"]);
