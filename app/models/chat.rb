@@ -8,8 +8,11 @@ class Chat < ActiveRecord::Base
     	res = self.all
 
     	res = res.where("id > ?", params[:id]) unless params[:id].nil?
-    	res = res.joins(:user)
-    	res = res.select("chats.*", "users.name as username")
+    	res = res.order(id: :ASC)
     	res
+    end
+
+    def username
+    	self.user.try(:name)
     end
 end

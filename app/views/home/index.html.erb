@@ -6,11 +6,13 @@
 			<% Post.all.each do |post| %>
 				<li><a href="<%= post_path(post) %>"><%= post.title %> - <%= post.user.name %></a>
 
-					
+				<div id="chat_div<%=post.id %>"></div>	
 				</li>
-				<%=  link_to "Show Chat", post_chats_path(post.id), remote: true, onclick: raw("showChat("+ post.id.to_s + ",'" + post.title.to_s + "','" + post.user.name.to_s + "'); return false;"), class: "show_chat" %>
-				<%= link_to "Hide Chat", '#', onclick: "hideChat(" + post.id.to_s + "); return false;", class: "hide_chat" %>
+				<% if (current_user) %>
+					<%=  link_to "Show Chat", post_chats_path(post.id), remote: true, onclick: raw("showChat("+ post.id.to_s + ",'" + post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
+				<% end %>
 				<hr>
+
 			<% end %>
 		</ul>
 	</div>

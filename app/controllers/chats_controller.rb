@@ -1,12 +1,13 @@
 class ChatsController < ApplicationController
 	# TODO: check why this is needed?
+	before_filter :authenticate_user!, :only => [:new, :create]
 	skip_before_filter  :verify_authenticity_token
 
 	def index
 		@chatable = find_chatable
 		@chats = @chatable.chats.get_by_params(params)
-		
-		render :json => @chats
+
+		render :json => @chats.as_json(:methods => [:username])
 		#render "/#{@chatable.class.name.underscore}s/chats/index"
 	end
 	def new
