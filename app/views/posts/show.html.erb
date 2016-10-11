@@ -17,9 +17,12 @@
 	<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
 
 	<%= link_to 'Request invite', post_invites_path(@post, :status => 1 ), remote: true, method: :post %>
+	<%= link_to "Show Chat", '#', onclick: " $('#qnimate').addClass('popup-box-on'); return false;", class: "show_chat" %>
 	<% if current_user %>
 		
 		<%= link_to 'Accept invite', post_invite_path(:post_id => @post.id, :status => 2 ), remote: true, method: :put %>
 		<%= link_to 'Reject invite', post_invite_path(:post_id => @post.id, :status => 3 ), remote: true, method: :put %>
+
 	<% end %>
 </div>
+

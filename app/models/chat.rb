@@ -4,4 +4,15 @@ class Chat < ActiveRecord::Base
 	validates :message, presence: true,
                     length: { minimum: 1 }
 
+    def self.get_by_params(params)
+    	res = self.all
+
+    	res = res.where("id > ?", params[:id]) unless params[:id].nil?
+    	res = res.order(id: :ASC)
+    	res
+    end
+
+    def username
+    	self.user.try(:name)
+    end
 end

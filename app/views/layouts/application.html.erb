@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Colearn</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://use.fontawesome.com/f9b4728164.js"></script>
-        <script src="http://www.codingdrama.com/bootstrap-markdown/js/markdown.js"> </script>
-        <script src="http://www.codingdrama.com/bootstrap-markdown/js/to-markdown.js"> </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"> </script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"> </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js"> </script>
-  <%= csrf_meta_tags %>
+	<title>Colearn</title>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" type="text/css" media="screen" />
+	 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
+	
+	<script src="https://use.fontawesome.com/f9b4728164.js"></script>
+	<script src="http://www.codingdrama.com/bootstrap-markdown/js/markdown.js"> </script>
+	<script src="http://www.codingdrama.com/bootstrap-markdown/js/to-markdown.js"> </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"> </script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"> </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js"> </script>
+	
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	    
+	<%= csrf_meta_tags %>
 </head>
 <body>
 <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
+<p class="alert"><%= alert %></p>
 <div class="header ">
     <a class="logo" href="/">
         <img class="logo-image" src="/assets/colearn-logo.png">
@@ -30,14 +37,13 @@
             </div>
             <div class="account">
                <%= gravatar_tag current_user.email, :size => 50 %>
-
-                <a  href="/signout/?returnURI=@request.uri" class="signout btn">Signout</a>
+              
+                <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
             </div>
         </div>
     <% else %>
     	 <div class="account-action">
-            <a href="/login/?returnURI=@request.uri" class="login btn">Login</a>
-            <a href="/login/?returnURI=@request.uri" class="sign-up btn">Sign Up</a>
+            <a href="<%= new_user_session_path %>"  class="login btn">Login/Sign Up</a>
         </div>
     	<a class="signout hidden" href="#" onclick="signOut();">Sign out</a>
     <% end %>    
@@ -46,7 +52,18 @@
 </div>
 <div class="content">
 	<%= yield %>
+	
+	<div class="popup-box chat-popup" id="chat_div">
+    		  
+    </div>	
 </div>
+
+
+
+
+
+
+
 <div class="footer">
 	<a href="mailto:colearn.xyz@@gmail.com">Contact us</a>
 </div>
