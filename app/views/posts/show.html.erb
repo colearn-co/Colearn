@@ -3,6 +3,7 @@
 </br>
 <%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
 <%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
+
 <%=  link_to "Show Chat", post_chats_path(@post.id), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
 <hr>
 <div>
@@ -23,13 +24,22 @@
 
 <div>
 	<div>
+		<h3>Members </h3>
+		<div>
+			<ul>
+				<% @post.members.each do |m| %>
+					<li><%= m.name %></li>
+				<% end %>
+			</ul>
+		</div>
 		<h3>Requested invites </h3>
 		<hr>
-		<% @post.invites.requested_invites.each do |i| %>
+		<% @post.requested_invites.each do |i| %>
 			<div><p><%= markdown(i.message) %></p></div>
+			<p><%=i.user.name %>
 			<% if current_user && current_user.id == @post.user.id %>
-				<%= link_to 'Accept invite', post_invite_path(:post_id => i.post_id, :status => 2 ), remote: true, method: :put %>
-				<%= link_to 'Reject invite', post_invite_path(:post_id => i.post_id, :status => 3 ), remote: true, method: :put %>
+				<%= link_to 'Accept invite', post_invite_path(@post, i, :status => 2 ), remote: true, method: :put %>
+				<%= link_to 'Reject invite', post_invite_path(@post, i, :status => 3 ), remote: true, method: :put %>
 			<% end %>	
 		<% end %>
 	</div>
