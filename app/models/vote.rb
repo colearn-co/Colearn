@@ -7,8 +7,10 @@ class Vote < ActiveRecord::Base
 	belongs_to :votable, polymorphic: true
 	validates_presence_of :user
 	validates_presence_of :votable
-	scope :upvotes, -> {where(:type => Vote::TYPE[:upvote])}
-	scope :downvotes, -> {where(:type => Vote::TYPE[:downvote])}
+	validates_uniqueness_of :user_id, {scope: [:votable_type, :votable_id]} 
+
+	scope :upvotes, -> {where(:vote_type => Vote::TYPE[:upvote])}
+	scope :downvotes, -> {where(:vote_type => Vote::TYPE[:downvote])}
 
 
 end

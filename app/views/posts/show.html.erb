@@ -1,8 +1,9 @@
 <h3><%= @post.title%></h3>
 <%= markdown(@post.message) %> - <%= @post.user.name %>
 </br>
-<%= link_to 'upvote', post_votes_path(@post, :type => 1), remote: true, method: :post %>
-<%= link_to 'downvote', post_votes_path(@post, :type => 2), remote: true, method: :post %>
+<p><%= @post.total_vote_count %> Points</p>
+<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), remote: true, method: :post %>
+<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), remote: true, method: :post %>
 
 <%=  link_to "Show Chat", post_chats_path(@post.id), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
 <hr>

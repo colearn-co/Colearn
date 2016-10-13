@@ -6,7 +6,7 @@ class VotesController < ApplicationController
 	def create
 		@votable = find_votable
   		@vote = @votable.votes.build
-  		@vote.type = params[:type]
+  		@vote.vote_type = params[:vote_type]
   		@vote.user = current_user
   		@vote.save
   		render "/#{@votable.class.name.underscore}s/votes/response".downcase

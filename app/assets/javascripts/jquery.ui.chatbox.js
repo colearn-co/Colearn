@@ -53,10 +53,13 @@
 
                     var msgElement = document.createElement(
                         systemMessage ? "i" : "span");
-                    $(msgElement).text(msg);
+                    $(msgElement).html(msg);
                     e.appendChild(msgElement);
                     $(e).addClass("ui-chatbox-msg");
                     $(e).css("maxWidth", $(box).width());
+                    $(e).css("width", "inherit");
+                    $(e).css("padding-right", "15px");
+
                     $(e).fadeIn();
                     self._scrollToBottom();
 

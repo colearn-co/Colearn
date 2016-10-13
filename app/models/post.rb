@@ -5,11 +5,13 @@ class Post < ActiveRecord::Base
 	has_many :invites
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :requested_invites, lambda { requested_invites }, class_name: 'Invite'
-
+	has_many :upvotes, lambda { upvotes }, class_name: 'Vote', :as => :votable
+	has_many :downvotes, lambda { downvotes }, class_name: 'Vote', :as => :votable
 	has_many :members, through: :accepted_invites, source: :user
 	has_many :comments, :as => :commentable
 	has_many :skills
 	has_many :tags
+	
 	validates_presence_of :user
 
 	validates :title, presence: true,
@@ -23,4 +25,7 @@ class Post < ActiveRecord::Base
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end
 	
+	def total_vote_count
+		self.upvotes.count - self.downvotes.count
+	end
 end
