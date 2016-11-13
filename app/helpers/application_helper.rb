@@ -13,5 +13,9 @@ module ApplicationHelper
                                       )
     	return markdown.render(text).html_safe
 	end
+
+  def participants_text(cnt)
+    cnt > 1 ? "#{cnt} participants" : "No other participant"
+  end
 	   
 end

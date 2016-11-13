@@ -1,58 +1,160 @@
-<h3><%= @post.title%></h3>
-<%= markdown(@post.message) %> - <%= @post.user.name %>
-</br>
-<p><%= @post.total_vote_count %> Points</p>
-<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), remote: true, method: :post %>
-<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), remote: true, method: :post %>
+<% content_for(:head) do %>
+	<style type="text/css">
+		.user-post-ic {
+			float: left;
+		}
 
-<%=  link_to "Show Chat", post_chats_path(@post.id), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
-<hr>
-<div>
-	<p>Comments</p>
-	<ul id="comment-list">
-		<% @post.comments.each do |c| %>
-			<li><%= c.message %></li>
-		<% end %>
-	</ul>
-<div>
+		.user-info {
+			display: block; line-height: 19px; margin-left: 43px;
+		}
+		.user-name {
+			color: rgb(88, 88, 88); font-size: 13px;
 
+		}
+		.time-dist {
+			line-height: 10px; display: block; color: rgb(134, 134, 134); font-size: 10px;
 
-<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
-	<%= f.text_field :message %>
-	<%= f.submit "Post" %>
+		}
+		.participated {
+			float: left; 
+			display: inline-block; 
+			border: 1px solid rgb(232, 232, 232); 
+			box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.05);
+		}
+		.anchor-button {
+			    background: #4e9caf none repeat scroll 0 0;
+			    border-radius: 5px;
+			    color: white;
+			    display: inline-block;
+			    font-weight: bold;
+			    height: 18px;
+			    padding: 1px;
+			    text-align: center;
+			    width: 75px;
+		}
+		.anchor-button:hover {
+			text-decoration: none;
+			color: white;
+		}
+	</style>
 <% end %>
 
+<div style="">
+	<div style="width: 345px; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
-<div>
-	<div>
-		<h3>Members </h3>
-		<div>
-			<ul>
-				<% @post.members.each do |m| %>
-					<li><%= m.name %></li>
+				<% if @post.user == current_user %>
+					<div style="margin-bottom: 50px;">
+						<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Join requests</b>
+							
+						</div>
+							
+
+							<% @post.requested_invites.each do |i| %>
+								<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px;">
+									<%= gravatar_tag i.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.name %></span>
+										
+										<span style="float: right;">
+											<a style="margin-right: 10px;" href="<%= post_invite_path(@post, i, :status => 3) %>" data-method="put" data-remote="true">
+												<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" style="color: red; font-size: 18px;"></i>
+											</a>
+											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true">
+												<i class="remove glyphicon glyphicon-ok glyphicon-white" style="color: green; font-size: 18px;"></i>
+											</a>
+										</span>
+										<div style="padding: 0px 5px; font-size: 11px; display: block;">
+											<%= i.message %>								
+										</div>
+									
+								</div>
+							<% end %>
+					</div>
 				<% end %>
-			</ul>
-		</div>
-		<h3>Requested invites </h3>
-		<hr>
-		<% @post.requested_invites.each do |i| %>
-			<div><p><%= markdown(i.message) %></p></div>
-			<p><%=i.user.name %>
-			<% if current_user && current_user.id == @post.user.id %>
-				<%= link_to 'Accept invite', post_invite_path(@post, i, :status => 2 ), remote: true, method: :put %>
-				<%= link_to 'Reject invite', post_invite_path(@post, i, :status => 3 ), remote: true, method: :put %>
-			<% end %>	
+
+				<div>
+					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
+					<% if @post.is_member?(current_user) %>
+						<span style="display: block; font-size: 12px;"><%=  link_to "Show Chat", post_chats_path(@post), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat anchor-button" %></span>
+					<% end %>
+					</div>
+						
+
+						<% @post.members.each do |u| %>
+							<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 8px;">
+								<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+									<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= u.name rescue "N/A" %></span>
+								
+							</div>
+						<% end %>
+				</div>
+
+		<% if @post.user != current_user %>
+			<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" data-toggle="modal" data-target="#join-request">Send join request</div>
 		<% end %>
+
 	</div>
-	<h3>Request to Join</h3>
-	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
-		<%= f.text_area :message, :"data-provide" => "markdown"  %>
-		<%= f.submit "Request to Join" %>
-	<% end %>	
-	
-	
+	<div style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: center;">
+		<h3 style="font-weight: bold;"><%= @post.title%></h3>
+
+		<p style="margin-bottom: 20px;">
+		<%= @post.message %>
+			
+		</p>
+			
+
+		<%#= link_to 'upvote', post_votes_path(@post, :vote_type => 1), remote: true, method: :post %>
+		<%#= link_to 'downvote', post_votes_path(@post, :vote_type => 2), remote: true, method: :post %>
+
+		<div style="padding: 16px; text-align: left;">
+			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
+			<div id="comment-list">
+				<% @post.comments.reorder(id: :desc).each do |c| %>
+					<%= render :partial => 'single_chat', :locals => {:comment => c} %>
+				<% end %>
+			</div>
+
+
+			<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+					<div class="form-group">
+					<%= f.text_field :message, :class => "form-control", :id => "comment", :style => "width: 600px; display: inline;" %>
+					<%= f.submit "Post", :class => "btn-primary" %>
+					</div>
+				
+			<% end %>
+		</div>
+
+
+		<div id="chat_div<%= @post.id %>"> <!-- todo: create chat_div id using a helper method.-->
+		</div>
+
+	</div>
 </div>
 
-<div id='chat_div<%= @post.id %>'> <!-- todo: create chat_div id using a helper method.-->
-</div>
 
+
+<!-- Modal -->
+<div id="join-request" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Request to join</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
+        		<p>Brief message about yourself</p>
+				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
+				<%= f.submit "Request to Join", :class => "btn btn-default" %>
+			<% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

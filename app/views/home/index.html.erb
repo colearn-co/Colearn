@@ -1,19 +1,144 @@
+<% content_for :head do %>
+	<style type="text/css">
+		.participated {
+			float: left; 
+			display: inline-block; 
+			border: 1px solid rgb(232, 232, 232); 
+			box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.05);
+		}
+		.anchor-button {
+			background: #4e9caf none repeat scroll 0 0;
+			border-radius: 5px;
+			color: white;
+			display: inline-block;
+			font-weight: bold;
+			height: 22px;
+			padding: 1px;
+			text-align: center;
+			width: 84px;
+		}
+		.anchor-button:hover {
+			text-decoration: none;
+			color: white;
+		}
+		.post-title {
+			display: block; font-weight: bold; font-size: 19px; margin-bottom: 6px;
+		}
+		.user-post-ic {
+			float: left;
+		}
+
+		.user-info {
+			display: block; line-height: 19px; margin-left: 43px;
+		}
+		.user-name {
+			color: rgb(88, 88, 88); font-size: 13px;
+
+		}
+		.time-dist {
+			line-height: 10px; display: block; color: rgb(134, 134, 134); font-size: 10px;
+
+		}
+		.post-message {
+			display: block; margin-top: 12px;
+
+		}
+		.post-skills {
+			border-top: 1px solid #f1f1f1;
+		    color: rgb(137, 137, 137);
+		    display: block;
+		    margin-top: 10px;
+
+		}
+		.background {
+			text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: rgb(207, 207, 207);
+		}
+		.skill-wrap {
+			display: block; margin: 8px 0px;
+			text-align: center;
+		}
+		.back-text {
+			background-color: rgb(249, 249, 250);
+
+		}
+		.main-skills {
+			font-size: 13px;
+			color: #8d8d8d;
+		}
+	</style>
+<% end %>
 <div>
-	Welcome to Co-learn
-	<div>
-		<b>All Posts</b>
-		<ul>
-			<% Post.all.each do |post| %>
-				<li><a href="<%= post_path(post) %>"><%= post.title %> - <%= post.user.name %></a>
+	<div style="margin-left: 50px; margin-right: 50px;">
 
-				<div id="chat_div<%=post.id %>"></div>	
-				</li>
-				<% if (current_user) %>
-					<%=  link_to "Show Chat", post_chats_path(post.id), remote: true, onclick: raw("showChat("+ post.id.to_s + ",'" + post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat" %>
-				<% end %>
-				<hr>
+	<div class="participated" style="width: 345px; position: fixed;">
+		<% if current_user && !current_user.participated_posts.blank? %>
 
+					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participated Learnings</b></div>
+					<% current_user.participated_posts.each do |p| %>
+						<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px;">
+							<a href="<%= post_path(p) %>" style="text-decoration: none; display: inline-block; width: 200px;">
+								<span style="display: block; color: rgb(68, 68, 68); font-size: 16px;"><%= p.title %></span>
+								<% if p.requested_invites.length > 0 %>
+									<div style="background-color: rgb(192, 66, 63); color: rgb(255, 255, 255); box-shadow: 0px 1px 1px rgb(154, 53, 50) inset; display: inline-block; padding: 0px 5px; font-size: 11px; border-radius: 5px;">
+										<%= p.requested_invites.length %> joining requests!									
+									</div>
+								<% end %>
+							 
+							
+							</a>
+							<div style="float: right; width: 95px; text-align: center;">
+								<%=  link_to "Show Chat", post_chats_path(p), remote: true, onclick: raw("showChat("+ p.id.to_s + ",'" + p.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat anchor-button" %>
+								<span style="background-color: rgb(238, 238, 238); color: rgb(136, 136, 136); padding: 0px; font-size: 10px; display: inline-block;"><%= participants_text(p.members.count) %></span>
+
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+
+
+					<% end %>
+		<% else %>
+		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center; font-size: 23px; font-family: initial;">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
+
+		<% end %>
+		<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px;">Create new learning posts</div>
+
+	</div>
+
+	<div style="float: right; width: 789px;">
+		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>All learning posts</b></div>
+		<div>
+			<% Post.all.order_by_recency.each do |post| %>
+
+
+				<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px;">
+					<span class="post-title"><a href="<%= post_path(post) %>" style="color: #333;"><%= post.title %></a></span>
+					<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
+					</span>
+					<span class="user-info">
+						<span class="user-name"><%= post.user.name %></span>
+						<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+					</span>
+					
+					<span class="post-message"><%= post.message %></span>
+					<span style="display: block;">
+						<span class="post-skills"></span>
+							<span class="skill-wrap">
+								<span class="background">
+									<span class="back-text">Background</span>
+								</span>
+								<span class="main-skills">
+									<%= post.skills.first.title rescue "NA" %>
+								</span>
+							</span>			
+							
+					</span>
+				</div>
+
+
+				
 			<% end %>
-		</ul>
+		</div>
+	</div>
+	<div style="clear: both;"></div>
 	</div>
 </div>

@@ -37,9 +37,7 @@
 }
 .content {
     min-height: 1000px;
-    margin: auto;
     padding: 15px;
-    max-width: 1080px;
     z-index: 500;
 }
 .google-login {
@@ -105,4 +103,13 @@
 .post-learning-req-btn {
     margin: 5px;
     margin-top: 10px;
+}
+.header a {
+    color: #9d9d9d;
+    padding: 14px 12px;
+    text-decoration: none;
+
+}
+.header a:hover {
+    color: white;
 }

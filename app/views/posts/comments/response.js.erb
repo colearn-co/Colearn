@@ -1,1 +1,1 @@
-$('#comment-list').append("<li>" + "<%= escape_javascript @comment.message %>" + "</li>")
+$('#comment-list').prepend("<%= escape_javascript render :partial => 'posts/single_chat', :locals => {:comment => @comment} %>");

@@ -11,6 +11,7 @@ class Post < ActiveRecord::Base
 	has_many :comments, :as => :commentable
 	has_many :skills
 	has_many :tags
+	scope :order_by_recency, -> {order(id: :desc)}
 	
 	validates_presence_of :user
 
@@ -23,6 +24,10 @@ class Post < ActiveRecord::Base
 	
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
+	end
+
+	def is_member?(user)
+		self.members.include?(user)
 	end
 	
 	def total_vote_count
