@@ -144,7 +144,7 @@
 	<div style="clear: both;"></div>
 	</div>
 	<!--:FIXME: unmaintainable code: this div is used to show chat pop up id exp for post id 1: 'chat_div1' -->
-	<% current_user.participated_posts.each do |p| %>
+	<% (current_user.participated_posts rescue []).each do |p| %>
 		<div id="chat_div<%=p.id %>"></div>
 	<% end %>
 </div>

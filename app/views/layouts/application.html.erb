@@ -23,14 +23,21 @@
 		<% if (current_user) %>
 			current_user = <%= raw current_user.as_json.to_json %>
 		<% end %>
+		<% if flash[:notice] %>
+			jQuery(document).ready(function() {
+				$.notify("<%= escape_javascript flash[:notice] %>", { position:"top center", className: "info" });
+			});
+		<% end %>
 	</script>
 	    
 	<%= csrf_meta_tags %>
 	<%= yield(:head) %>
 </head>
 <body style="background: #e9eaec none repeat scroll 0 0;">
+
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
+
 <div class="header " style="background-color: rgb(21, 11, 48);">
     <a class="logo" href="/" style="padding: 0px;">
         <img class="logo-image" src="<%= asset_path('colearn-logo.png') %>" style="max-width: 152px; border-radius: 17px;">
