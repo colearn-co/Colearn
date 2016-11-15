@@ -93,7 +93,7 @@
 		<% end %>
 
 	</div>
-	<div style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: center;">
+	<div style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: left;">
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
 
 		<p style="margin-bottom: 20px;">
@@ -101,9 +101,9 @@
 			
 		</p>
 			
-
-		<%#= link_to 'upvote', post_votes_path(@post, :vote_type => 1), remote: true, method: :post %>
-		<%#= link_to 'downvote', post_votes_path(@post, :vote_type => 2), remote: true, method: :post %>
+		<p><%= @post.total_vote_count %> Points</p>
+		<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), remote: true, method: :post %>
+		<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), remote: true, method: :post %>
 
 		<div style="padding: 16px; text-align: left;">
 			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
