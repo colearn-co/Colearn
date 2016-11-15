@@ -121,7 +121,7 @@
 						<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
 					</span>
 					
-					<span class="post-message"><%= post.message %></span>
+					<span class="post-message"><%= markdown post.message %></span>
 					<span style="display: block;">
 						<span class="post-skills"></span>
 							<span class="skill-wrap">

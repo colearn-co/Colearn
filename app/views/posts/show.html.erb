@@ -97,7 +97,7 @@
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
 
 		<p style="margin-bottom: 20px;">
-		<%= @post.message %>
+		<%= markdown(@post.message) %>
 			
 		</p>
 			
