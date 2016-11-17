@@ -1,1 +1,11 @@
-alert('voted')
+var voteCount = parseInt($(".vote-count")[0].innerHTML);
+<% if @vote.vote_type == 1 %>
+	$(".upvote").addClass("upvoted");
+	$(".downvote").removeClass("downvoted");
+	$(".vote-count")[0].innerHTML = voteCount + 1;
+
+<% else %>
+	$(".downvote").addClass("downvoted");
+	$(".upvote").removeClass("upvoted");
+	$(".vote-count")[0].innerHTML = voteCount - 1;
+<% end %>

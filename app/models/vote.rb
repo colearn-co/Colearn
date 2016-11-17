@@ -2,6 +2,7 @@ class Vote < ActiveRecord::Base
 	TYPE = {
 		:upvote => 1,
 		:downvote => 2,		
+		:none => 0
 	}
 	belongs_to :user
 	belongs_to :votable, polymorphic: true

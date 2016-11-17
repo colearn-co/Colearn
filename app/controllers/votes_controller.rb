@@ -5,8 +5,8 @@ class VotesController < ApplicationController
 
 	def create
 		@votable = find_votable
-  		@vote = @votable.votes.build
-  		@vote.vote_type = params[:vote_type]
+  		@vote = Vote.where(user: current_user, votable: @votable).first || votable.votes.build
+  		@vote.vote_type = @vote.vote_type != params[:vote_type] && @vote.vote_type != Vote::TYPE[:none] ? Vote::TYPE[:none] : params[:vote_type]
   		@vote.user = current_user
   		@vote.save
   		render "/#{@votable.class.name.underscore}s/votes/response".downcase

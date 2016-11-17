@@ -113,3 +113,61 @@
 .header a:hover {
     color: white;
 }
+.vote-area {
+    padding-right: 12px;
+}
+.upvote {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background-position: 0 -25px;
+  line-height: 0; 
+  font-size: 0;
+  color: transparent; 
+}
+.downvote {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background-position: 0 -25px;
+  line-height: 0; 
+  font-size: 0;
+  color: transparent; 
+}  
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  
+  border-bottom: 10px solid black;
+}
+
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  
+  border-top: 10px solid #f00;
+}
+.post-area {
+    display: flex;
+}
+.upvoted {
+    border-bottom: 15px solid orange;
+    pointer-events: none;
+    cursor: default;
+}
+.downvoted {
+    border-top: 15px solid orange;
+    pointer-events: none;  /*TODO: this is temp fix to remove pointer event should be fixed. http://stackoverflow.com/questions/2091168/disable-link-using-css*/
+    cursor: default;
+}
+.vote-count {
+    text-align: center;
+}

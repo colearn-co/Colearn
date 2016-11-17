@@ -33,4 +33,10 @@ class Post < ActiveRecord::Base
 	def total_vote_count
 		self.upvotes.count - self.downvotes.count
 	end
+	def user_vote(user)
+		self.votes.where(user: user).first
+	end
+	def user_vote_type(user)
+		self.votes.where(user: user).first.try(:vote_type)
+	end
 end
