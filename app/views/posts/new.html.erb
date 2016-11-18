@@ -1,14 +1,18 @@
 <div style="margin: 0px 0px 0px 162px; max-width: 750px;">
 	<%= form_for @post, html: {class: "post-form"} do |f| %>
 		<div class="form-group">
-		  <label for="usr" style="font-size: 18px;">Title<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Write a brief title)</span></label>
+		  <label for="usr" style="font-size: 18px;">Title<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Write a brief title, Be specific)</span></label>
 		  <%= f.text_field :title, :class => "form-control" %>
 		</div>
 		<div class="form-group">
 			<label for="usr" style="font-size: 18px;">Description<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Describe what you want to learn, your goals etc.)</span></label>
 			<%= f.text_area :message, :"data-provide" => "markdown", :class => 'form-control' %>
 		</div>
-
+		<p>Description should include.<br>
+            1. Goal: what you want to learn <br>
+            2. Plan: How you want to achieve it. Ask for help from community if you are not clear<br>
+            3. Any other relevant information. </p>
+            <br>
 		<div class="form-group">
 			<label for="usr" style="font-size: 18px;">Background<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief about your background, it will help others to reach you.)</span></label>
 
