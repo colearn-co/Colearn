@@ -1,5 +1,5 @@
 var voteCount = parseInt($(".vote-count")[0].innerHTML);
-<% if @vote.vote_type == 1 %>
+<% if @vote.vote_type == Vote::TYPE[:upvote] %>
 	$(".upvote").addClass("upvoted");
 	$(".downvote").removeClass("downvoted");
 	$(".vote-count")[0].innerHTML = voteCount + 1;

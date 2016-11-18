@@ -146,5 +146,14 @@
 	<!--:FIXME: unmaintainable code: this div is used to show chat pop up id exp for post id 1: 'chat_div1' -->
 	<% (current_user.participated_posts rescue []).each do |p| %>
 		<div id="chat_div<%=p.id %>"></div>
+		<% if (p.members.count > 1) %>
+			<script type="text/javascript">
+				jQuery(document).ready(function()  {
+					setTimeout(function() {
+						<%= raw("showChat("+ p.id.to_s + ",'" + p.title.to_s + "','" + current_user.name.to_s + "');")  %>
+					}, 2000);
+				});
+			</script>
+		<% end %>
 	<% end %>
 </div>

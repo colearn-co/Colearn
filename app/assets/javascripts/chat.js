@@ -5,9 +5,12 @@ jQuery(document).ready(function() {
 var chats = {};
 chats.interval = 5000;
 
-function showChat(postId, title, username) {
+function showChat(postId, title, username, options) {
 	if (chats["currentallyShownId"] && chats["currentallyShownId"] !== postId) {
 		hideChat(chats["currentallyShownId"]);
+	}
+	if (!options) {
+		options = {hidden: false};
 	}
 	console.log("Showing postid:" + postId)
 	var elementId = "chat_div" + postId;
@@ -17,6 +20,7 @@ function showChat(postId, title, username) {
 	                            user:{username : username},
 	                            title : title ? title : "Chat",
 	                            offset: 100,
+	                            hidden: options.hidden,
 	                            boxClosed: function(id) {
 	                            	hideChat(postId)
 	                            },
@@ -42,6 +46,7 @@ function showChat(postId, title, username) {
 				getChats({postId: postId, id: chats[postId]["lastChatId"]}, function(newChats) {
 					console.log("Got " + newChats.length, "new messages for postId: " + postId);
 					if (newChats.length != 0) {
+						showChat(postId, title, username); // show the chat where new message has come.
 						newChats.forEach(function(chat) {
 							if (chat.user_id !== current_user.id) {
 								$("#" + elementId).chatbox("option", "boxManager").
