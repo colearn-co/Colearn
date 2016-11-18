@@ -21,3 +21,11 @@ test:
   username: colearn
   password: colearn
 
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: colearn_prod
+  host: localhost
+  pool: 5
+  username: colearn
+  password: colearn
