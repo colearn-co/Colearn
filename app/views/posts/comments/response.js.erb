@@ -1,1 +1,2 @@
 $('#comment-list').prepend("<%= escape_javascript render :partial => 'posts/single_chat', :locals => {:comment => @comment} %>");
+$('#comment').val('');

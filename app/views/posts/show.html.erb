@@ -122,7 +122,7 @@
 			<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
 					<div class="form-group">
 					<%= f.text_field :message, :class => "form-control", :id => "comment", :style => "width: 600px; display: inline;" %>
-					<%= f.submit "Post", :class => "btn-primary" %>
+					<%= f.submit "Post", :class => "btn-primary ajax-loader" %>
 					</div>
 				
 			<% end %>
