@@ -58,3 +58,9 @@
     white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* IE */
 }
+.ui-widget-header {
+    background: rgb(78, 156, 175);
+    border: rgb(100, 156, 175);
+    color: white;
+}
+
