@@ -56,10 +56,12 @@
         </div>
     <% else %>
     	 <div class="account-action">
-            <a href="<%= new_user_session_path %>"  class="login btn">Login</a>
+            <a href="javascript:void(0)"  class="login btn">Login</a>
         </div>
     	<a class="signout hidden" href="#" onclick="signOut();">Sign out</a>
-    <% end %>    
+    <% end %>   
+
+
    
        
 </div>
@@ -73,11 +75,64 @@
 
 
 
+    	<% if !current_user %> 
+    		<div class="modal fade" id="login-div" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              	<div class="modal-dialog modal-sm" role="document">
+                	<div class="modal-content">
+                  		<div class="modal-header">
+                    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    		<h4 class="modal-title" id="myModalLabel">Sign in</h4>
+                  		</div>
+                  		<div class="modal-body">
+                    		<div class="row text-center">
+	        
+						        <h6>Hi there! Let's start with signing you in.</h6>
+						        <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but">
+						        	<img src="<%= asset_path('google-login.png') %>" style="max-width: 100%; border-radius: 25px;">
+						        </a>
+					    	</div>
+					    </div>
+				    	<div class="modal-footer">
+                			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              			</div>
+            			
+          			</div>
+        		</div>
+        	</div>
+        <% end %>
+
+
+
+
+<!-- loader modal -->
+
+<div id="divLoading"> 
+</div>
+
+
+
 
 
 
 
 <div class="footer">
 </div>
+<script type="text/javascript">
+        $('.login').click(function() {
+            $('#login-div').modal('show');
+        });
+
+        $('.ajax-loader').click(function() {
+        	$("div#divLoading").addClass('show');
+        })
+
+		$( document ).ajaxComplete(function( event, xhr, settings ) {
+			if(xhr.status == 401){
+				$('#login-div').modal('show');
+			}
+			$("div#divLoading").removeClass('show');
+		});
+        
+    </script>
 </body>
 </html>
