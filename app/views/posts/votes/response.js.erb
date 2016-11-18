@@ -1,1 +1,20 @@
-alert('voted')
+var voteCount = parseInt($(".vote-count")[0].innerHTML);
+<% if @vote.vote_type == 1 %>
+	$(".upvote").addClass("upvoted");
+	$(".downvote").removeClass("downvoted");
+	$(".vote-count")[0].innerHTML = voteCount + 1;
+
+<% elsif @vote.vote_type == Vote::TYPE[:downvote] %>
+	$(".downvote").addClass("downvoted");
+	$(".upvote").removeClass("upvoted");
+	$(".vote-count")[0].innerHTML = voteCount - 1;
+<% else %> 
+	if ($(".downvote").hasClass('downvoted')) {
+		$(".vote-count")[0].innerHTML = voteCount + 1;	
+		$(".downvote").removeClass("downvoted");
+	} else {
+		$(".vote-count")[0].innerHTML = voteCount - 1;	
+		$(".upvote").removeClass("upvoted");
+	}
+
+<% end %>
