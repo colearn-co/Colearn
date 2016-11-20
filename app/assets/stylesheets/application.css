@@ -95,6 +95,7 @@
 }
 .account-action {
     margin-left: auto;
+    padding-right: 8px;
 }
 .post-learning-plan-btn {
     margin: 5px;
@@ -104,11 +105,19 @@
     margin: 5px;
     margin-top: 10px;
 }
-.header a {
+.login {
     color: #9d9d9d;
-    padding: 14px 12px;
+    /*padding: 14px 12px; */
+    margin-top: 10px;
+    margin-bottom: 10px; 
     text-decoration: none;
 
+}
+.sign-up {
+    margin-top: 10px;
+    margin-bottom: 10px; 
+    color: white;
+    
 }
 .header a:hover {
     color: white;

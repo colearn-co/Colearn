@@ -65,7 +65,9 @@
         </div>
     <% else %>
     	 <div class="account-action">
-            <a href="javascript:void(0)"  class="login btn">Login</a>
+            <a href="javascript:void(0)"  class="login btn">Sign in</a>
+            
+            <a href="javascript:void(0)" class="sign-up btn btn-success" >Sign up</a>
         </div>
     	<a class="signout hidden" href="#" onclick="signOut();">Sign out</a>
     <% end %>   
@@ -90,7 +92,7 @@
                 	<div class="modal-content">
                   		<div class="modal-header">
                     		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    		<h4 class="modal-title" id="myModalLabel">Sign in</h4>
+                    		<h4 class="modal-title" id="myModalLabel">Sign in/ Sign up</h4>
                   		</div>
                   		<div class="modal-body">
                     		<div class="row text-center">
@@ -128,6 +130,9 @@
 </div>
 <script type="text/javascript">
         $('.login').click(function() {
+            $('#login-div').modal('show');
+        });
+        $('.sign-up').click(function() {
             $('#login-div').modal('show');
         });
 
