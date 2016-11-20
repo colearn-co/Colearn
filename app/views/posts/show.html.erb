@@ -152,7 +152,7 @@
         	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
         		<p>Brief message about yourself</p>
 				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
-				<%= f.submit "Request to Join", :class => "btn btn-default" %>
+				<%= f.submit "Request to Join", :class => "btn btn-success" %>
 			<% end %>
         </p>
       </div>
