@@ -202,3 +202,11 @@ display : none;
 .vote-count {
     text-align: center;
 }
+
+.ui-widget-header.ui-corner-top.ui-chatbox-titlebar.ui-dialog-header > span {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 85%;
+}

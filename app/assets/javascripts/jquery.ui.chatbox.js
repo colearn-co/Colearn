@@ -1,5 +1,5 @@
 /*
- * Copyright 2010, Wen Pu (dexterpu at gmail dot com)
+ * Copyright 2010, Wen Pu (dexterpu at gmail fdot com)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
