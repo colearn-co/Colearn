@@ -61,11 +61,15 @@
 }
 .username-text {
     margin-left: 5px;
+    color: #9d9d9d;
+    padding: 14px 12px;
+    text-decoration: none;
 }
 .profile-picture {
     width: 35px;
     height: 35px;
     margin: 10px;
+
 }
 .learning-form {
    margin-left: 8px;
@@ -118,6 +122,11 @@
     margin-bottom: 10px; 
     color: white;
     
+}
+.signout {
+    color: #9d9d9d;
+    padding: 14px 12px;
+    text-decoration: none;
 }
 .header a:hover {
     color: white;
