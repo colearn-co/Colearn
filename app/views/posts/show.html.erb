@@ -98,6 +98,7 @@
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
 		<hr>
 		<div class="post-area">
+
 			<div class="vote-area">
 				<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , remote: true, method: :post%>
 				<br>
@@ -105,9 +106,11 @@
 				
 				<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", remote: true, method: :post %>
 			</div>
-			<p style="margin-bottom: 20px;">
-				<%= markdown(@post.message) %>
-			</p>
+			<div > 
+				<p style="margin-bottom: 20px; display: inline;">
+					<%= markdown(@post.message) %>
+				</p>
+			</div>
 		</div>	
 
 		<div style="padding: 16px; text-align: left;">
