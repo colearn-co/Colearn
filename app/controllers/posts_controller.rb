@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 	def create
 		puts post_params
 		current_user.posts << @post = Post.new(post_params)
-		redirect_to posts_path
+		redirect_to root_path
 	end
 
 	def show
