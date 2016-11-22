@@ -36,6 +36,31 @@
 			text-decoration: none;
 			color: white;
 		}
+
+		@media only screen and (max-width: 768px) {
+			/* For mobile phones: */
+			.participated {
+				width: auto !important; 
+				position: unset !important;
+				float: unset !important;
+				display: block !important;
+
+			}
+			.post-detail {
+				width: 100% !important; margin-top: 12px !important;
+				float: unset !important;
+				display: block !important;
+			}
+			.ui-widget.ui-corner-top.ui-chatbox {
+				display: none !important;
+			}
+			#comment {
+				width: 100% !important;
+			} 
+			.header {
+				width: 100% !important;
+			}
+		}
 	</style>
 <% end %>
 
@@ -94,7 +119,7 @@
 
 	</div>
 	
-	<div style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: left;">
+	<div class="post-detail" style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: left;">
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
 		<hr>
 		<div class="post-area">

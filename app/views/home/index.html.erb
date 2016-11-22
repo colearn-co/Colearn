@@ -65,10 +65,30 @@
 			font-size: 13px;
 			color: #8d8d8d;
 		}
+
+		@media only screen and (max-width: 768px) {
+			/* For mobile phones: */
+			.participated {
+				width: 100% !important; 
+				position: unset !important;
+				float: unset !important;
+
+			}
+			.all-posts {
+				width: 100% !important; margin-top: 12px !important;
+			}
+			.ui-widget.ui-corner-top.ui-chatbox {
+				display: none !important;
+			}
+			.margin-div {
+				margin-left: 5px !important;
+				margin-right: 5px !important;
+			}
+		}
 	</style>
 <% end %>
 <div>
-	<div style="margin-left: 50px; margin-right: 50px;">
+	<div class="margin-div" style="margin-left: 50px; margin-right: 50px;">
 
 	<div class="participated" style="width: 345px; position: fixed;">
 		<% if current_user && !current_user.participated_posts.blank? %>
@@ -107,7 +127,7 @@
 
 	</div>
 
-	<div style="float: right; width: 789px;">
+	<div class="all-posts" style="float: right; width: 789px;">
 		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>All learning posts</b></div>
 		<div>
 			<% Post.all.order_by_recency.each do |post| %>

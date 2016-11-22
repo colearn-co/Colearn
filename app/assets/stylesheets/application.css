@@ -228,3 +228,31 @@ display : none;
     white-space: nowrap;
     width: 85%;
 }
+
+@media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+    .logo-image {
+        max-width: 120px !important;border-radius: 17px !important;
+    }
+    .logo span {
+        color: white !important; font-size: 13px !important;
+        padding-left: 0px !important;
+    }
+    .login.btn {
+            padding: 10px 1px !important;
+            font-size: 21px;
+    }
+    .content {
+        margin-top: 58px !important;
+        padding: 4px !important
+    }
+    .username {
+        display: none !important;
+    }
+           
+    .account-area {
+        display: unset;
+        margin-left: unset;
+    } 
+    
+}
