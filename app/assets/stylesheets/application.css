@@ -232,15 +232,16 @@ display : none;
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .logo-image {
-        max-width: 120px !important;border-radius: 17px !important;
+        max-width: 44px !important;border-radius: 17px !important;
+        height: 18px !important;
     }
     .logo span {
         color: white !important; font-size: 13px !important;
         padding-left: 0px !important;
     }
     .login.btn {
-            padding: 10px 1px !important;
-            font-size: 21px;
+            padding: 2px 1px !important;
+            font-size: 17px;
     }
     .content {
         margin-top: 58px !important;
@@ -249,10 +250,17 @@ display : none;
     .username {
         display: none !important;
     }
+    .logo {
+
+        padding-top: 10px !important;
+    }
            
     .account-area {
         display: unset;
         margin-left: unset;
     } 
+    .account-action {
+        padding-right: 0px !important;
+    }
     
 }
