@@ -228,3 +228,16 @@ display : none;
     white-space: nowrap;
     width: 85%;
 }
+.footer {
+    background: black;
+    color: white;
+    height: 50px;
+}
+.footer-content {
+    max-width: 1000px;
+    margin-top: 10px;
+    margin: auto;
+}
+.footer-content > a {
+    color: white;
+}
