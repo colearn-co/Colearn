@@ -14,6 +14,9 @@
 6. Add field to model ``` rails g migration AddMessageToInvite ```
 
 
+### Production ###
+1. Recompile assets:
+    ```  RAILS_ENV=production rake assets:precompile ```
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
