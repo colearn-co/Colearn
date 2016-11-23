@@ -18,6 +18,10 @@
 1. Recompile assets:
     ```  RAILS_ENV=production rake assets:precompile ```
 
+### Terminology suggestions ###
+1. study circle
+2. learning post
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

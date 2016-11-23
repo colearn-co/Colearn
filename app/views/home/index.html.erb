@@ -123,12 +123,12 @@
 
 		<% end %>
 		<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login' %>">
-		<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px;">Create new learning posts</div></a>
+		<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px;">Create learning post</div></a>
 
 	</div>
 
 	<div class="all-posts" style="float: right; width: 789px;">
-		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>All learning posts</b></div>
+		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; "><b>Recent learning posts</b></div>
 		<div>
 			<% Post.all.order_by_recency.each do |post| %>
 
