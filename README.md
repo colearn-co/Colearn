@@ -22,6 +22,9 @@
 1. study circle
 2. learning post
 
+### Links ###
+1. http://thelazylog.com/twitter-bootstrap-3-rails-4-fix-issue-which-prevents-fonts-from-loading/
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
