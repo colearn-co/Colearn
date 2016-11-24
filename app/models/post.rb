@@ -29,6 +29,10 @@ class Post < ActiveRecord::Base
 	def is_member?(user)
 		self.members.include?(user)
 	end
+
+	def to_param
+		"#{id}-#{self.title.gsub(' ', '-')}"
+	end
 	
 	def total_vote_count
 		self.upvotes.count - self.downvotes.count
