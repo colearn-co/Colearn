@@ -2,6 +2,10 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="<%= asset_path('colearn-logo.png') %>" property="og:image">
+<meta property="og:title"  content="Find people to learn with" />
+<meta property="og:description" content="Start collaborative learning! Find or create your learning post and participate actively!" />
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -15,8 +19,6 @@
   })();
 
 </script>
-	<title>Colearn</title>
-	
 	
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 	  
@@ -45,6 +47,8 @@
 	</script>    
 	<%= csrf_meta_tags %>
 	<%= yield(:head) %>
+
+	<title>Colearn</title>
 </head>
 <body style="background: #e9eaec none repeat scroll 0 0;">
 
