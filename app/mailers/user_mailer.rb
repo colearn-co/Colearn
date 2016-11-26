@@ -3,12 +3,12 @@ class UserMailer < ApplicationMailer
 		@post = post
 		@to = to
 		@from = from
-		mail(to: to.email, subject: "#{from.name} wants to join you").deliver()
+		mail(to: to.email, subject: "#{from.name} wants to join you")
     end
 
     def join_confirmation_mail(to, post)      
 		@post = post
 		@to = to
-		mail(to: to.email, subject: "Colearn join confirmation").deliver()
+		mail(to: to.email, subject: "Colearn join confirmation")
     end
 end
