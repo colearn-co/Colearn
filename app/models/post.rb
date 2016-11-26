@@ -31,7 +31,7 @@ class Post < ActiveRecord::Base
 	end
 
 	def to_param
-		"#{id}-#{self.title.gsub(' ', '-')}"
+		"#{id}-#{self.title.gsub(/[^0-9A-Za-z]/,"-").gsub(/[-]+/, "-")}"
 	end
 	
 	def total_vote_count
