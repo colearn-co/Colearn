@@ -122,7 +122,7 @@
 		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center; font-size: 23px; font-family: initial;">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
 
 		<% end %>
-		<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login' %>">
+		<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
 		<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px;">Create learning post</div></a>
 
 	</div>
@@ -178,3 +178,9 @@
 		<% end %>
 	<% end %>
 </div>
+<script type="text/javascript">
+	$('.ga_post_create').click(function() {
+		_gaq.push(['_trackEvent', 'Post', 'create', 'click']);	
+	})
+	
+</script>
