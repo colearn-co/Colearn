@@ -158,11 +158,22 @@
 		});
 		$('#login-div').on('hidden.bs.modal', function () {
 				_gaq.push(['_trackEvent', 'Login', 'closed']);			
-			})
+			});
 		$('#login-div').on('show.bs.modal', function () {
 				_gaq.push(['_trackEvent', 'Login', 'show']);			
-			})
-        
+			});
+     $(".login").click(function(event) {
+        // console.log("clicked on login");
+        ga("send", "event","Login/signup", "login", location.pathname);
+     });
+     $(".sign-up").click(function(event) {
+        // console.log("clicked on signup");
+        ga("send", "event", "Login/signup", "signup", location.pathname);
+     });
+     $(".signout").click(function(event) {
+        // console.log("clicked on signout");
+        ga("send", "event", "Login/signup", "signout", location.pathname);
+     });      
     </script>
 </body>
 </html>
