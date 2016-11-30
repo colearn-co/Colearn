@@ -140,7 +140,8 @@
 				</div>
 
 		<% if @post.user != current_user %>
-			<div class="join_post_button" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" data-toggle="modal" data-target="#join-request">Interested? join now!</div>
+			<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
+
 		<% end %>
 
 	</div>
@@ -231,9 +232,14 @@
   </div>
 </div>
 <script type="text/javascript">
-	$(".join_post_button").click(function(event) {
-		//console.log("join post");
-		ga("send", "event", "Post", "Invites", "join_post_req", <%= @post.id%>);
-		return true;
-	})
+	
+	$('#invite-req').click(function() {
+		<% if current_user %>
+			ga("send", "event", "Post", "Invites", "join_post_req_logged_in", <%= @post.id%>);
+			$('#join-request').modal('show');
+		<% else %>
+			ga("send", "event", "Post", "Invites", "join_post_req_not_logged_in", <%= @post.id%>);
+			$('#login-div').modal('show');
+		<% end %>
+	});
 </script>
