@@ -37,6 +37,28 @@
 			text-decoration: none;
 			color: white;
 		}
+		.post-skills {
+				border-top: 1px solid #c7c7c7;
+			    color: rgb(137, 137, 137);
+			    display: block;
+			    margin-top: 10px;
+
+			}
+			.background {
+				text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: #686868;
+			}
+			.skill-wrap {
+				display: block; margin: 8px 0px;
+				text-align: center;
+			}
+			.back-text {
+			background-color: #e9eaec;
+
+			}
+			.main-skills {
+				font-size: 13px;
+				color: #8d8d8d;
+			}
 
 		@media only screen and (max-width: 768px) {
 			/* For mobile phones: */
@@ -61,6 +83,7 @@
 			.header {
 				width: 100% !important;
 			}
+
 		}
 	</style>
 <% end %>
@@ -138,7 +161,20 @@
 				<p style="margin-bottom: 20px; display: inline;">
 					<%= markdown(@post.message) %>
 				</p>
+				<span style="display: block;">
+					<span class="post-skills"></span>
+					<span class="skill-wrap">
+						<span class="background">
+							<span class="back-text">Background</span>
+						</span>
+						<span class="main-skills">
+							<%= @post.skills.first.title rescue "NA" %>
+						</span>
+					</span>			
+							
+				</span>
 			</div>
+			
 		</div>	
 
 		<div style="padding: 16px; text-align: left;">
