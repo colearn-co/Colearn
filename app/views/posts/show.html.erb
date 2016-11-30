@@ -140,7 +140,7 @@
 				</div>
 
 		<% if @post.user != current_user %>
-			<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" data-toggle="modal" data-target="#join-request">Interested? join now!</div>
+			<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
 		<% end %>
 
 	</div>
@@ -230,3 +230,13 @@
 
   </div>
 </div>
+<script type="text/javascript">
+	$('#invite-req').click(function() {
+		<% if current_user %>
+
+			$('#join-request').modal('show');
+		<% else %>
+			$('#login-div').modal('show');
+		<% end %>
+	})
+</script>
