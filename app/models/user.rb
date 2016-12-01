@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 	has_many :invites
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :participated_posts, through: :accepted_invites, source: :post
+	validates_uniqueness_of :email
  	
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
