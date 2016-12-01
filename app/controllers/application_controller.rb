@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     # redirect to it after loggin in or out. This override makes signing in
     # and signing up work automatically.
   def store_current_location
-    store_location_for(:user, request.url)
+    store_location_for(:user, request.url) unless request.xhr?
   end
   protect_from_forgery with: :exception
 end
