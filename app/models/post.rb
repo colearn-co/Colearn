@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
 	has_many :upvotes, lambda { upvotes }, class_name: 'Vote', :as => :votable
 	has_many :downvotes, lambda { downvotes }, class_name: 'Vote', :as => :votable
 	has_many :members, through: :accepted_invites, source: :user
+	has_many :other_members, lambda {|v| where.not(:id => v.user_id)}, through: :accepted_invites, source: :user
 	has_many :comments, :as => :commentable
 	has_many :skills
 	has_many :tags
