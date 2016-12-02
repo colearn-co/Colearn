@@ -152,11 +152,11 @@
 		<div class="post-area">
 
 			<div class="vote-area">
-				<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , remote: true, method: :post%>
+				<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , :title => "Post is clear and shows dedication for learning", remote: true, method: :post%>
 				<br>
 				<div class="vote-count" ><%= @post.total_vote_count %></div>
 				
-				<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", remote: true, method: :post %>
+				<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", :title => "Post is not clear and does not shows dedication for learning" , remote: true, method: :post %>
 			</div>
 			<div > 
 				<p style="margin-bottom: 20px; display: inline;">
@@ -181,7 +181,7 @@
 		<div style="padding: 16px; text-align: left;">
 			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
 			<div id="comment-list">
-				<% @post.comments.reorder(id: :desc).each do |c| %>
+				<% @post.comments.reorder(id: :asc).each do |c| %>
 					<%= render :partial => 'single_chat', :locals => {:comment => c} %>
 				<% end %>
 			</div>
