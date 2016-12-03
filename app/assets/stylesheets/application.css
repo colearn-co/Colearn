@@ -246,6 +246,16 @@ display : none;
     color: white;
     padding-right: 10px;
 }
+    .notifyjs-corner {
+        left: 0 !important;
+        top: 0px !important; 
+        width: 100% !important; 
+        text-align: center !important;
+    }
+    .notifyjs-bootstrap-base.notifyjs-bootstrap-info {
+        display: inline-block !important;
+
+    }
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .feedback_trigger {
@@ -286,6 +296,7 @@ display : none;
     .account-action {
         padding-right: 0px !important;
     }
+
     
 
 }
