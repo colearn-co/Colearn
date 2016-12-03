@@ -140,7 +140,12 @@
 				</div>
 
 		<% if @post.user != current_user %>
-			<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
+			<% if !@post.user_requested?(current_user) %>
+				<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
+			<% else %>
+				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Already join request sent</div>
+
+			<% end %>
 
 		<% end %>
 
@@ -220,7 +225,7 @@
         	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
         		<p>Brief message about yourself</p>
 				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
-				<%= f.submit "Request to Join", :class => "btn btn-success" %>
+				<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req" %>
 			<% end %>
         </p>
       </div>
@@ -242,4 +247,7 @@
 			$('#login-div').modal('show');
 		<% end %>
 	});
+	$('.js_join_req').click(function() {
+		$('#join-request').modal('hide');
+	})
 </script>

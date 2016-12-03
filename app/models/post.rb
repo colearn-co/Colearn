@@ -30,6 +30,9 @@ class Post < ActiveRecord::Base
 	def is_member?(user)
 		self.members.include?(user)
 	end
+	def user_requested?(user)
+		self.requested_invites.map(&:user).include?(user)
+	end
 
 	def to_param
 		"#{id}-#{self.title.gsub(/[^0-9A-Za-z]/,"-").gsub(/[-]+/, "-")}"
