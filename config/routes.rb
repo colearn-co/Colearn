@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     resources :invites
   end
 
+  post 'feedback' => 'home#feedback'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
