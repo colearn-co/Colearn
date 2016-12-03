@@ -13,7 +13,12 @@
 <% end -%>
 
 <%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
-  <% end -%>
+ <div style="display: block;">
+	 <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but">
+							        	<img src="<%= asset_path('google-login.png') %>" style="max-width: 100%; width: 298px; height: 65px; border-radius: 25px; display: block; margin-bottom: 10px">
+							        </a>
+							        <a href="<%= user_facebook_omniauth_authorize_path %>" id="fb-login-but">
+							        	<img src="<%= asset_path('fb-login.png') %>" style="max-width: 100%; border-radius: 25px; width: 298px; height: 65px; display: block;">
+							        </a>
+</div>
 <% end -%>

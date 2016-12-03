@@ -1,4 +1,6 @@
 class UserMailer < ApplicationMailer
+	add_template_helper(ApplicationHelper)
+
 	def join_request_mail(to, from, post)      
 		@post = post
 		@to = to
@@ -11,4 +13,11 @@ class UserMailer < ApplicationMailer
 		@to = to
 		mail(to: to.email, subject: "Colearn join confirmation")
     end
+
+    def welcome_mail(to)
+    	@to = to 
+    	mail(to: to.email, subject: "Welcome to Colearn #{to.name}!")
+    end
+
+    
 end
