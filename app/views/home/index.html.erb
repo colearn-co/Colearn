@@ -116,7 +116,7 @@
 							
 							
 							<div style="float: right; width: 95px; text-align: center;">
-								<%=  link_to "Show Chat", post_chats_path(p), remote: true, onclick: raw("showChat("+ p.id.to_s + ",'" + p.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat anchor-button" %>
+								<%=  link_to "Show Chat", post_chats_path(p), remote: true, onclick: raw("showChat("+ p.id.to_s + ",'" + p.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat anchor-button mobile-hide" %>
 								<span style="background-color: rgb(238, 238, 238); color: rgb(136, 136, 136); padding: 0px; font-size: 10px; display: inline-block;"><%= participants_text(p.members.count) %></span>
 
 							</div>

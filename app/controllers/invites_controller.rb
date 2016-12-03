@@ -7,6 +7,7 @@ class InvitesController < ApplicationController
   		@invite.message = params[:invite][:message]
   		@invite.user = current_user
   		@invite.save!
+  		flash[:notice] = "Join request sent successfully"
   		render "/#{@post.class.name.underscore}s/invites/response".downcase
 	end
 

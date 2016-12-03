@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :password, :password_confirmation, :current_password])
   end
 
+  def mobile_device?
+    ( request.user_agent =~ /Mobile|webOS/ && (request.user_agent !~ /iPad/) )
+  end
+  helper_method :mobile_device?
+  
   private
     # override the devise helper to store the current location so we can
     # redirect to it after loggin in or out. This override makes signing in
