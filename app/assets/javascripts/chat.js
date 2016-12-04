@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 
 var chats = {};
 chats.interval = 5000;
-
+var chatBotWelcomeMsg = "Hello Colearners! You are now joined and start chating. Good luck and have fun.";
 function showChat(postId, title, username, options) {
 	if (chats["currentallyShownId"] && chats["currentallyShownId"] !== postId) {
 		hideChat(chats["currentallyShownId"]);
@@ -15,6 +15,7 @@ function showChat(postId, title, username, options) {
 	console.log("Showing postid:" + postId)
 	var elementId = "chat_div" + postId;
 	if (!chats[postId]) {
+
 		getAllChats(postId, function(allChats) {
 			$("#" + elementId).chatbox({id: elementId, 
 	                            user:{username : username},
@@ -33,9 +34,11 @@ function showChat(postId, title, username, options) {
 	                                $("#" + id).chatbox("option", "boxManager").addMsg(user.username, getMessageHtml(msg, new Date()));
 	                            	$('.timeago').timeago('refresh');
 	                            }});
+			$("#" + elementId).chatbox("option", 
+				"boxManager").addMsg("colearn-bot", getMessageHtml(chatBotWelcomeMsg));
 			allChats.forEach(function(chat) {
 				$("#" + elementId).chatbox("option", "boxManager").
-				addMsg(chat.username, getMessageHtml(chat.message, chat.created_at));
+					addMsg(chat.username, getMessageHtml(chat.message, chat.created_at));
 			});
 			$('.timeago').timeago('refresh');
 			chats[postId] = {added: true};
@@ -67,7 +70,9 @@ function showChat(postId, title, username, options) {
 	chats.currentallyShownId = postId;
 	 
 }
-
+function addBotMessage() {
+	addMsg("colearn-bot", getMessageHtml("chat.message"));
+}
 function hideChat(postId) {
 	console.log("Hidding postid:" + postId);
 	var elementId = "chat_div" + postId;
@@ -96,9 +101,11 @@ function getChats(params, callback) {
 
 function getMessageHtml(msg, date) {
 	if (date instanceof Date) date = getMicroformat(date);
-	return "<span>" + msg + //TODO: html encode msg
-	"</span> </br><div style='float: right;'><time class='timeago' datetime='" + date
+	var dateHtml = "";
+	if (date) dateHtml = "</br><div style='float: right;'><time class='timeago' datetime='" + date
 	+ "' >" + new Date(date).toString() +  "</time></div>";
+	return "<span>" + msg + //TODO: html encode msg
+	"</span>" + dateHtml ;
 } 
 
 function getMicroformat(date) {

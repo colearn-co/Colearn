@@ -237,7 +237,12 @@
   </div>
 </div>
 <script type="text/javascript">
-	
+	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
+		setInterval(function() {
+			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
+		}, 2000);
+		
+	<% end %>
 	$('#invite-req').click(function() {
 		<% if current_user %>
 			ga("send", "event", "Post", "Invites", "join_post_req_logged_in", <%= @post.id%>);
