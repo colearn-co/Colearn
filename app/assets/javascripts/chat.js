@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 
 var chats = {};
 chats.interval = 5000;
-var chatBotWelcomeMsg = "Hello Colearners! You are now joined and start chating. Good luck and have fun.";
+var chatBotWelcomeMsg = "Hello Colearners! You are now joined, you can start chatting now. Good luck and have fun.";
 function showChat(postId, title, username, options) {
 	if (chats["currentallyShownId"] && chats["currentallyShownId"] !== postId) {
 		hideChat(chats["currentallyShownId"]);
@@ -104,7 +104,7 @@ function getMessageHtml(msg, date) {
 	var dateHtml = "";
 	if (date) dateHtml = "</br><div style='float: right;'><time class='timeago' datetime='" + date
 	+ "' >" + new Date(date).toString() +  "</time></div>";
-	return "<span>" + msg + //TODO: html encode msg
+	return "<span>" + linkifyHtml(msg, {defaultProtocal: 'http'}) + //TODO: html encode msg
 	"</span>" + dateHtml ;
 } 
 

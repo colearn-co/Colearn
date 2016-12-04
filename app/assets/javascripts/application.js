@@ -13,4 +13,5 @@
 //= require jquery.min-1-12-4.js
 //= require jquery-ui.min-1.12.1.js
 //= require jquery_ujs
+//= require linkify.js
 //= require_tree .
