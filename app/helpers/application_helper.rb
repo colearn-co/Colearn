@@ -17,5 +17,9 @@ module ApplicationHelper
   def participants_text(cnt)
     cnt > 1 ? "#{cnt} participants" : "No other participant"
   end
+
+  def asset_url_h(asset)
+      "#{configatron.base_url}#{asset_path(asset)}"
+  end
 	   
 end

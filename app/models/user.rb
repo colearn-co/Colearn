@@ -15,6 +15,15 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable,
 	 	:recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
 
+	after_create :send_welcome_notification
+
+	def send_welcome_notification
+		if (!self.email.blank?) 
+			UserMailer.welcome_mail(self).deliver
+		end
+	end
+
+
 	def self.find_for_auth2(access_token, signed_in_resource=nil)
 		data = access_token.info
 		authentication = Authentication.find_or_initialize_by(:provider => access_token.provider, :uid => access_token.uid)

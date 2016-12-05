@@ -147,6 +147,7 @@
 					<span class="user-info">
 						<span class="user-name"><%= post.user.name %></span>
 						<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+
 					</span>
 					
 					<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
