@@ -1,0 +1,49 @@
+
+.message-input-area {
+  font-family:Helvetica, Arial, sans-serif;
+  resize: vertical;
+  font-size:15px;
+  width: 100%;
+  height:50px;
+  border:0;
+  padding:10px 15px;
+  background:#ddd;
+  margin-top: 8px;
+}
+
+.chat-title-bar {
+  background-color:rgb(21, 11, 48);
+  color: white;
+  height: 50px;
+  
+}
+.chat-area {
+  display: flex;
+  
+}
+.user-area {
+  width: 30%;
+  margin-right: 4px;
+}
+.messages-area {
+  width: 70%;
+  margin-top: 4px;
+}
+.chat-box {
+   min-height: 300px;
+}
+.messages {
+	min-height: 300px;
+	padding:15px;
+	border-bottom:1px dashed #999;
+	font-family:Helvetica, Arial, sans-serif;
+	position:relative;
+	margin:0 auto;
+	width:100%;
+	color:#777;
+	border-radius:10px;
+	border:1px solid #aaa;
+	overflow:hidden;
+	overflow: auto;
+	height:300px;
+}

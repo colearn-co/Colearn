@@ -7,8 +7,8 @@ class ChatsController < ApplicationController
 		@chatable = find_chatable
 		@chats = @chatable.chats.get_by_params(params)
 
-		render :json => @chats.as_json(:methods => [:username])
-		#render "/#{@chatable.class.name.underscore}s/chats/index"
+		#render :json => @chats.as_json(:methods => [:username])
+		render "/#{@chatable.class.name.underscore}s/chats/index"
 	end
 	def new
 		@chatable = find_chatable
