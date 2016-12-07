@@ -103,7 +103,7 @@ function getMessageHtml(msg, date) {
 	if (date instanceof Date) date = getMicroformat(date);
 	var dateHtml = "";
 	if (date) dateHtml = "</br><div style='float: right;'><time class='timeago' datetime='" + date
-	+ "' >" + new Date(date).toString() +  "</time></div>";
+	+ "' >" + new Date(date).toISOString() +  "</time></div>";
 	return "<span>" + linkifyHtml(msg, {defaultProtocal: 'http'}) + //TODO: html encode msg
 	"</span>" + dateHtml ;
 } 

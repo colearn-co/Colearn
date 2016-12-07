@@ -47,3 +47,23 @@
 	overflow: auto;
 	height:300px;
 }
+.user-picture > img {
+	height: 30px; width: 30px; border-radius: 20px;
+}
+.msg-timestamp {
+	float: right;
+}
+.user-display-area {
+	
+	width: 60px;
+}
+.text-msg-area {
+	width: 100%
+}
+.message-html {
+	margin-bottom: 8px;
+}
+.user-msg-area {
+	display: flex;
+	padding-top: 2px;
+}
