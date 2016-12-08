@@ -201,13 +201,13 @@
 		<div style="padding: 16px; text-align: left; margin-top: 15px;">
 			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
 			<div>
-				<% @post.members.each do |u| %>
+				<% @post.accepted_invites.each do |invite| %>
 					<div style="margin-bottom: 10px;">
 						<div style="padding: 8px;">
-								<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
-									<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= u.name rescue "N/A" %></span>
+								<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
+									<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.name rescue "N/A" %></span>
 									<div style="padding-left: 29px; font-size: 13px;">
-										sadsad asd sadsa dad asdas das da sdas das da dass das das dsa das dsa d asd a das d asd sa das d asd asdsadasdas dsa das das d asd asd sa das das
+										<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
 									</div>
 								
 							</div>
