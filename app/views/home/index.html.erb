@@ -97,7 +97,7 @@
 <div>
 	<div class="margin-div" style="margin-left: 50px; margin-right: 50px;">
 
-	<div class="participated" style="width: 345px; position: fixed;">
+	<div class="participated" style="width: 27%; position: fixed;">
 		<% if current_user && !current_user.participated_posts.blank? %>
 
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participated Learnings</b></div>
@@ -134,7 +134,7 @@
 
 	</div>
 
-	<div class="all-posts" style="float: right; width: 789px;">
+	<div class="all-posts" style="float: right; width: 69%;">
 		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; "><b>Recent learning posts</b></div>
 		<div>
 			<% Post.all.order_by_recency.each do |post| %>
