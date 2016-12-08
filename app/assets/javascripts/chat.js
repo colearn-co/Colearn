@@ -102,7 +102,7 @@ function getChats(params, callback) {
 function getMessageHtml(msg, date) {
 	if (date instanceof Date) date = getMicroformat(date);
 	var dateHtml = "";
-	if (date) dateHtml = "</br><div style='float: right;'><time class='timeago' datetime='" + date
+	if (date) dateHtml = "</br><div style='float: right;'><time class='timeago' datetime='" + new Date(date).toISOString()
 	+ "' >" + new Date(date).toString() +  "</time></div>";
 	return "<span>" + linkifyHtml(msg, {defaultProtocal: 'http'}) + //TODO: html encode msg
 	"</span>" + dateHtml ;
