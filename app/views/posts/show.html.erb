@@ -91,8 +91,8 @@
 <div style="">
 	<div style="width: 19%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
-				<% if @post.user == current_user %>
-					<div style="margin-bottom: 50px;">
+				<% if @post.is_member?(current_user) %>
+					<div style="margin-bottom: 30px;">
 						<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Join requests</b>
 							
 						</div>
@@ -141,12 +141,11 @@
 
 		<% if @post.user != current_user %>
 			<% if !@post.user_requested?(current_user) %>
-				<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
-			<% else %>
+                                <div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
+            <% else %>
+
 				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Already join request sent</div>
-
 			<% end %>
-
 		<% end %>
 
 	</div>
@@ -182,6 +181,46 @@
 			</div>
 			
 		</div>	
+
+		<% if !@post.is_member?(current_user) %>
+			<div style="padding: 16px; margin-top: 10px;">
+				<p>
+	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
+	        		<label for="usr" style="font-size: 18px;">Interested to join?<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief message about your background/skills)</span></label>
+					<p><%= f.text_area :message, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
+					<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req", :disabled => current_user.blank? %>
+				<% end %>
+	        </p>
+			</div>
+		<% end %>
+
+
+
+
+
+		<div style="padding: 16px; text-align: left; margin-top: 15px;">
+			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
+			<div>
+				<% @post.members.each do |u| %>
+					<div style="margin-bottom: 10px;">
+						<div style="padding: 8px;">
+								<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
+									<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= u.name rescue "N/A" %></span>
+									<div style="padding-left: 29px; font-size: 13px;">
+										sadsad asd sadsa dad asdas das da sdas das da dass das das dsa das dsa d asd a das d asd sa das d asd asdsadasdas dsa das das d asd asd sa das das
+									</div>
+								
+							</div>
+					</div>
+				<% end %>
+			</div>
+
+		</div>
+
+
+
+
+
 
 		<div style="padding: 16px; text-align: left;">
 			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
@@ -255,4 +294,8 @@
 	$('.js_join_req').click(function() {
 		$('#join-request').modal('hide');
 	})
+	$('.js_join_msg').click(function(e){
+		e.preventDefault();
+		$('#login-div').modal('show');
+	});
 </script>

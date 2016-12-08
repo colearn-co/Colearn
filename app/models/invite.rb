@@ -6,6 +6,7 @@ class Invite < ActiveRecord::Base
 		
 	}
 	belongs_to :user
+	belongs_to :accepting_user, :class_name => 'User', :foreign_key => 'accepting_user_id'
 	belongs_to :post
 	scope :accepted_invites, -> {where(:status => Invite::STATUS[:accepted])}
 	scope :requested_invites, -> {where(:status => Invite::STATUS[:requested])}

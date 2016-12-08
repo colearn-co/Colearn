@@ -13,10 +13,13 @@ class InvitesController < ApplicationController
 
 	def update
 		@post = Post.find params[:post_id]
-		#only update if post.user is current user.
-		@invite = @post.invites.find(params[:id])	
-		@invite.update_attributes(:status => params[:status])
-		flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Rejected invite requested"
-		render "/#{@post.class.name.underscore}s/invites/response".downcase
+		if @post.is_member?(current_user)
+			@invite = @post.invites.find(params[:id])	
+			@invite.update_attributes(:status => params[:status], :accepting_user => current_user)
+			flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Rejected invite requested"
+			render "/#{@post.class.name.underscore}s/invites/response".downcase
+		else
+			render :json => {:error => "invalid request"}
+		end	
 	end
 end
