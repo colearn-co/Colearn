@@ -277,7 +277,7 @@
 </div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
-		setInterval(function() {
+		setTimeout(function() {
 			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
 		}, 2000);
 		
