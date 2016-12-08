@@ -1,7 +1,14 @@
-function Chat(currentUser, users, newMsgCallback) {
+function Chat(currentUser, users, options, newMsgCallback) {
 	this.currentUser = currentUser;
-	this.users = users;
+	var usersMap = {};
+	users.forEach(function(user) {
+		usersMap[user.id] = user;
+	});
+	usersMap[currentUser.id] = currentUser;
+
+
 	this.newMsgCallback = newMsgCallback;
+	
 	var $chatArea     = $('.chat-area'),
 		$userArea = $('.user-area'),
 	    $printer  = $('.messages'),
@@ -10,9 +17,42 @@ function Chat(currentUser, users, newMsgCallback) {
 	    preventNewScroll = false;
 
 	$textArea.focus();
+	//add all users to user area
+	for (var userId in usersMap) {
+		addUserToUserArea(usersMap[userId]);
+	}
 
+	function addUser(user) {
+		if (!userMap[user.id]) {
+			userMap[user.id] = user;
+			addUserToUserArea(user);
+		}
+	}
+
+	function removeUser(user) {
+		if (userMap[user.id]) {
+			userMap.remove(user.id);
+			removeUserFromUserArea();
+		}
+	}
+
+	this.changeUserStatus = function (userId, newStatus) {
+		var user = usersMap[userId];
+		var imgElement = $userArea.find("#" + user.getUserElementId()).find("img");
+		imgElement.removeClass(user.status);
+		imgElement.addClass(newStatus);
+		user.status = newStatus;
+	} 
+
+	function addUserToUserArea(user) {
+		$userArea.append(user.getUserHTML());
+	}
+
+	function removeUserFromUserArea(user) {
+		$("#" + user.getUserElementId()).remove();
+	}
 	//// SCROLL BOTTOM	
-	function scrollBottom(){
+	function scrollBottom() {
 	  if(!preventNewScroll){ // if mouse is not over printer
 		$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
 	  }
@@ -47,7 +87,7 @@ function Chat(currentUser, users, newMsgCallback) {
 
 	//// TEST ONLY - SIMULATE NEW MESSAGES
 	var i = 0;
-	intv = setInterval(function(){
+	intv = setTimeout(function(){
 		var user = new User({
 			name: "kamal", 
 			picture: "http://gravatar.com/avatar/4cc30665303007ca1b503141d3f85858.jpg?d=monsterid" 
@@ -77,54 +117,18 @@ function Chat(currentUser, users, newMsgCallback) {
 }
 
 
-function User(user) {
-	this.name = user.name;
-	this.picture = user.picture;
-	this.status = user.status;
-	if (!user.status) {
-		this.status = "online";
-	}
-}
-
-User.prototype.getUserHTML = function() {
-	console.log("user html");
-
-	var html = '<div class="user-display-area"><div class="user-picture">'
-	+ '<img class="' + getStatusClass(this.status) + '" src="' + 
-		this.picture +
-	'"></div><div class="username">' + this.name + '</div></div>';
-	console.log("html:" + html);
-	return html;
-	function getStatusClass(status) {
-		return status;
-	}
-}
-
-
-
-function Message(text, time) {
-	this.text = text;
-	this.time = time;
-}
-
-Message.prototype.getMessageHTML = function() {
-	var date = new Date(this.time);
-	var msgHtml = "<div class='text-msg-area'><div class='text-msg'>" + 
-					linkifyHtml(this.text, {defaultProtocal: 'http'}) + //TODO: html encode text
-					"</div>" + "<div class='msg-timestamp'>" + 
-					"<time class='timeago' datetime='" + 
-						new Date(date).toISOString() + "' >" + 
-						new Date(date).toString() +  
-					"</time></div>";
-	return msgHtml;
-}
-
 jQuery(document).ready(function() {
-	var user = new User({name: "kamal Joshi", 
+	var user = new User({
+		id: 2,
+		name: "kamal Joshi", 
 		picture: "http://gravatar.com/avatar/4cc30665303007ca1b503141d3f85858.jpg?d=monsterid", 
-		status: "online"});
-  	Chat(user, function(msg) {
+		status: "online"
+	});
+  	chat = new Chat(user, [user], function(msg) {
   		console.log("New message: " + msg);
   		//send to server
   	});
+  	setTimeout(function() {
+  		chat.changeUserStatus(2, "offline");
+  	}, 5000);
 });
