@@ -24,6 +24,8 @@
 .user-area {
   width: 30%;
   margin-right: 4px;
+  overflow: auto;
+  height: 100%;
 }
 .messages-area {
   width: 70%;
@@ -44,8 +46,8 @@
 	border-radius:10px;
 	border:1px solid #aaa;
 	overflow:hidden;
-	overflow: auto;
-	height:300px;
+	overflow: scroll;
+	height: 100%;
 }
 .user-picture > img {
 	height: 30px; width: 30px; border-radius: 20px;
@@ -66,4 +68,23 @@
 .user-msg-area {
 	display: flex;
 	padding-top: 2px;
+}
+.chat-area {
+	height: 400px;
+	max-height: 400px;
+}
+.message-area {
+	height: 100%;
+}
+.circleBase {
+    border-radius: 50%;
+}
+.online {
+	@extend .circleBase;
+    border: 4px solid green;
+}
+
+.offline {
+	@extend .circleBase;
+    border: 4px solid red;
 }
