@@ -186,7 +186,7 @@
 			<div style="padding: 16px; margin-top: 10px;">
 				<p>
 	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
-	        		<label for="usr" style="font-size: 18px;">Interested to join?<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief message about your background/skills)</span></label>
+	        		<label for="usr" style="font-size: 18px;">Interested to join?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> This message should include your background/skills relevant to this post (Be specific)</span></label>
 					<p><%= f.text_area :message, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
 					<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req", :disabled => current_user.blank? %>
 				<% end %>
@@ -262,7 +262,7 @@
       <div class="modal-body">
         <p>
         	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
-        		<p>Brief message about yourself</p>
+        		<p>This message should include your background/skills relevant to this post (Be specific)</p>
 				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
 				<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req" %>
 			<% end %>
