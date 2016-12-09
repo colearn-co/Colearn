@@ -24,17 +24,18 @@ class User < ActiveRecord::Base
 	end
 
 
-	def self.find_for_auth2(access_token, signed_in_resource=nil)
+	def self.find_for_auth2(access_token, referrer = nil)
 		data = access_token.info
 		authentication = Authentication.find_or_initialize_by(:provider => access_token.provider, :uid => access_token.uid)
-		find_or_create_user_auth(authentication, data, access_token.credentials.token)
+		find_or_create_user_auth(authentication, data, access_token.credentials.token, referrer)
 	end
 
-	def self.find_or_create_user_auth(authentication, data, oauth_token) 
+	def self.find_or_create_user_auth(authentication, data, oauth_token, referrer) 
 		registered_user = authentication.user || User.where(:email => data[:email]).where.not(:email => nil).first
 		if !registered_user
 			registered_user = User.create(name: data[:name],
 			email: data[:email], password: Devise.friendly_token[0,20],
+			:referrer => referrer
 			)
 		end
 		authentication.user = registered_user
