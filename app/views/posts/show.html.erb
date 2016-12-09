@@ -89,7 +89,7 @@
 <% end %>
 
 <div style="">
-	<div style="width: 345px; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
+	<div style="width: 19%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
 				<% if @post.user == current_user %>
 					<div style="margin-bottom: 50px;">
@@ -151,7 +151,7 @@
 
 	</div>
 	
-	<div class="post-detail" style="width: 750px; display: inline-block; float: right; margin-right: 50px; text-align: left;">
+	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 50px; text-align: left;">
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
 		<hr>
 		<div class="post-area">
@@ -195,7 +195,7 @@
 			<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
 					<div class="form-group">
 					<%= f.text_field :message, :class => "form-control", :id => "comment", :style => "width: 600px; display: inline;" %>
-					<%= f.submit "Post", :class => "btn-primary ajax-loader" %>
+					<%= f.submit "Comment", :class => "btn-primary ajax-loader" %>
 					</div>
 				
 			<% end %>
@@ -238,7 +238,7 @@
 </div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
-		setInterval(function() {
+		setTimeout(function() {
 			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
 		}, 2000);
 		
