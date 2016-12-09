@@ -131,4 +131,5 @@ jQuery(document).ready(function() {
   	setTimeout(function() {
   		chat.changeUserStatus(2, "offline");
   	}, 5000);
+  	// Initializes and creates emoji set from sprite sheet
 });
