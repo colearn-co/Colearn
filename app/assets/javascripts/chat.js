@@ -12,7 +12,6 @@ function showChat(postId, title, username, options) {
 	if (!options) {
 		options = {hidden: false};
 	}
-	console.log("Showing postid:" + postId)
 	var elementId = "chat_div" + postId;
 	if (!chats[postId]) {
 
@@ -29,7 +28,6 @@ function showChat(postId, title, username, options) {
 	                                $.post("/posts/" + postId + "/chats", {
 	                                	"chat[message]": msg
 	                                }, function(status) {
-	                                	console.log("post request success ", status); // why this is not called?
 	                                });
 	                                $("#" + id).chatbox("option", "boxManager").addMsg(user.username, getMessageHtml(msg, new Date()));
 	                            	$('.timeago').timeago('refresh');
@@ -45,9 +43,7 @@ function showChat(postId, title, username, options) {
 			chats[postId].lastChatId = allChats[allChats.length - 1].id;
 			
 			setInterval(function() {
-				console.log("Getting new message for post:" + postId, chats.postId);
 				getChats({postId: postId, id: chats[postId]["lastChatId"]}, function(newChats) {
-					console.log("Got " + newChats.length, "new messages for postId: " + postId);
 					if (newChats.length != 0) {
 						showChat(postId, title, username); // show the chat where new message has come.
 						newChats.forEach(function(chat) {
@@ -74,7 +70,6 @@ function addBotMessage() {
 	addMsg("colearn-bot", getMessageHtml("chat.message"));
 }
 function hideChat(postId) {
-	console.log("Hidding postid:" + postId);
 	var elementId = "chat_div" + postId;
 	if (chats[postId]) {
 		$("#" + elementId).chatbox("option", "hidden", true);
@@ -84,7 +79,6 @@ function hideChat(postId) {
 
 function getAllChats(postId, callback) {
 	$.get("/posts/"+ postId + "/chats/", function(data, status) {
-		console.log("chat data:", data, status);
 		if (callback) {
 			callback(data);
 		}
@@ -92,7 +86,6 @@ function getAllChats(postId, callback) {
 } 
 function getChats(params, callback) {
 	$.get("/posts/"+ params.postId + "/chats/", {id: params.id}, function(data, status) {
-		console.log("chat data:", data, status);
 		if (callback) {
 			callback(data);
 		}

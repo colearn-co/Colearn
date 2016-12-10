@@ -17,7 +17,9 @@ class Invite < ActiveRecord::Base
 
 	def send_notification_to_owner
 		if self.status == STATUS[:requested]
-			UserMailer.join_request_mail(self.post.user, self.user, self.post).deliver
+			self.post.members.each do|mem|
+				UserMailer.join_request_mail(mem, self.user, self.post).deliver
+			end
 		end
 	end
 

@@ -140,9 +140,9 @@
 				</div>
 
 		<% if @post.user != current_user %>
-			<% if !@post.user_requested?(current_user) %>
+			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
                                 <div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
-            <% else %>
+            <% elsif !@post.is_member?(current_user) %>
 
 				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Already join request sent</div>
 			<% end %>
@@ -182,13 +182,13 @@
 			
 		</div>	
 
-		<% if !@post.is_member?(current_user) %>
+		<% if !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
 			<div style="padding: 16px; margin-top: 10px;">
 				<p>
-	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
+	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
 	        		<label for="usr" style="font-size: 18px;">Interested to join?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> This message should include your background/skills relevant to this post (Be specific)</span></label>
-					<p><%= f.text_area :message, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
-					<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req", :disabled => current_user.blank? %>
+					<p><%= f.text_area :message, required: true, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
+					<%= f.submit "Request to Join", :class => "btn btn-success js_join_req", :disabled => current_user.blank? %>
 				<% end %>
 	        </p>
 			</div>
@@ -261,10 +261,10 @@
       </div>
       <div class="modal-body">
         <p>
-        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
+        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
         		<p>This message should include your background/skills relevant to this post (Be specific)</p>
-				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
-				<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req" %>
+				<p><%= f.text_area :message, :style => "width: 100%;", required: true  %></p>
+				<%= f.submit "Request to Join", :class => "btn btn-success js_join_req" %>
 			<% end %>
         </p>
       </div>
@@ -292,7 +292,7 @@
 			$('#login-div').modal('show');
 		<% end %>
 	});
-	$('.js_join_req').click(function() {
+	$('.js_join_req_form').submit(function() {
 		$('#join-request').modal('hide');
 	})
 	$('.js_join_msg').click(function(e){
