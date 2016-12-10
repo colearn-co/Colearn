@@ -89,9 +89,7 @@
 <% end %>
 
 <div style="">
-	<% if @post.is_closed? %>
-		<div style="color: #d9534f; text-align: right;">This post is now closed</div>
-	<% end %>
+	
 	<div style="width: 25%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
 				<% if @post.is_member?(current_user) %>
@@ -145,7 +143,7 @@
 		<% if @post.user != current_user %>
 			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
 				<% if @post.is_closed? %>
-				<div style="padding: 6px 0px 0px 4px; color: #d9534f;">This post is now closed!</div>
+				<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
                    	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
 						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
 					</a>
@@ -165,7 +163,8 @@
 	</div>
 	
 	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 37px; text-align: left;">
-		<h3 style="font-weight: bold;"><%= @post.title%></h3>
+		
+		<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
 		<% if @post.user == current_user && !@post.is_closed? %>
 			<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
 				Mark as closed
