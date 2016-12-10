@@ -1,5 +1,6 @@
 function Chat(currentUser, users, options, newMsgCallback) {
 	this.currentUser = currentUser;
+	var scrollTopEventCallback;
 	var usersMap = {};
 	users.forEach(function(user) {
 		usersMap[user.id] = user;
@@ -17,6 +18,14 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	    preventNewScroll = false;
 
 	$textArea.focus();
+	$('.messages').scroll(function() {
+	    var pos = $('.messages').scrollTop();
+	    if (pos > 0 && pos < 50) {
+	    	if (scrollTopEventCallback) {
+	       		scrollTopEventCallback();
+	    	}
+	    }
+	});
 	//add all users to user area
 	for (var userId in usersMap) {
 		addUserToUserArea(usersMap[userId]);
@@ -105,13 +114,38 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		scrollBottom(); 
 	}
 
+	function prependHtmlsToChatBox(htmls) {
+		var es = [];
+		htmls.forEach(function(html) {
+			es.push("<div class='message-html'>" + html + "<div>");
+		});
+		$printer.prepend(es);
+	}
+
 	function addHtmlToUserArea(html) {
 		$userArea.append(html);
 	}
 
+	function getUserMessageHtml(user, message) {
+		return "<div class='user-msg-area'>" + user.getUserHTML() + message.getMessageHTML() + "</div>";
+	}
 	function addMessage(user, message) {
-		addHtmlToChatBox("<div class='user-msg-area'>" + user.getUserHTML() + message.getMessageHTML() + "</div>");
+		addHtmlToChatBox(getUserMessageHtml(user, message));
 		$('.timeago').timeago('refresh');
+	}
+	function addMessagesToTop(users, messages) {
+		var htmls = [];
+		for (i = 0; i < messages.length; i++) {
+			htmls.push(getUserMessageHtml(users[i], messages[i]));
+		}
+		prependHtmlsToChatBox(htmls);
+
+	}
+
+	this.addMessage = addMessage;
+	this.addMessagesToTop = addMessagesToTop;
+	this.setScrollTopEventCallback = function(callback) {
+		scrollTopEventCallback = callback;
 	}
 
 }
@@ -131,5 +165,27 @@ jQuery(document).ready(function() {
   	setTimeout(function() {
   		chat.changeUserStatus(2, "offline");
   	}, 5000);
+  	setTimeout(function() {
+  		var m = new Message("https://www.gravatar.com/avatar/98fdf4b6dee9b8156d22736311cd0d41?s=50", new Date().getTime(), {type: 'file'});
+  		chat.addMessage(user, m);
+  	}, 10000);
+  	var isAddingDataToTop = false;
+  	chat.setScrollTopEventCallback(function() {
+  		console.log("Scroll top envent");
+  		if (!isAddingDataToTop) {
+  			isAddingDataToTop = true;
+  			var ms = [];
+  			var users = [];
+	  		var m = new Message("m :" , new Date().getTime());
+	  		for (i = 0; i < 5;i++) {
+	  			m.text += i;
+	  			ms.push(m);
+	  			users.push(user);
+	  		}
+	  		chat.addMessagesToTop(users, ms);
+	  		isAddingDataToTop = false;	
+  		}
+  		
+  	});
   	// Initializes and creates emoji set from sprite sheet
 });
