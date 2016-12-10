@@ -19,8 +19,12 @@ class InvitesController < ApplicationController
 		@post = Post.find params[:post_id]
 		if @post.is_member?(current_user)
 			@invite = @post.invites.find(params[:id])	
-			@invite.update_attributes(:status => params[:status], :accepting_user => current_user)
+			@invite.update_attributes(:status => params[:status], :accepting_user => current_user, 
+				:reject_message => params[:reject_message])
 			flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Rejected invite requested"
+			if @invite.valid?
+				UserMailer.join_rejection_mail(@invite).deliver()
+			end
 			render "/#{@post.class.name.underscore}s/invites/response".downcase
 		else
 			render :json => {:error => "invalid request"}

@@ -14,6 +14,7 @@ class Invite < ActiveRecord::Base
 
 	after_create :send_notification_to_owner
 	after_update :send_confirm_notification
+	validate :rejection_message_presence
 
 	def send_notification_to_owner
 		if self.status == STATUS[:requested]
@@ -26,6 +27,17 @@ class Invite < ActiveRecord::Base
 	def send_confirm_notification
 		if self.status == STATUS[:accepted]
 			UserMailer.join_confirmation_mail(self.user, self.post).deliver	
+		end
+	end
+
+	def send_rejection_mail
+		
+	end
+
+	private
+	def rejection_message_presence
+		if self.status == STATUS[:rejected] && self.reject_message.blank?
+			errors.add(:reject_message, "cannot be blank")
 		end
 	end
 

@@ -1,0 +1,11 @@
+<div>
+	<p>Hi <%= @to.name %>,</p>
+	<p>Your request for the post <b><%= @post.title %>.</b> is rejected with the message:
+	</p>
+	<p>
+		<%= @invite.reject_message %>
+	</p>
+
+
+	Click <a href="<%= root_url %>">here</a> to explore other learning posts.
+</div>

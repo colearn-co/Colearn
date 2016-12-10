@@ -42,7 +42,7 @@
 			<label for="usr" style="font-size: 18px;">Background<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief about your background, it will help others to reach you.)</span></label>
 
 			<%= f.fields_for :skills do |builder| %>
-				<%=  builder.text_field :title, :class => "form-control" %>
+				<%=  builder.text_area :title, :class => "form-control" %>
 			<% end %>
 		</div>
 		<%= f.submit "Create", :class => "btn btn-info" %>

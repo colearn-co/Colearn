@@ -109,7 +109,7 @@
 										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.name %></span>
 										
 										<span style="float: right;">
-											<a style="margin-right: 10px;" href="<%= post_invite_path(@post, i, :status => 3) %>" data-method="put" data-remote="true">
+											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" style="margin-right: 10px;" href="javascript:void(0)" class="js_reject_call">
 												<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" style="color: red; font-size: 18px;"></i>
 											</a>
 											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true">
@@ -296,6 +296,58 @@
 
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div id="reject-message" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title js_reject_title">Reject message</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        	<%= form_tag "", remote: true, class: "ajax-loader-form", method: "put" do %>
+        		<p class="js_reject_message"></p>
+				<p><%= text_area_tag :reject_message, nil, :style => "width: 100%;", required: true  %></p>
+				<%= submit_tag "Reject", :class => "btn btn-success" %>
+			<% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div style="clear: both;"></div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
@@ -320,4 +372,11 @@
 		e.preventDefault();
 		$('#login-div').modal('show');
 	});
+	$('.js_reject_call').click(function() {
+		var modal = $('#reject-message');
+		modal.find('.js_reject_title').text('Reject ' + $(this).data('name') + ' join request');
+		modal.find('.js_reject_message').text('Let ' + $(this).data('name') + ' know why you rejected this request.');
+		modal.find('form').attr("action", $(this).data("path"));
+		modal.modal('show')
+	})
 </script>

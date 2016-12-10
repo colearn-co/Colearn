@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161210060926) do
+ActiveRecord::Schema.define(version: 20161210092533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20161210060926) do
     t.integer  "status"
     t.text     "message"
     t.integer  "accepting_user_id"
+    t.text     "reject_message"
   end
 
   create_table "posts", force: :cascade do |t|

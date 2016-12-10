@@ -14,6 +14,13 @@ class UserMailer < ApplicationMailer
 		mail(to: to.email, subject: "Colearn join confirmation")
     end
 
+    def join_rejection_mail(invite)      
+		@post = invite.post
+		@to = invite.user
+		@invite = invite
+		mail(to: @to.email, subject: "Colearn - Post join request rejected")
+    end
+
     def welcome_mail(to)
     	@to = to 
     	mail(to: to.email, subject: "Welcome to Colearn #{to.name}!")
