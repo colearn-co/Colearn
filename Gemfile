@@ -30,6 +30,7 @@ gem 'hirb'
 gem "omniauth-google-oauth2"
 gem 'omniauth-facebook'
 gem 'configatron'
+gem "cancan", '1.6.10'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

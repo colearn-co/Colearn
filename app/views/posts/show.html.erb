@@ -89,7 +89,10 @@
 <% end %>
 
 <div style="">
-	<div style="width: 19%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
+	<% if @post.is_closed? %>
+		<div style="color: #d9534f; text-align: right;">This post is now closed</div>
+	<% end %>
+	<div style="width: 25%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
 				<% if @post.is_member?(current_user) %>
 					<div style="margin-bottom: 30px;">
@@ -141,7 +144,18 @@
 
 		<% if @post.user != current_user %>
 			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
-                                <div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
+				<% if @post.is_closed? %>
+				<div style="padding: 6px 0px 0px 4px; color: #d9534f;">This post is now closed!</div>
+                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
+					</a>
+                <% else %>
+                   	<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join this post!</div>
+                   	<div style="margin: 12px; text-align: center"><div>OR</div></div>
+                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
+					</a>
+                <% end %>
             <% elsif !@post.is_member?(current_user) %>
 
 				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Already join request sent</div>
@@ -150,8 +164,13 @@
 
 	</div>
 	
-	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 50px; text-align: left;">
+	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 37px; text-align: left;">
 		<h3 style="font-weight: bold;"><%= @post.title%></h3>
+		<% if @post.user == current_user && !@post.is_closed? %>
+			<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
+				Mark as closed
+			<% end %>
+		<% end %>
 		<hr>
 		<div class="post-area">
 
@@ -182,11 +201,11 @@
 			
 		</div>	
 
-		<% if !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
+		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
 			<div style="padding: 16px; margin-top: 10px;">
 				<p>
 	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
-	        		<label for="usr" style="font-size: 18px;">Interested to join?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> This message should include your background/skills relevant to this post (Be specific)</span></label>
+	        		<label for="usr" style="font-size: 18px;">Interested to join this learning post?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> This message should include your background/skills relevant to this post (Be specific)</span></label>
 					<p><%= f.text_area :message, required: true, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
 					<%= f.submit "Request to Join", :class => "btn btn-success js_join_req", :disabled => current_user.blank? %>
 				<% end %>
@@ -197,25 +216,27 @@
 
 
 
+		<% if @post.members.length > 1 %>
 
-		<div style="padding: 16px; text-align: left; margin-top: 15px;">
-			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
-			<div>
-				<% @post.accepted_invites.each do |invite| %>
-					<div style="margin-bottom: 10px;">
-						<div style="padding: 8px;">
-								<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
-									<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.name rescue "N/A" %></span>
-									<div style="padding-left: 29px; font-size: 13px;">
-										<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
-									</div>
-								
-							</div>
-					</div>
-				<% end %>
+			<div style="padding: 16px; text-align: left; margin-top: 15px;">
+				<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
+				<div>
+					<% @post.accepted_invites.each do |invite| %>
+						<div style="margin-bottom: 10px;">
+							<div style="padding: 8px;">
+									<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
+										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.name rescue "N/A" %></span>
+										<div style="padding-left: 29px; font-size: 13px;">
+											<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
+										</div>
+									
+								</div>
+						</div>
+					<% end %>
+				</div>
+
 			</div>
-
-		</div>
+		<% end %>
 
 
 

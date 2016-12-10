@@ -1,4 +1,8 @@
 class Post < ActiveRecord::Base
+	STATUS = {
+		:open => 1,
+		:closed => 2
+	}
 	belongs_to :user
 	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
@@ -30,6 +34,19 @@ class Post < ActiveRecord::Base
 	def is_member?(user)
 		self.members.include?(user)
 	end
+
+	def mark_closed
+		self.update_attributes(:status => Post::STATUS[:closed])
+	end
+
+	def mark_open
+		self.update_attributes(:status => Post::STATUS[:open])
+	end
+
+	def is_closed?
+		self.status == STATUS[:closed]
+	end
+
 	def user_requested?(user)
 		self.requested_invites.map(&:user).include?(user)
 	end

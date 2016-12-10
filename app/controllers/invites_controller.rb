@@ -2,13 +2,17 @@ class InvitesController < ApplicationController
 	before_filter :authenticate_user!
 	def create
 		@post = Post.find(params[:post_id])
-  		@invite = @post.invites.build
-  		@invite.status = params[:status]
-  		@invite.message = params[:invite][:message]
-  		@invite.user = current_user
-  		@invite.save!
-  		flash[:notice] = "Join request sent successfully"
-  		render "/#{@post.class.name.underscore}s/invites/response".downcase
+		if !@post.is_closed?
+	  		@invite = @post.invites.build
+	  		@invite.status = params[:status]
+	  		@invite.message = params[:invite][:message]
+	  		@invite.user = current_user
+	  		@invite.save!
+	  		flash[:notice] = "Join request sent successfully"
+	  		render "/#{@post.class.name.underscore}s/invites/response".downcase
+	  	else
+	  		render :json => {:error => "Post is closed"}
+	  	end
 	end
 
 	def update
