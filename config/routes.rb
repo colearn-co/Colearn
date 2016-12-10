@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   default_url_options :host => "colearn.xyz"
 
   resources :posts do
+    member do
+      post 'close'
+    end
     resources :comments
     resources :votes
     resources :chats

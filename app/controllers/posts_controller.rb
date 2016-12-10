@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:new, :create]
+	before_filter :authenticate_user!, :only => [:new, :create, :close]
+	load_and_authorize_resource
 	
 	def index
 		@posts = Post.all
@@ -18,6 +19,12 @@ class PostsController < ApplicationController
 
 	def show
 		@post = Post.find(params[:id])
+	end
+
+	def close
+		@post = Post.find(params[:id])
+		@post.mark_closed
+		redirect_to post_path(@post)
 	end
 
 

@@ -89,10 +89,11 @@
 <% end %>
 
 <div style="">
-	<div style="width: 19%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
+	
+	<div style="width: 25%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
 
-				<% if @post.user == current_user %>
-					<div style="margin-bottom: 50px;">
+				<% if @post.is_member?(current_user) %>
+					<div style="margin-bottom: 30px;">
 						<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Join requests</b>
 							
 						</div>
@@ -106,7 +107,7 @@
 										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.name %></span>
 										
 										<span style="float: right;">
-											<a style="margin-right: 10px;" href="<%= post_invite_path(@post, i, :status => 3) %>" data-method="put" data-remote="true">
+											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" style="margin-right: 10px;" href="javascript:void(0)" class="js_reject_call">
 												<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" style="color: red; font-size: 18px;"></i>
 											</a>
 											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true">
@@ -140,19 +141,35 @@
 				</div>
 
 		<% if @post.user != current_user %>
-			<% if !@post.user_requested?(current_user) %>
-				<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join now!</div>
-			<% else %>
+			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
+				<% if @post.is_closed? %>
+				<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
+                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
+					</a>
+                <% else %>
+                   	<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join this post!</div>
+                   	<div style="margin: 12px; text-align: center"><div>OR</div></div>
+                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
+					</a>
+                <% end %>
+            <% elsif !@post.is_member?(current_user) %>
+
 				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Already join request sent</div>
-
 			<% end %>
-
 		<% end %>
 
 	</div>
 	
-	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 50px; text-align: left;">
-		<h3 style="font-weight: bold;"><%= @post.title%></h3>
+	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 37px; text-align: left;">
+		
+		<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
+		<% if @post.user == current_user && !@post.is_closed? %>
+			<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
+				Mark as closed
+			<% end %>
+		<% end %>
 		<hr>
 		<div class="post-area">
 
@@ -182,6 +199,48 @@
 			</div>
 			
 		</div>	
+
+		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
+			<div style="padding: 16px; margin-top: 10px;">
+				<p>
+	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
+	        		<label for="usr" style="font-size: 18px;">Interested to join this learning post?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> This message should include your background/skills relevant to this post (Be specific)</span></label>
+					<p><%= f.text_area :message, required: true, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
+					<%= f.submit "Request to Join", :class => "btn btn-success js_join_req", :disabled => current_user.blank? %>
+				<% end %>
+	        </p>
+			</div>
+		<% end %>
+
+
+
+
+		<% if @post.members.length > 1 %>
+
+			<div style="padding: 16px; text-align: left; margin-top: 15px;">
+				<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
+				<div>
+					<% @post.accepted_invites.each do |invite| %>
+						<div style="margin-bottom: 10px;">
+							<div style="padding: 8px;">
+									<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
+										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.name rescue "N/A" %></span>
+										<div style="padding-left: 29px; font-size: 13px;">
+											<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
+										</div>
+									
+								</div>
+						</div>
+					<% end %>
+				</div>
+
+			</div>
+		<% end %>
+
+
+
+
+
 
 		<div style="padding: 16px; text-align: left;">
 			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
@@ -222,10 +281,10 @@
       </div>
       <div class="modal-body">
         <p>
-        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true do |f| %>
-        		<p>Brief message about yourself</p>
-				<p><%= f.text_area :message, :style => "width: 100%;"  %></p>
-				<%= f.submit "Request to Join", :class => "btn btn-success ajax-loader js_join_req" %>
+        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
+        		<p>This message should include your background/skills relevant to this post (Be specific)</p>
+				<p><%= f.text_area :message, :style => "width: 100%;", required: true  %></p>
+				<%= f.submit "Request to Join", :class => "btn btn-success js_join_req" %>
 			<% end %>
         </p>
       </div>
@@ -236,6 +295,59 @@
 
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div id="reject-message" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title js_reject_title">Reject message</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        	<%= form_tag "", remote: true, class: "ajax-loader-form", method: "put" do %>
+        		<p class="js_reject_message"></p>
+				<p><%= text_area_tag :reject_message, nil, :style => "width: 100%;", required: true  %></p>
+				<%= submit_tag "Reject", :class => "btn btn-success" %>
+			<% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="clear: both;"></div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
 		setTimeout(function() {
@@ -252,7 +364,18 @@
 			$('#login-div').modal('show');
 		<% end %>
 	});
-	$('.js_join_req').click(function() {
+	$('.js_join_req_form').submit(function() {
 		$('#join-request').modal('hide');
+	})
+	$('.js_join_msg').click(function(e){
+		e.preventDefault();
+		$('#login-div').modal('show');
+	});
+	$('.js_reject_call').click(function() {
+		var modal = $('#reject-message');
+		modal.find('.js_reject_title').text('Reject ' + $(this).data('name') + ' join request');
+		modal.find('.js_reject_message').text('Let ' + $(this).data('name') + ' know why you rejected this request.');
+		modal.find('form').attr("action", $(this).data("path"));
+		modal.modal('show')
 	})
 </script>

@@ -157,6 +157,10 @@
         	$("div#divLoading").addClass('show');
         })
 
+        $('form.ajax-loader-form').submit(function() {
+          $("div#divLoading").addClass('show');
+        })
+
 		$( document ).ajaxComplete(function( event, xhr, settings ) {
 			if(xhr.status == 401){
 				$('#login-div').modal('show');
@@ -205,6 +209,7 @@
           //init feedback_me plugin
           fm.init(fm_options);
           $('.feedback_me_form > ul > li').first().hide();
+          trackUser();
            
       });
       </script>
