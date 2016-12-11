@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     end
     resources :comments
     resources :votes
-    resources :chats
+    resources :chats do
+      member do
+        get 'resource_download_url'
+      end
+    end
     resources :invites
   end
 

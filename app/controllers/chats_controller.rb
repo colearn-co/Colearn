@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
 	# TODO: check why this is needed?
-	before_filter :authenticate_user!, :only => [:new, :create]
+	before_filter :authenticate_user!, :only => [:new, :create, :resource_download_url]
 	skip_before_filter  :verify_authenticity_token
 
 	def index
@@ -10,10 +10,16 @@ class ChatsController < ApplicationController
 		#render :json => @chats.as_json(:methods => [:username])
 		render "/#{@chatable.class.name.underscore}s/chats/index"
 	end
+
 	def new
 		@chatable = find_chatable
 		@chat = Chat.new :chatable=>@chatable
 		render "/#{@chatable.class.name.underscore}s/chats/new"
+	end
+
+	def resource_download_url
+		@chat = Chat.find(params[:id])
+		redirect_to @chat.resource_download_url
 	end
 
 	def create
@@ -23,6 +29,11 @@ class ChatsController < ApplicationController
 
   		@chatable.chats.push(@chat)# @chatable.chats << @chat= Chat.new(chat_params)
   		@chat.save!
+
+  		if !params[:avatar].blank?
+  			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => @chat)
+  			chat_resource.save!
+  		end
   		render :json => "done"
 	end
 private
