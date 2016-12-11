@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
 	def online_status(post)
 		time = self.user_chat_infos.where(:post => post).first.last_visited rescue nil
-		Time.now.to_i - time.to_i <= 10 ? "online" : "offline"
+		Time.now.to_i - time.to_i <= 30 ? "online" : "offline"
 	end
 
 	def last_visited(post)
