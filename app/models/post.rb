@@ -31,6 +31,11 @@ class Post < ActiveRecord::Base
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end
 
+	def user_visited_post_chat(user)
+		info = UserChatInfo.find_or_create_by(:user => user, :post => self)
+		info.update_attributes(:last_visited => Time.now)
+	end
+
 	def is_member?(user)
 		self.members.include?(user)
 	end
@@ -58,10 +63,13 @@ class Post < ActiveRecord::Base
 	def total_vote_count
 		self.upvotes.count - self.downvotes.count
 	end
+
 	def user_vote(user)
 		self.votes.where(user: user).first
 	end
+
 	def user_vote_type(user)
 		self.votes.where(user: user).first.try(:vote_type)
 	end
+
 end

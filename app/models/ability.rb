@@ -6,6 +6,9 @@ class Ability
         p.user == user
     end
     can [:read, :create], Post
+    can [:fetch_chat_info], Post do |p|
+        p.members.include?(user)
+    end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

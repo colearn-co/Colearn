@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :posts do
     member do
       post 'close'
+      get 'fetch_chat_info'
     end
     resources :comments
     resources :votes

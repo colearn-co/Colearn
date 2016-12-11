@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:new, :create, :close]
+	before_filter :authenticate_user!, :only => [:new, :create, :close, :fetch_chat_info]
 	load_and_authorize_resource
 	
 	def index
@@ -9,6 +9,12 @@ class PostsController < ApplicationController
 	def new
 		@post = Post.new
 		@post.skills.build
+	end
+
+	def fetch_chat_info
+		@post = Post.find(params[:id])
+		@post.user_visited_post_chat(current_user)
+		@client_chats = ClientChat.all_client_chats(@post, params)
 	end
 
 	def create

@@ -7,12 +7,25 @@ class Chat < ActiveRecord::Base
     def self.get_by_params(params)
     	res = self.all
 
-    	res = res.where("id > ?", params[:id]) unless params[:id].nil?
+        res = res.where("id > ?", params[:after_id]) unless params[:after_id].nil?
+    	res = res.where("id < ?", params[:before_id]) unless params[:before_id].nil?
     	res = res.order(id: :ASC)
+        res = res.limit(params[:limit] || 20)
     	res
     end
 
     def username
     	self.user.try(:name)
+    end
+
+    def self.json_info
+        {
+            :only => [:id, :message, :created_at],
+            :include => {
+                :user => {
+                    :only => [:id]
+                }
+            }
+        }
     end
 end

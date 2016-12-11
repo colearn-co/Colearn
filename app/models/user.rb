@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email
- 	
+ 	has_many :user_chat_infos
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable,
@@ -23,11 +23,42 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def chat_info(post)
+		self.user_chat_infos.where(:post => post).first
+	end
+
 
 	def self.find_for_auth2(access_token, referrer = nil)
 		data = access_token.info
 		authentication = Authentication.find_or_initialize_by(:provider => access_token.provider, :uid => access_token.uid)
 		find_or_create_user_auth(authentication, data, access_token.credentials.token, referrer)
+	end
+
+	def json_info(post)
+		self.as_json(User.json_info).merge({
+			:online_status => online_status(post),
+			:last_visited => last_visited(post)
+		})
+	end
+
+	def self.json_info
+		{
+			:only => [:id, :name, :pic],
+			:methods => [:pic]
+		}
+	end
+
+	def pic
+		""
+	end
+
+	def online_status(post)
+		time = self.user_chat_infos.where(:post => post).first.last_visited rescue nil
+		Time.now.to_i - time.to_i <= 10 ? "online" : "offline"
+	end
+
+	def last_visited(post)
+		self.user_chat_infos.where(:post => post).first.last_visited rescue nil
 	end
 
 	def self.find_or_create_user_auth(authentication, data, oauth_token, referrer) 
