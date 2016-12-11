@@ -1,7 +1,11 @@
 function Message(message, user) {
 	this.id = message.id;
 	this.text = message.message;
-	this.time = new Date(message.created_at).getTime();
+	if (message.created_at instanceof Date) {
+		this.time = message.created_at.getTime();
+	} else {
+		this.time = new Date(message.created_at).getTime();
+	}
 	this.user = user;
 	this.type = "text";
 }

@@ -71,11 +71,13 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	    e.preventDefault();
 	    var msg = $textArea.val(); // not empty / space
 	    if($.trim(msg)) {
-	      var currentMsg = new Message(msg, new Date().getTime());
+	      var currentMsg = new Message({
+	      	message: msg, created_at: new Date()
+	      }, currentUser);
 	      if (newMsgCallback) {
-	      	newMsgCallback(currentMsg);
+	      	newMsgCallback(currentMsg.text);
 	      }
-	      addMessage(currentUser, currentMsg);
+	      addMessage(currentMsg);
 	      $textArea[0].value=''; // CLEAR TEXTAREA
 	      scrollBottom(); // DO ON POST
 	        
