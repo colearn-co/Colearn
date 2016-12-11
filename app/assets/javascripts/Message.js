@@ -1,9 +1,9 @@
-function Message(text, time, options) {
-	if (!options) options = {};
-	this.text = text;
-	this.time = time;
-	this.type = options.type ? options.type : 'text';
-	console.log("type:" + this.type);
+function Message(message, user) {
+	this.id = message.id;
+	this.text = message.message;
+	this.time = new Date(message.created_at).getTime();
+	this.user = user;
+	this.type = "text";
 }
 
 Message.prototype.getMessageHTML = function() {
