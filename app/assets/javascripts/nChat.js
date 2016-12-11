@@ -6,10 +6,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		usersMap[user.id] = user;
 	});
 	usersMap[currentUser.id] = currentUser;
-
-
 	this.newMsgCallback = newMsgCallback;
-	
 	var $chatArea     = $('.chat-area'),
 		$userArea = $('.user-area'),
 	    $printer  = $('.messages'),
@@ -67,7 +64,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	  }
 	}	
 	scrollBottom(); 
-	function postMessage(e){  
+	function postMessage(e) {  
 	  // on Post click or 'enter' but allow new lines using shift+enter
 	  if (e.type=='click' || (e.which==13 && !e.shiftKey)) { 
 	    e.preventDefault();
@@ -93,21 +90,6 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	});
 
 	$textArea.keyup(postMessage);
-
-	//// TEST ONLY - SIMULATE NEW MESSAGES
-	var i = 0;
-	intv = setTimeout(function(){
-		var user = new User({
-			name: "kamal", 
-			picture: "http://gravatar.com/avatar/4cc30665303007ca1b503141d3f85858.jpg?d=monsterid" 
-		});
-		console.log("user:" + user.getUserHTML());
-	    var text = "message............ kdsafhjahd";
-	    var message = new Message(text, new Date().getTime());
-	    addMessage(user, message);
-	    addHtmlToUserArea(user.getUserHTML());
-	    
-	},2000);
 
 	function addHtmlToChatBox(html) {
 		$printer.append("<div class='message-html'>" + html + "<div>");
@@ -139,7 +121,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 			htmls.push(getUserMessageHtml(users[i], messages[i]));
 		}
 		prependHtmlsToChatBox(htmls);
-
+		$('.timeago').timeago('refresh');
 	}
 
 	this.addMessage = addMessage;
@@ -176,16 +158,17 @@ jQuery(document).ready(function() {
   			isAddingDataToTop = true;
   			var ms = [];
   			var users = [];
-	  		var m = new Message("m :" , new Date().getTime());
 	  		for (i = 0; i < 5;i++) {
+	  			var m = new Message("m :" , new Date().getTime());
 	  			m.text += i;
 	  			ms.push(m);
 	  			users.push(user);
 	  		}
 	  		chat.addMessagesToTop(users, ms);
-	  		isAddingDataToTop = false;	
+	  		setTimeout(function() {
+	  			isAddingDataToTop = false;	
+	  		}, 5000);
   		}
   		
   	});
-  	// Initializes and creates emoji set from sprite sheet
 });
