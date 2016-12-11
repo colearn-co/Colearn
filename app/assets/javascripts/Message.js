@@ -27,7 +27,25 @@ Message.prototype.getMessageHTML = function() {
 	return msgHtml;
 
 	function getFilePreview(text) {
+		var fileName = getFileName(text);
 		//TODO check if this is a image file link?
-		return "<img class='chat-img-preview' src='https://www.gravatar.com/avatar/98fdf4b6dee9b8156d22736311cd0d41?s=50'>";
+		if (isImage(text)) {
+			return "<img class='chat-img-preview' src='https://www.gravatar.com/avatar/98fdf4b6dee9b8156d22736311cd0d41?s=50'>";
+		} else {
+			return "<div> File <a target='_tab' href='" + text + "'>" + fileName + "</a></div>";
+		}
+	}
+
+	function isImage(text) {
+		var list = [".jpeg", ".jpg", ".png", ".gif"];
+		var isImage = false;
+		list.forEach(function(l) {
+			isImage |= text.endsWith();
+		});
+		return isImage;
+	}
+
+	function getFileName(text) {
+		return text.substr(text.lastIndexOf('/') + 1);
 	}
 }
