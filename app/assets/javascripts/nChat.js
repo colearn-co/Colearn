@@ -1,4 +1,5 @@
 function Chat(currentUser, users, options, newMsgCallback) {
+	
 	this.currentUser = currentUser;
 	var scrollTopEventCallback;
 	var usersMap = {};
@@ -42,7 +43,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		}
 	}
 
-	this.changeUserStatus = function (userId, newStatus) {
+	this.changeUserStatus = function (userId, newStatus) { // should propbally move to User model.
 		var user = usersMap[userId];
 		var imgElement = $userArea.find("#" + user.getUserElementId()).find("img");
 		imgElement.removeClass(user.status);
@@ -51,7 +52,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	} 
 
 	function addUserToUserArea(user) {
-		$userArea.append(user.getUserHTML());
+		$userArea.append(user.getUserHTMLUserArea());
 	}
 
 	function removeUserFromUserArea(user) {
@@ -95,6 +96,14 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		$printer.append("<div class='message-html'>" + html + "<div>");
 		scrollBottom(); 
 	}
+	function addHtmlsToChatBox(htmls) {
+		var es = [];
+		htmls.forEach(function(html) {
+			es.push(html);
+		});
+		$printer.append(es);
+		scrollBottom(); 
+	}
 
 	function prependHtmlsToChatBox(htmls) {
 		var es = [];
@@ -108,23 +117,32 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		$userArea.append(html);
 	}
 
-	function getUserMessageHtml(user, message) {
-		return "<div class='user-msg-area'>" + user.getUserHTML() + message.getMessageHTML() + "</div>";
+	function getUserMessageHtml(message) {
+		return "<div class='user-msg-area'>" + message.user.getUserHTML() + message.getMessageHTML() + "</div>";
 	}
-	function addMessage(user, message) {
-		addHtmlToChatBox(getUserMessageHtml(user, message));
+	function addMessage(message) {
+		addHtmlToChatBox(getUserMessageHtml(message));
 		$('.timeago').timeago('refresh');
 	}
-	function addMessagesToTop(users, messages) {
+	function addMessages(messages) {
 		var htmls = [];
 		for (i = 0; i < messages.length; i++) {
-			htmls.push(getUserMessageHtml(users[i], messages[i]));
+			htmls.push(getUserMessageHtml(messages[i]));
+		}
+		addHtmlsToChatBox(htmls);
+		$('.timeago').timeago('refresh');
+	}
+	function addMessagesToTop(messages) {
+		var htmls = [];
+		for (i = 0; i < messages.length; i++) {
+			htmls.push(getUserMessageHtml(messages[i]));
 		}
 		prependHtmlsToChatBox(htmls);
 		$('.timeago').timeago('refresh');
 	}
 
 	this.addMessage = addMessage;
+	this.addMessages = addMessages;
 	this.addMessagesToTop = addMessagesToTop;
 	this.setScrollTopEventCallback = function(callback) {
 		scrollTopEventCallback = callback;
@@ -132,7 +150,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 
 }
 
-
+/*
 jQuery(document).ready(function() {
 	var user = new User({
 		id: 2,
@@ -171,4 +189,4 @@ jQuery(document).ready(function() {
   		}
   		
   	});
-});
+});*/
