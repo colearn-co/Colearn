@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable,
 	 	:recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
 
+	include Gravatarify::Base
 	after_create :send_welcome_notification
 
 	def send_welcome_notification
@@ -43,13 +44,13 @@ class User < ActiveRecord::Base
 
 	def self.json_info
 		{
-			:only => [:id, :name, :pic],
-			:methods => [:pic]
+			:only => [:id, :name, :picture],
+			:methods => [:picture]
 		}
 	end
 
-	def pic
-		""
+	def picture
+		gravatar_url(self.email, :d => :monsterid)
 	end
 
 	def online_status(post)

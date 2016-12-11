@@ -3,6 +3,7 @@ class Chat < ActiveRecord::Base
 	belongs_to :chatable, polymorphic: true
 	validates :message, presence: true,
                     length: { minimum: 1 }
+    has_one :chat_resource
 
     def self.get_by_params(params)
     	res = self.all
@@ -12,6 +13,10 @@ class Chat < ActiveRecord::Base
     	res = res.order(id: :ASC)
         res = res.limit(params[:limit] || 20)
     	res
+    end
+
+    def resource_download_url
+        self.chat_resource.avatar.expiring_url(10) rescue nil
     end
 
     def username
@@ -24,6 +29,10 @@ class Chat < ActiveRecord::Base
             :include => {
                 :user => {
                     :only => [:id]
+                },
+                :chat_resource => {
+                    :only => [:avatar_content_type],
+                    :methods => [:private_resource_url] 
                 }
             }
         }

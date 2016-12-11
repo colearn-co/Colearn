@@ -35,6 +35,9 @@ gem "cancan", '1.6.10'
 gem 'faye-websocket', '0.10.0'
 gem "websocket-rails", "0.7.0"
 gem 'redis', '3.3.2'
+gem "paperclip", "~> 4.3"
+
+gem 'aws-sdk', '1.66.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
