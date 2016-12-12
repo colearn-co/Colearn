@@ -144,7 +144,7 @@
 			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
 				<% if @post.is_closed? %>
 				<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
-                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+                   	<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
 						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
 					</a>
                 <% else %>
