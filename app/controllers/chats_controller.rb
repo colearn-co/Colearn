@@ -34,7 +34,7 @@ class ChatsController < ApplicationController
   			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => @chat)
   			chat_resource.save!
   		end
-  		render :json => "done"
+  		render :json => {:chat => @chat.as_json(Chat.json_info)}
 	end
 private
 	def find_chatable
