@@ -31,7 +31,7 @@ class Chat < ActiveRecord::Base
                     :only => [:id]
                 },
                 :chat_resource => {
-                    :only => [:avatar_content_type],
+                    :only => [:avatar_content_type, :avatar_file_name],
                     :methods => [:private_resource_url] 
                 }
             }

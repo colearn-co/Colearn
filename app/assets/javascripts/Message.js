@@ -7,19 +7,30 @@ function Message(message, user) {
 		this.time = new Date(message.created_at).getTime();
 	}
 	this.user = user;
-	this.type = "text";
+	if (message.chat_resource) {
+		this.resource_path = message.chat_resource.private_resource_url;
+		this.resource_type = message.chat_resource.avatar_content_type;	
+		this.file_name = message.chat_resource.avatar_file_name;
+	}
+	
+	/*
+		"image/png"
+	private_resource_url
+	:
+	"/posts/28-adsf/chats/151/resource_download_url"
+	*/
+	
 }
 
 Message.prototype.getMessageHTML = function() {
 	var date = new Date(this.time);
 	var msgContent;
-	if (this.type === 'text') {
-		msgContent = "<div class='text-msg'>" + 
-						emojione.toImage(linkifyHtml(this.text, {defaultProtocal: 'http'})) + //TODO: html encode text
-					"</div>";
-	} else if (this.type === 'file') {
-		msgContent = "<div class='file-msg'>" 
-					+ getFilePreview(this.text) +
+
+	if (!this.resource_path) {
+		msgContent = getTextMsgHtml(this.text);
+	} else {
+		msgContent = getTextMsgHtml(this.text) + "<div class='file-msg'>" 
+					+ getFilePreview(this.resource_path, this.resource_type, this.file_name) +
 					"</div>"
 	}
 	var msgHtml = "<div class='text-msg-area'>" + 
@@ -30,26 +41,23 @@ Message.prototype.getMessageHTML = function() {
 					"</time></div>";
 	return msgHtml;
 
-	function getFilePreview(text) {
-		var fileName = getFileName(text);
+	function getFilePreview(resource_path, resource_type, file_name) {
 		//TODO check if this is a image file link?
-		if (isImage(text)) {
-			return "<img class='chat-img-preview' src='https://www.gravatar.com/avatar/98fdf4b6dee9b8156d22736311cd0d41?s=50'>";
+		if (isImage(resource_type)) {
+			return "<img class='chat-img-preview' src='" + resource_path + "'>";
 		} else {
-			return "<div> File <a target='_tab' href='" + text + "'>" + fileName + "</a></div>";
+			return "<div> File <a target='_tab' href='" + resource_path + "'>" + file_name + "</a></div>";
 		}
 	}
 
-	function isImage(text) {
-		var list = [".jpeg", ".jpg", ".png", ".gif"];
-		var isImage = false;
-		list.forEach(function(l) {
-			isImage |= text.endsWith();
-		});
-		return isImage;
+	function isImage(resource_type) {
+		return resource_type.startsWith("image/");
 	}
 
-	function getFileName(text) {
-		return text.substr(text.lastIndexOf('/') + 1);
+	
+	function getTextMsgHtml(text) {
+		return "<div class='text-msg'>" + 
+						emojione.toImage(linkifyHtml(text, {defaultProtocal: 'http'})) + //TODO: html encode text
+					"</div>";
 	}
 }

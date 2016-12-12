@@ -1,0 +1,27 @@
+<div class="chat-box">
+  <div class="chat-title-bar">
+    This is a title
+  </div>
+  <div class="chat-area">
+    <div class="user-area">
+      
+    </div>
+    <div class="messages-area">
+      <div class="messages">
+
+      </div>
+    <div class="input-container">
+      <textarea class="message-input-area"></textarea>
+      <iframe name="hidden-iframe" style="display: none;">
+        
+      </iframe>
+      <%= form_for Chat.new, url: post_chats_path(@chatable), html: {class: "chat-form", enctype: "multipart/form-data", target: "hidden-iframe" } do |f| %>
+        <%= f.hidden_field :message, :value => "Attachment"%>
+        <input type="file" name="avatar"/> 
+        <%= f.submit "Upload" %>
+      <% end %>
+     
+    </div>   
+   </div>
+  </div>
+</div>

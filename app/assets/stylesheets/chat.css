@@ -91,3 +91,6 @@
 .input-container {
 	display: flex;
 }
+.chat-img-preview {
+	width: 30%;
+}
