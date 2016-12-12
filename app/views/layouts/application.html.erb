@@ -31,9 +31,9 @@
 		<% if (current_user) %>
 			current_user = <%= raw current_user.as_json.to_json %>
 		<% end %>
-		<% if flash[:notice] %>
+		<% if flash[:notice] || flash[:alert] %>
 			jQuery(document).ready(function() {
-				$.notify("<%= escape_javascript flash[:notice] %>", { position:"top center", className: "info" });
+				$.notify("<%= escape_javascript flash[:notice] || flash[:alert] %>", { position:"top center", className: "info" });
 			});
 		<% end %>
 	</script>
