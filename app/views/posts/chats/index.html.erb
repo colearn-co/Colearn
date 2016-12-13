@@ -34,6 +34,12 @@
   $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
     console.log('adsaasd', e, data)
   });
+
+  jQuery(document).ready(function() {
+   
+    window.currentPostId = @chatable.id; // make this generic chatable 
+    chatController(currentPostId);
+  });
   
 </script>
 
