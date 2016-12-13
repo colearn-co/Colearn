@@ -15,7 +15,7 @@
       <iframe name="hidden-iframe" style="display: none;">
         
       </iframe>
-      <%= form_for Chat.new, url: post_chats_path(@chatable), html: {class: "chat-form", enctype: "multipart/form-data", target: "hidden-iframe" } do |f| %>
+      <%= form_for Chat.new, url: post_chats_path(@chatable), remote: true, html: {class: "chat-form js_upload_form", enctype: "multipart/form-data" } do |f| %>
         <%= f.hidden_field :message, :value => "Attachment"%>
         <input type="file" name="avatar"/> 
         <%= f.submit "Upload" %>
@@ -25,3 +25,16 @@
    </div>
   </div>
 </div>
+<% content_for :scripts do %>
+<script type="text/javascript">
+    $('.js_upload_form').bind("ajax:success", function() {
+    if($(this).data('remotipartSubmitted'));
+  });
+
+  $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
+    console.log('adsaasd', e, data)
+  });
+  
+</script>
+
+<% end %>

@@ -12,14 +12,6 @@ function Message(message, user) {
 		this.resource_type = message.chat_resource.avatar_content_type;	
 		this.file_name = message.chat_resource.avatar_file_name;
 	}
-	
-	/*
-		"image/png"
-	private_resource_url
-	:
-	"/posts/28-adsf/chats/151/resource_download_url"
-	*/
-	
 }
 
 Message.prototype.getMessageHTML = function() {

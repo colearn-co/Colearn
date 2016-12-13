@@ -38,6 +38,7 @@ gem 'redis', '3.3.2'
 gem "paperclip", "~> 4.3"
 
 gem 'aws-sdk', '1.66.0'
+gem 'remotipart', '~> 1.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -51,4 +51,6 @@ jQuery(document).ready(function() {
   window.currentPostId = t.substr(0, t.indexOf("-")); // set this from server side probabaly?
   chatController(currentPostId);
 
+  
+
 });

@@ -16,4 +16,5 @@
 //= require linkify.js
 //= require_tree .
 //= require websocket_rails/main
+//= require jquery.remotipart
 
