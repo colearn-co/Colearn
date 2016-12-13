@@ -27,9 +27,8 @@
 </div>
 <% content_for :scripts do %>
 <script type="text/javascript">
-    $('.js_upload_form').bind("ajax:success", function() {
-    if($(this).data('remotipartSubmitted'));
-  });
+  $('.js_upload_form').bind("ajax:success", function() {
+      });
 
   $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
     console.log('adsaasd', e, data)

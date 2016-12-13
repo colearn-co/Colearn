@@ -13,7 +13,12 @@ function chatController(postId) {
     var chat = new Chat(new User(current_user), members, {}, function(message, callback) {
       chatDAO.sendMessage(message, callback);
     });
-   
+    $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
+      console.log('adsaasd', e, data);
+      var c = JSON.parse(data.responseText).chat;
+      var msg = new Message(c, membersMap[c.user.id]);
+      chat.addMessages([msg]);
+    });
     if (chatsInfo.chats.length > 0) {
       lastChatId = chatsInfo.chats[chatsInfo.chats.length - 1].id;
     }
