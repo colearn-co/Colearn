@@ -2,7 +2,7 @@ function chatController(postId) {
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
   
-  chatDAO.getChatsInfo({limit: 250}, function(chatsInfo) {
+  chatDAO.getChatsInfo({limit: 20}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
     chatsInfo.members.forEach(function(m) {
@@ -18,6 +18,7 @@ function chatController(postId) {
       lastChatId = chatsInfo.chats[chatsInfo.chats.length - 1].id;
     }
     chat.addMessages(getMessagesFromChatInfo(chatsInfo));
+    
     setInterval(function() {
       chatDAO.getChatsInfo({after_id: lastChatId}, function(ci) {
         var messages = getMessagesFromChatInfo(ci, true);
@@ -25,6 +26,8 @@ function chatController(postId) {
         if (ci.chats.length > 0) {
           lastChatId = ci.chats[ci.chats.length - 1].id; // move this to a function
         }
+        chat.addUsersToUserArea(getUsersFromChatInfo(ci));
+
       });
     }, 5000);
     
@@ -37,6 +40,15 @@ function chatController(postId) {
         } // TODO this will not work if multiple windows are open FIX
       });
       return messages;
+    }
+
+    function getUsersFromChatInfo(chatsInfo) {
+      var members = [];
+      chatsInfo.members.forEach(function(m) {
+        var user = new User(m);
+        members.push(user);
+      });
+      return members;
     }
 
   });
