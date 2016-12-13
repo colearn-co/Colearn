@@ -37,7 +37,7 @@
 
   jQuery(document).ready(function() {
    
-    window.currentPostId = @chatable.id; // make this generic chatable 
+    window.currentPostId = <%= @chatable.id; %> // make this generic chatable 
     chatController(currentPostId);
   });
   

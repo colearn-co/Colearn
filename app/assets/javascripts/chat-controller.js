@@ -43,14 +43,3 @@ function chatController(postId) {
 
   
 }
-
-
-
-jQuery(document).ready(function() {
-	var t = location.pathname.substr(location.pathname.indexOf("/posts/") + 7);
-  window.currentPostId = t.substr(0, t.indexOf("-")); // set this from server side probabaly?
-  chatController(currentPostId);
-
-  
-
-});
