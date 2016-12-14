@@ -54,11 +54,11 @@ function chatController(postId) {
 
     function fetchLattestMessages(lastChatId) {
       chatDAO.getChatsInfo({after_id: lastChatId}, function(ci) {
-        var messages = getMessagesFromChatInfo(ci, true);
-        chat.addMessages(messages);
         if (ci.chats.length > 0) {
           lastChatId = ci.chats[ci.chats.length - 1].id; // move this to a function
         }
+        var messages = getMessagesFromChatInfo(ci, true);
+        chat.addMessages(messages);
         chat.addUsersToUserArea(getUsersFromChatInfo(ci));
 
       });
