@@ -12,13 +12,12 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		$userArea = $('.user-area'),
 	    $printer  = $('.messages'),
 	    $textArea = $('.message-input-area'),
-	    printerH  = $printer.innerHeight(),
 	    preventNewScroll = false;
 
 	$textArea.focus();
 	$('.messages').scroll(function() {
 	    var pos = $('.messages').scrollTop();
-	    if (pos >= 0 && pos < 50) {
+	    if (pos >= 0 && pos < 8) {
 	    	if (scrollTopEventCallback) {
 	       		scrollTopEventCallback();
 	    	}
@@ -64,9 +63,8 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	}
 	//// SCROLL BOTTOM	
 	function scrollBottom() {
-	  if(!preventNewScroll){ // if mouse is not over printer
-		$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
-	  }
+		$(".messages").scrollTop($(".messages")[0].scrollHeight); //TODO: add animation.
+		//$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
 	}	
 	scrollBottom(); 
 	function postMessage(e) {  
@@ -90,11 +88,11 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	}
 
 
-	//// PREVENT SCROLL TO BOTTOM WHILE READING OLD MESSAGES
+	/*//// PREVENT SCROLL TO BOTTOM WHILE READING OLD MESSAGES
 	$printer.hover(function( e ) {
 	  preventNewScroll = e.type=='mouseenter' ? true : false ;
 	  if (!preventNewScroll) { scrollBottom(); } // On mouseleave go to bottom
-	});
+	});*/
 
 	$textArea.keyup(postMessage);
 
@@ -131,20 +129,28 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		$('.timeago').timeago('refresh');
 	}
 	function addMessages(messages) {
-		var htmls = [];
-		for (i = 0; i < messages.length; i++) {
-			htmls.push(getUserMessageHtml(messages[i]));
+		if (messages.length > 0) {
+			var htmls = [];
+			for (i = 0; i < messages.length; i++) {
+				htmls.push(getUserMessageHtml(messages[i]));
+			}
+			addHtmlsToChatBox(htmls);
+			//scrollBottom();
+			$('.timeago').timeago('refresh');	
 		}
-		addHtmlsToChatBox(htmls);
-		$('.timeago').timeago('refresh');
 	}
 	function addMessagesToTop(messages) {
-		var htmls = [];
-		for (i = 0; i < messages.length; i++) {
-			htmls.push(getUserMessageHtml(messages[i]));
+		if (messages.length > 0) {
+			var firstMsg = $('.messages:first'); // get top element of div.
+			var htmls = [];
+			for (i = 0; i < messages.length; i++) {
+				htmls.push(getUserMessageHtml(messages[i]));
+			}
+			prependHtmlsToChatBox(htmls);
+			$(".messages").scrollTop(firstMsg.offset().top)
+			$('.timeago').timeago('refresh');	
 		}
-		prependHtmlsToChatBox(htmls);
-		$('.timeago').timeago('refresh');
+        
 	}
 	// public methods
 	this.addUsersToUserArea = addUsersToUserArea;

@@ -1,7 +1,10 @@
 function chatController(postId) {
+
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
-  chatDAO.getChatsInfo({limit: 20}, function(chatsInfo) {
+  var firstChatId;
+  var isScrollingUp;
+  chatDAO.getChatsInfo({limit: 10}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
     chatsInfo.members.forEach(function(m) {
@@ -19,7 +22,22 @@ function chatController(postId) {
     
     if (chatsInfo.chats.length > 0) {
       lastChatId = chatsInfo.chats[chatsInfo.chats.length - 1].id;
+      firstChatId = chatsInfo.chats[0].id; // handle case when no messages.
     }
+
+    chat.setScrollTopEventCallback(function() {
+      if (!isScrollingUp) {
+        isScrollingUp = true;
+        chatDAO.getChatsInfo({before_id: firstChatId, limit: 10}, function(ci) {
+          if (ci.chats.length > 0) {
+            firstChatId = ci.chats[0].id; // move this to a function
+          }
+          var messages = getMessagesFromChatInfo(ci);
+          chat.addMessagesToTop(messages);
+          isScrollingUp = false;
+        });
+      }
+    });
     chat.addMessages(getMessagesFromChatInfo(chatsInfo));
     $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
       console.log('adsaasd', e, data);

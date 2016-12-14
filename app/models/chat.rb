@@ -16,7 +16,9 @@ class Chat < ActiveRecord::Base
     	else
             res = res.order(id: :desc);
         end
-        res = res.limit(params[:limit] || 20)
+        if (params[:limit]) 
+            res = res.limit(params[:limit])
+        end
         res = res.sort_by( &:id)
     	res
     end
