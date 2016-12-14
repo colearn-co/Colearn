@@ -1,7 +1,6 @@
 function chatController(postId) {
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
-  
   chatDAO.getChatsInfo({limit: 20}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
@@ -10,30 +9,27 @@ function chatController(postId) {
       members.push(user);
       membersMap[user.id] = user;
     });
+    
     var chat = new Chat(new User(current_user), members, {}, function(message, callback) {
-      chatDAO.sendMessage(message, callback);
+      myMessageSent = true;
+      chatDAO.sendMessage(message, function(error, data) {
+        callback(error, data);
+      });
     });
-    $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
-      console.log('adsaasd', e, data);
-      var c = JSON.parse(data.responseText).chat;
-      var msg = new Message(c, membersMap[c.user.id]);
-      chat.addMessages([msg]);
-    });
+    
     if (chatsInfo.chats.length > 0) {
       lastChatId = chatsInfo.chats[chatsInfo.chats.length - 1].id;
     }
     chat.addMessages(getMessagesFromChatInfo(chatsInfo));
-    
-    setInterval(function() {
-      chatDAO.getChatsInfo({after_id: lastChatId}, function(ci) {
-        var messages = getMessagesFromChatInfo(ci, true);
-        chat.addMessages(messages);
-        if (ci.chats.length > 0) {
-          lastChatId = ci.chats[ci.chats.length - 1].id; // move this to a function
-        }
-        chat.addUsersToUserArea(getUsersFromChatInfo(ci));
+    $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
+      console.log('adsaasd', e, data);
+      var c = JSON.parse(data.responseText).chat;
+      var msg = new Message(c, membersMap[c.user.id]);
+      chat.addMessage(msg);
+    });
 
-      });
+    setInterval(function() {
+      fetchLattestMessages(lastChatId);
     }, 5000);
     
     function getMessagesFromChatInfo(chatsInfo, excludeMyMessages) {
@@ -54,6 +50,18 @@ function chatController(postId) {
         members.push(user);
       });
       return members;
+    }
+
+    function fetchLattestMessages(lastChatId) {
+      chatDAO.getChatsInfo({after_id: lastChatId}, function(ci) {
+        var messages = getMessagesFromChatInfo(ci, true);
+        chat.addMessages(messages);
+        if (ci.chats.length > 0) {
+          lastChatId = ci.chats[ci.chats.length - 1].id; // move this to a function
+        }
+        chat.addUsersToUserArea(getUsersFromChatInfo(ci));
+
+      });
     }
 
   });
