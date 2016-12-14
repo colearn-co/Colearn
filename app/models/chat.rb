@@ -7,11 +7,17 @@ class Chat < ActiveRecord::Base
 
     def self.get_by_params(params)
     	res = self.all
-
-        res = res.where("id > ?", params[:after_id]) unless params[:after_id].nil?
-    	res = res.where("id < ?", params[:before_id]) unless params[:before_id].nil?
-    	res = res.order(id: :ASC)
+        if (params[:after_id]) 
+            res = res.where("id > ?", params[:after_id]) unless params[:after_id].nil?
+            res = res.order(id: :asc)
+        elsif (params[:before_id])
+            res = res.where("id < ?", params[:before_id]) unless params[:before_id].nil?
+            res = res.order(id: :desc)
+    	else
+            res = res.order(id: :desc);
+        end
         res = res.limit(params[:limit] || 20)
+        res = res.sort_by( &:id)
     	res
     end
 
