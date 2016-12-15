@@ -19,8 +19,7 @@ class Chat < ActiveRecord::Base
         if (params[:limit]) 
             res = res.limit(params[:limit])
         end
-        res = res.sort_by( &:id)
-    	res
+        res.sort_by( &:id)
     end
 
     def resource_download_url

@@ -1,25 +1,39 @@
 <div class="chat-box">
-  <div class="chat-title-bar">
-    This is a title
-  </div>
+  
   <div class="chat-area">
-    <div class="user-area">
-      
+    <div class="user-container">
+      <div class="logo-container">
+        Colearn
+      </div>
+      <div class="participate-mem">
+        Participating members
+      </div>
+      <div class="user-area">
+        
+      </div>
     </div>
     <div class="messages-area">
-      <div class="messages">
+      <header class="chat-title-bar">
+        <%= @chatable.title %>
+      </header>
+      <div class="client_main_container">
+        <div class="messages">
 
+        </div>
       </div>
     <div class="input-container">
-      <textarea class="message-input-area"></textarea>
-      <iframe name="hidden-iframe" style="display: none;">
-        
-      </iframe>
+    <div class="add-attachment js_add_attachment">
       <%= form_for Chat.new, url: post_chats_path(@chatable), remote: true, html: {class: "chat-form js_upload_form", enctype: "multipart/form-data" } do |f| %>
         <%= f.hidden_field :message, :value => "Attachment"%>
         <input type="file" name="avatar"/> 
         <%= f.submit "Upload" %>
       <% end %>
+    </div>
+      <input type="text" class="message-input-area" placeholder="Message here" />
+      <iframe name="hidden-iframe" style="display: none;">
+        
+      </iframe>
+      
      
     </div>   
    </div>
@@ -38,6 +52,14 @@
    
     window.currentPostId = <%= @chatable.id; %> // make this generic chatable 
     chatController(currentPostId);
+    $('.js_add_attachment').click(function() {
+      if($('.js_upload_form').is(":visible")) {
+        $('.js_upload_form').hide();
+      }
+      else {
+        $('.js_upload_form').show();
+      }
+    })
   });
   
 </script>

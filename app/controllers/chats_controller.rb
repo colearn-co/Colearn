@@ -2,6 +2,7 @@ class ChatsController < ApplicationController
 	# TODO: check why this is needed?
 	before_filter :authenticate_user!, :only => [:new, :create, :resource_download_url]
 	skip_before_filter  :verify_authenticity_token
+	layout "chat_layout"
 
 	def index
 		@chatable = find_chatable
