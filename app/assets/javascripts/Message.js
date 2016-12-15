@@ -25,12 +25,22 @@ Message.prototype.getMessageHTML = function() {
 					+ getFilePreview(this.resource_path, this.resource_type, this.file_name) +
 					"</div>"
 	}
+		
 	var msgHtml = "<div class='text-msg-area'>" + 
 					msgContent + "<div class='msg-timestamp'>" + 
 					"<time class='timeago' datetime='" + 
 						new Date(date).toISOString() + "' >" + 
 						new Date(date).toString() +  
 					"</time></div>";
+					
+		msgHtml = '<div class="user-msg-area">' + 
+				'<div class="user-picture">'
+				+ '<img " src="' + 
+					this.user.picture +
+				'"></div><div class="username-msg-area">' + 
+				'<div class="username">' + this.user.name + '</div>'
+				+ msgHtml + '</div></div>'
+		 		
 	return msgHtml;
 
 	function getFilePreview(resource_path, resource_type, file_name) {

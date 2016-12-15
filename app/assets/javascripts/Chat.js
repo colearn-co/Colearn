@@ -33,21 +33,6 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		}
 	}
 
-	function removeUser(user) {
-		if (userMap[user.id]) {
-			userMap.remove(user.id);
-			removeUserFromUserArea();
-		}
-	}
-
-	this.changeUserStatus = function (userId, newStatus) { // should propbally move to User model.
-		var user = usersMap[userId];
-		var imgElement = $userArea.find("#" + user.getUserElementId()).find("img");
-		imgElement.removeClass(user.status);
-		imgElement.addClass(newStatus);
-		user.status = newStatus;
-	} 
-
 	function addUserToUserArea(user) {
 		$userArea.append(user.getUserHTMLUserArea());
 	}
@@ -58,9 +43,6 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		});
 	}
 
-	function removeUserFromUserArea(user) {
-		$("#" + user.getUserElementId()).remove();
-	}
 	//// SCROLL BOTTOM	
 	function scrollBottom() {
 		$(".messages").scrollTop($(".messages")[0].scrollHeight); //TODO: add animation.
@@ -121,18 +103,18 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		$userArea.append(html);
 	}
 
-	function getUserMessageHtml(message) {
-		return '<div class="message-html">' + message.user.getUserHTML() + message.getMessageHTML() + "</div>";
+	function getMessageHtml(message) {
+		return '<div class="message-html">'+ message.getMessageHTML() + "</div>";
 	}
 	function addMessage(message) {
-		addHtmlToChatBox(getUserMessageHtml(message));
+		addHtmlToChatBox(getMessageHtml(message));
 		$('.timeago').timeago('refresh');
 	}
 	function addMessages(messages) {
 		if (messages.length > 0) {
 			var htmls = [];
 			for (i = 0; i < messages.length; i++) {
-				htmls.push(getUserMessageHtml(messages[i]));
+				htmls.push(getMessageHtml(messages[i]));
 			}
 			addHtmlsToChatBox(htmls);
 			//scrollBottom();
@@ -144,7 +126,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 			var firstMsg = $('.messages .message-html:first'); // get top element of div.
 			var htmls = [];
 			for (i = 0; i < messages.length; i++) {
-				htmls.push(getUserMessageHtml(messages[i]));
+				htmls.push(getMessageHtml(messages[i]));
 			}
 			prependHtmlsToChatBox(htmls);
 			$(".messages").scrollTop(firstMsg.position().top)

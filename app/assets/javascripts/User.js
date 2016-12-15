@@ -20,20 +20,6 @@ User.prototype.getUserHTMLUserArea = function() {
 	}
 }
 
-User.prototype.getUserHTML = function() {
-	//console.log("user html");
-
-	var html = '<div id="' + this.getUserElementId() + '" class="user-display-area"><div class="user-picture">'
-	+ '<img " src="' + 
-		this.picture +
-	'"></div><div class="username">' + this.name + '</div></div>';
-	//console.log("html:" + html);
-	return html;
-	function getStatusClass(status) {
-		return status;
-	}
-}
-
 User.prototype.getUserElementId = function() {
 	return "UA-user-id-" + this.id;
 }
