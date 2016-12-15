@@ -97,7 +97,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	$textArea.keyup(postMessage);
 
 	function addHtmlToChatBox(html) {
-		$printer.append("<div class='message-html'>" + html + "<div>");
+		$printer.append(html);
 		scrollBottom(); 
 	}
 	function addHtmlsToChatBox(htmls) {
@@ -112,7 +112,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	function prependHtmlsToChatBox(htmls) {
 		var es = [];
 		htmls.forEach(function(html) {
-			es.push("<div class='message-html'>" + html + "<div>");
+			es.push(html);
 		});
 		$printer.prepend(es);
 	}
@@ -122,7 +122,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	}
 
 	function getUserMessageHtml(message) {
-		return "<div class='user-msg-area'>" + message.user.getUserHTML() + message.getMessageHTML() + "</div>";
+		return '<div class="message-html">' + message.user.getUserHTML() + message.getMessageHTML() + "</div>";
 	}
 	function addMessage(message) {
 		addHtmlToChatBox(getUserMessageHtml(message));
@@ -141,13 +141,13 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	}
 	function addMessagesToTop(messages) {
 		if (messages.length > 0) {
-			var firstMsg = $('.messages:first'); // get top element of div.
+			var firstMsg = $('.messages .message-html:first'); // get top element of div.
 			var htmls = [];
 			for (i = 0; i < messages.length; i++) {
 				htmls.push(getUserMessageHtml(messages[i]));
 			}
 			prependHtmlsToChatBox(htmls);
-			$(".messages").scrollTop(firstMsg.offset().top)
+			$(".messages").scrollTop(firstMsg.position().top)
 			$('.timeago').timeago('refresh');	
 		}
         
