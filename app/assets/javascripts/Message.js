@@ -21,34 +21,39 @@ Message.prototype.getMessageHTML = function() {
 	if (!this.resource_path) {
 		msgContent = getTextMsgHtml(this.text);
 	} else {
-		msgContent = getTextMsgHtml(this.text) + "<div class='file-msg'>" 
+		msgContent = "<div class='file-msg'>" 
 					+ getFilePreview(this.resource_path, this.resource_type, this.file_name) +
 					"</div>"
 	}
 		
 	var msgHtml = "<div class='text-msg-area'>" + 
-					msgContent + "<div class='msg-timestamp'>" + 
+					msgContent;
+	var msg_time = "<div class='msg-timestamp'>" + 
 					"<time class='timeago' datetime='" + 
 						new Date(date).toISOString() + "' >" + 
 						new Date(date).toString() +  
 					"</time></div>";
-					
 		msgHtml = '<div class="user-msg-area">' + 
 				'<div class="user-picture">'
 				+ '<img " src="' + 
 					this.user.picture +
 				'"></div><div class="username-msg-area">' + 
-				'<div class="username">' + this.user.name + '</div>'
+				'<div class="username">' + this.user.name + msg_time + '</div>'
 				+ msgHtml + '</div></div>'
 		 		
 	return msgHtml;
 
 	function getFilePreview(resource_path, resource_type, file_name) {
 		//TODO check if this is a image file link?
+		var attachment_div = '<div class="attachment">' 
+									+ '<div class="attachment-label">uploaded a file: </div>'
+									+ '<div class="file-name">' + file_name + '</div>' 
+									+ '<a target="_tab" class="attachment-action glyphicon glyphicon-download" href="' + resource_path + '">' + '</a>';
+						+ '</div>';
 		if (isImage(resource_type)) {
-			return "<img class='chat-img-preview' src='" + resource_path + "'>";
+			return attachment_div + '<div class="attachment-preview">' + '<img class="chat-img-preview js_img_preview" src="' + resource_path + '">' + '</div>';
 		} else {
-			return "<div> File <a target='_tab' href='" + resource_path + "'>" + file_name + "</a></div>";
+			return attachment_div;
 		}
 	}
 

@@ -2,9 +2,9 @@
   
   <div class="chat-area">
     <div class="user-container">
-      <div class="logo-container">
+      <a href="<%= root_path %>" class="logo-container">
         Colearn
-      </div>
+      </a>
       <div class="participate-mem">
         Participating members
       </div>
@@ -22,11 +22,12 @@
         </div>
       </div>
     <div class="input-container">
-    <div class="add-attachment js_add_attachment">
+    <div class="add-attachment">
+    <div class="upload-button js_add_attachment"></div>
       <%= form_for Chat.new, url: post_chats_path(@chatable), remote: true, html: {class: "chat-form js_upload_form", enctype: "multipart/form-data" } do |f| %>
         <%= f.hidden_field :message, :value => "Attachment"%>
         <input type="file" name="avatar"/> 
-        <%= f.submit "Upload" %>
+        <%= f.submit "Upload", :class => "upload-submit" %>
       <% end %>
     </div>
       <input type="text" class="message-input-area" placeholder="Message here" />
@@ -39,6 +40,15 @@
    </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
 <% content_for :scripts do %>
 <script type="text/javascript">
   $('.js_upload_form').bind("ajax:success", function() {
@@ -55,6 +65,7 @@
     $( window ).resize(function() {
       $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
     });
+
    
     window.currentPostId = <%= @chatable.id; %> // make this generic chatable 
     chatController(currentPostId);
@@ -66,6 +77,10 @@
         $('.js_upload_form').show();
       }
     }); 
+    $('.js_upload_form').submit(function() {
+      $('.js_upload_form').hide();
+    });
+
   }); 
 </script>
 
