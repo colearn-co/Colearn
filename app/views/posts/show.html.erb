@@ -334,18 +334,19 @@
 
   </div>
 </div>
+<% if @post.is_member?(current_user) && @post.members.count > 1 %>
 
-
-
-
-
-
-
-
-
-
-
-
+	<div class="chat-pop-up">
+		<div class="chat-pop-up-header">
+			<div class="chat-pop-up-post-title"></div> 
+			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>
+			<div class="chat-pop-up-maximize btn"><i class="fa fa-expand" aria-hidden="true"></i></div>
+			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
+		</div>
+		<iframe src="<%= post_chats_path(@post)%>"></iframe> 
+		<!-- <iframe src="http://localhost:3000/"></iframe> -->
+	</div>
+<% end %>
 
 <div style="clear: both;"></div>
 <script type="text/javascript">

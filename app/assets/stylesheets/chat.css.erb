@@ -216,6 +216,7 @@ a.logo-container:focus, a.logo-container:hover {
     margin-top: 5px;
     padding-right: 5px;
 }
+
 .status {
 	float: right;
     margin-top: 6px;
@@ -286,6 +287,69 @@ a.logo-container:focus, a.logo-container:hover {
 .user-menu-close {
 	display: none;
 }
+
+
+/***post page css**/
+.chat-pop-up {
+    border: 3px solid #73AD21;
+    position: fixed;
+    right: 30px;
+    height: 350px;
+    bottom: 0;
+}
+.chat-pop-up > iframe{
+    height: 85%;
+    width: 350px;
+}
+.chat-pop-up-header {
+    display: flex;
+    height: 15%;
+}
+.chat-pop-up-post-title {
+   width: 70%;
+   line-height: 3;
+   margin-left: 4px;
+   margin-right: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-pop-up-maximize {
+   line-height: 3;
+    width: 10%;
+    padding: 0;
+    text-align: center;
+}
+.chat-pop-up-minimize {
+   line-height: 3;
+    width: 10%;
+    padding: 0;
+    text-align: center;
+}
+.chat-pop-up-close {
+    line-height: 3;
+    width: 10%;
+    padding: 0;
+    text-align: center;
+}
+.chat-pop-up-maximize:hover {
+    opacity: 0.5;
+}
+.chat-pop-up-minimize:hover {
+   opacity: 0.5;
+}
+.chat-pop-up-close:hover {
+    opacity: 0.5;
+}
+
+.minimize-btn {
+    width: 10%;
+    background: red;
+}
+.minimize-btn > i {
+    font-size: 10px;
+}
+
 @media only screen and (max-width: 768px) {
 	.user-container {
 		display: none;
@@ -330,3 +394,4 @@ a.logo-container:focus, a.logo-container:hover {
 		font-size: 25px;
 	}
 }
+
