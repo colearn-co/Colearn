@@ -14,7 +14,12 @@
     </div>
     <div class="messages-area">
       <header class="chat-title-bar">
-        <%= @chatable.title %>
+        <span class="chat-post-title"><%= @chatable.title %></span>
+        <div class="account">
+               <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+              
+                <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
+            </div>
       </header>
       <div class="client_main_container">
         <div class="messages">
