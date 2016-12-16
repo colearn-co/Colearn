@@ -126,7 +126,7 @@
 				<div>
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
 					<% if @post.is_member?(current_user) %>
-						<span style="display: block; font-size: 12px;"><%=  link_to "Show Chat", post_chats_path(@post), remote: true, onclick: raw("showChat("+ @post.id.to_s + ",'" + @post.title.to_s + "','" + current_user.name.to_s + "'); return false;"), class: "show_chat anchor-button mobile-hide" %></span>
+						<span style="display: block; font-size: 12px;"><%=  link_to "Show Chat", post_chats_path(@post), remote: true, onclick: "$('.chat-pop-up').show(500); return false;", class: "show_chat anchor-button mobile-hide" %></span>
 					<% end %>
 					</div>
 						
@@ -354,9 +354,9 @@
 <div style="clear: both;"></div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
-		setTimeout(function() {
+		/*setTimeout(function() {
 			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
-		}, 2000);
+		}, 2000);*/
 		
 	<% end %>
 	$('#invite-req').click(function() {
@@ -385,5 +385,11 @@
 	$('.chat-pop-up-header').click(function() {
 	    var frame = $('.chat-pop-up-frame');
 	   	frame.toggle(500);
+	});
+	$('.chat-pop-up-close').click(function() {
+	    console.log("close clicked");
+	    var frame = $('.chat-pop-up');
+	   	frame.toggle(500);
+	   	return false;
 	});
 </script>
