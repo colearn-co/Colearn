@@ -337,15 +337,18 @@
 <% if @post.is_member?(current_user) && @post.members.count > 1 %>
 
 	<div class="chat-pop-up">
-		<div class="chat-pop-up-header">
+		<div class="chat-pop-up-header btn">
 			<div class="chat-pop-up-post-title"></div> 
 			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>
-			<div class="chat-pop-up-maximize btn"><i class="fa fa-expand" aria-hidden="true"></i></div>
+			<a target="_tab" class="chat-pop-up-maximize btn" href="<%= post_chats_path(@post)%>">
+				<div  ><i class="fa fa-expand" aria-hidden="true"></i></div>
+			</a>
 			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
 		</div>
-		<iframe src="<%= post_chats_path(@post)%>"></iframe> 
+		<iframe class="chat-pop-up-frame" src="<%= post_chats_path(@post)%>"></iframe> 
 		<!-- <iframe src="http://localhost:3000/"></iframe> -->
 	</div>
+	</a>
 <% end %>
 
 <div style="clear: both;"></div>
@@ -378,5 +381,9 @@
 		modal.find('.js_reject_message').text('Let ' + $(this).data('name') + ' know why you rejected this request.');
 		modal.find('form').attr("action", $(this).data("path"));
 		modal.modal('show')
-	})
+	});
+	$('.chat-pop-up-header').click(function() {
+	    var frame = $('.chat-pop-up-frame');
+	   	frame.toggle(500);
+	});
 </script>
