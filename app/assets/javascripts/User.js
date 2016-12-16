@@ -7,16 +7,16 @@ function User(user) {
 }
 
 User.prototype.getUserHTMLUserArea = function() {
-	console.log("user html");
+	// console.log("user html");
 
 	var html = '<div id="' + this.getUserElementId() + '" class="user-display-area"><div class="user-picture">'
-	+ '<img class="' + getStatusClass(this.status) + '" src="' + 
+	+ '<img class="' + '" src="' + 
 		this.picture +
-	'"></div><div class="username">' + this.name + '</div></div>';
+	'"></div><div class="chat-username">' + this.name + '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);
 	return html;
 	function getStatusClass(status) {
-		return status;
+		return 'status ' + status;
 	}
 }
 

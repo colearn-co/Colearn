@@ -278,10 +278,6 @@ display : none;
             padding: 2px 1px !important;
             font-size: 17px;
     }
-    .content {
-        margin-top: 58px !important;
-        padding: 4px !important
-    }
     .username {
         display: none !important;
     }
