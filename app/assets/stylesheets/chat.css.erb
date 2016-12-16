@@ -234,10 +234,14 @@ a.logo-container:focus, a.logo-container:hover {
 }
 .upload-button {
 	width: 100%;
-    background-image: url("/assets/plus-small-269f22573c68a40ed72c845642da80e27cb1ba164e1079d1a0acbfd6b2949e7e.png");
+    /* background-image: url("/assets/plus-small-269f22573c68a40ed72c845642da80e27cb1ba164e1079d1a0acbfd6b2949e7e.png"); */
     height: 42px;
-    background-repeat: no-repeat;
-    background-position: center;
+    text-align: center;
+    /* line-height: 3; */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+    font-size: 37px;
+    color: gray;
 }
 .attachment .file-name {
 	display: inline-block;
@@ -279,6 +283,9 @@ a.logo-container:focus, a.logo-container:hover {
 .chat-user-list {
 	display: none;
 }
+.user-menu-close {
+	display: none;
+}
 @media only screen and (max-width: 768px) {
 	.user-container {
 		display: none;
@@ -289,8 +296,37 @@ a.logo-container:focus, a.logo-container:hover {
 	}
 	.chat-post-title {
 		max-width: 56%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	}
+	.add-attachment {
+		width: 12%;
+	}
+	.message-input-area {
+		width: 88%;
+	}
+	.user-container {
+	    /* position: relative; */
+	    position: absolute;
+	    z-index: 1000;
+	    height: 100vh;
+	}
+	.chat-area {
+		position: relative;
+	}
+	.user-menu-close {
+		display: block;
+		float: right;
+	    line-height: 1.6;
+	    margin-right: 13px;
+	    font-size: 25px;
+	}
+	.logo-container {
+		display: inline-block;
+	}
+	.chat-title-bar .chat-user-list {
+		padding: 0px 12px;
+		font-size: 25px;
 	}
 }

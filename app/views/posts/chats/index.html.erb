@@ -1,10 +1,11 @@
 <div class="chat-box">
   
   <div class="chat-area">
-    <div class="user-container">
+    <div class="user-container js_users">
       <a href="<%= root_path %>" class="logo-container">
         Colearn
       </a>
+      <span class="user-menu-close glyphicon glyphicon-align-justify js_user_menu_close"></span>
       <div class="participate-mem">
         Participating members
       </div>
@@ -14,7 +15,7 @@
     </div>
     <div class="messages-area">
       <header class="chat-title-bar">
-      <span class="chat-user-list glyphicon glyphicon-th-list btn"></span>
+      <span class="chat-user-list glyphicon glyphicon-align-justify btn js_chat_list_btn"></span>
         <span class="chat-post-title"><%= @chatable.title %></span>
         <div class="account">
                <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
@@ -29,7 +30,7 @@
       </div>
     <div class="input-container">
     <div class="add-attachment">
-    <div class="upload-button js_add_attachment"></div>
+    <div class="upload-button glyphicon glyphicon-plus js_add_attachment"></div>
       <%= form_for Chat.new, url: post_chats_path(@chatable), remote: true, html: {class: "chat-form js_upload_form", enctype: "multipart/form-data" } do |f| %>
         <%= f.hidden_field :message, :value => "Attachment"%>
         <input type="file" name="avatar"/> 
@@ -85,6 +86,13 @@
     }); 
     $('.js_upload_form').submit(function() {
       $('.js_upload_form').hide();
+    });
+    $('.js_chat_list_btn').click(function() {
+      $('.js_users').show('slide', {direction: 'left'}, 500);
+
+    })
+    $('.js_user_menu_close').click(function() {
+      $('.js_users').hide('slide', {direction: 'left'}, 500);
     });
 
   }); 
