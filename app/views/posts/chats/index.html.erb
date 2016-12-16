@@ -48,7 +48,13 @@
     console.log('adsaasd', e, data)
   });
 
-  jQuery(document).ready(function() {
+  $(document).ready(function() {
+
+    $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
+
+    $( window ).resize(function() {
+      $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
+    });
    
     window.currentPostId = <%= @chatable.id; %> // make this generic chatable 
     chatController(currentPostId);
@@ -59,9 +65,8 @@
       else {
         $('.js_upload_form').show();
       }
-    })
-  });
-  
+    }); 
+  }); 
 </script>
 
 <% end %>
