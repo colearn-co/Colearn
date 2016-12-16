@@ -14,6 +14,7 @@
     </div>
     <div class="messages-area">
       <header class="chat-title-bar">
+      <span class="chat-user-list glyphicon glyphicon-th-list btn"></span>
         <span class="chat-post-title"><%= @chatable.title %></span>
         <div class="account">
                <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>

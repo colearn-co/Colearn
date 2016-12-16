@@ -12,7 +12,7 @@ User.prototype.getUserHTMLUserArea = function() {
 	var html = '<div id="' + this.getUserElementId() + '" class="user-display-area"><div class="user-picture">'
 	+ '<img class="' + '" src="' + 
 		this.picture +
-	'"></div><div class="username">' + this.name + '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
+	'"></div><div class="chat-username">' + this.name + '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);
 	return html;
 	function getStatusClass(status) {

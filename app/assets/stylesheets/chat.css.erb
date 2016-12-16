@@ -116,7 +116,7 @@ a.logo-container:focus, a.logo-container:hover {
     border-radius: 22px;
     border: none;
 }
-.user-container .username {
+.user-container .chat-username {
 	    display: inline-block;
     margin-left: 5px;
         color: #ab9ba9;
@@ -221,7 +221,7 @@ a.logo-container:focus, a.logo-container:hover {
     margin-top: 6px;
     margin-right: 29px;
 }
-.username-msg-area .username {
+.username-msg-area .chat-username {
 	font-weight: bold;
 	color: #2c2d30;
 
@@ -275,4 +275,22 @@ a.logo-container:focus, a.logo-container:hover {
 .chat-post-title {
 	max-width: 81%;
     display: inline-block;
+}
+.chat-user-list {
+	display: none;
+}
+@media only screen and (max-width: 768px) {
+	.user-container {
+		display: none;
+	}
+
+	.chat-user-list {
+		display: inline-block;
+	}
+	.chat-post-title {
+		max-width: 56%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	}
 }
