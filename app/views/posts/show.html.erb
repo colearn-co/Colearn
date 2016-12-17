@@ -345,7 +345,7 @@
 			</a>
 			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
 		</div>
-		<iframe class="chat-pop-up-frame" src="<%= post_chats_path(@post)%>"></iframe> 
+		<iframe id="chat-pop-up-frame-id" class="chat-pop-up-frame" src="<%= post_chats_path(@post)%>"></iframe> 
 		<!-- <iframe src="http://localhost:3000/"></iframe> -->
 	</div>
 	</a>
@@ -354,6 +354,19 @@
 <div style="clear: both;"></div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
+		var receiver = document.getElementById('chat-pop-up-frame-id').contentWindow;
+		var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+		var eventer = window[eventMethod];
+		var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+		// Listen to message from child window
+		eventer(messageEvent,function(e) {
+		    var key = e.message ? "message" : "data";
+		    var data = e[key];
+		    receiver.postMessage({mode: "embed"}, "*");
+		    //run function//
+		}, false);
+
 		/*setTimeout(function() {
 			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
 		}, 2000);*/

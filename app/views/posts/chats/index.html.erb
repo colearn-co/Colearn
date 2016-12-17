@@ -94,7 +94,16 @@
     $('.js_user_menu_close').click(function() {
       $('.js_users').hide('slide', {direction: 'left'}, 500);
     });
+    
+    window.addEventListener("message", function(event) {
+      console.log("event:" + event);
+      $('.account').hide();
+      /*if ( event.origin !== "https://javascript.info" ) {
 
+      }*/
+    }, false);
+
+    parent.postMessage("ready","*");
   }); 
 </script>
 
