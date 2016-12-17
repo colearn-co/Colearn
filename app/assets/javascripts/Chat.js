@@ -49,6 +49,9 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		//$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
 	}	
 	scrollBottom(); 
+	window.onload = function() {
+    	scrollBottom(); // scroll bottom again after all images are loaded.
+	};
 	function postMessage(e) {  
 	  // on Post click or 'enter' but allow new lines using shift+enter
 	  if (e.type=='click' || (e.which==13 && !e.shiftKey)) { 
