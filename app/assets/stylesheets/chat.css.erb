@@ -38,7 +38,7 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 }
 .user-container {
 	position: relative;
-    width: 25.75rem;
+    width: 20%;
     max-width: 260px;
     background-color: #4d394b;
     color: white;
@@ -59,6 +59,8 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
     -moz-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
+
+    width: 80%;
     min-width: 0;
 }
 .chat-box {
@@ -69,7 +71,6 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
     font-family: Helvetica, Arial, sans-serif;
     position: relative;
     margin: 0 auto;
-    width: 100%;
     color: #777;
     border-radius: 10px;
     overflow: auto;
@@ -320,6 +321,11 @@ a.logo-container:focus, a.logo-container:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: white;
+  text-align: left;
+}
+.text-hidden {
+    text-indent: -9999px;
 }
 .chat-pop-up-maximize {
    line-height: 3;
@@ -356,6 +362,9 @@ a.logo-container:focus, a.logo-container:hover {
 .minimize-btn > i {
     font-size: 10px;
 }
+.messages-area.embed .chat-post-title {
+    max-width: 82%;
+}
 
 @media only screen and (max-width: 768px) {
 	.user-container {
@@ -382,6 +391,7 @@ a.logo-container:focus, a.logo-container:hover {
 	    position: absolute;
 	    z-index: 1000;
 	    height: 100vh;
+        width: 100%;
 	}
 	.chat-area {
 		position: relative;

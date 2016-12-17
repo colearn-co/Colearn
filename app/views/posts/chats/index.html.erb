@@ -2,7 +2,7 @@
   
   <div class="chat-area">
     <div class="user-container js_users">
-      <a href="<%= root_path %>" class="logo-container">
+      <a href="<%= params[:mode] == 'embed' ? 'javascript:void(0);' : root_path %>" class="logo-container">
         Colearn
       </a>
       <span class="user-menu-close glyphicon glyphicon-align-justify js_user_menu_close"></span>
@@ -13,15 +13,18 @@
         
       </div>
     </div>
-    <div class="messages-area">
+    <div class="messages-area <%= params[:mode] %>">
       <header class="chat-title-bar">
       <span class="chat-user-list glyphicon glyphicon-align-justify btn js_chat_list_btn"></span>
         <span class="chat-post-title"><%= @chatable.title %></span>
-        <div class="account">
-               <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
-              
-                <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
-            </div>
+        <% if params[:mode] != 'embed' %> 
+
+          <div class="account">
+             <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+            
+              <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
+          </div>
+      <% end %>      
       </header>
       <div class="client_main_container">
         <div class="messages">
@@ -50,14 +53,12 @@
 
 
 
-
-
-
-
-
-
 <% content_for :scripts do %>
 <script type="text/javascript">
+  chatGlobalOpts = {};
+  <% if params[:mode] %> 
+    chatGlobalOpts.mode = '<%= params[:mode] %>';
+  <% end %>
   $('.js_upload_form').bind("ajax:success", function() {
       });
 
@@ -94,16 +95,6 @@
     $('.js_user_menu_close').click(function() {
       $('.js_users').hide('slide', {direction: 'left'}, 500);
     });
-    
-    window.addEventListener("message", function(event) {
-      console.log("event:" + event);
-      $('.account').hide();
-      /*if ( event.origin !== "https://javascript.info" ) {
-
-      }*/
-    }, false);
-
-    parent.postMessage("ready","*");
   }); 
 </script>
 
