@@ -1,0 +1,40 @@
+<% if post.is_member?(current_user) && post.members.count > 1 %>
+
+	<div id="chat-pop-up-post-id-<%= post.id %>" class="chat-pop-up">
+		<div class="chat-pop-up-header btn">
+			<div class="chat-pop-up-post-title text-hidden"><%= post.title %></div> 
+			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>
+			<a target="_tab" class="chat-pop-up-maximize btn" href="<%= post_chats_path(post)%>">
+				<div  ><i class="fa fa-expand" aria-hidden="true"></i></div>
+			</a>
+			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
+		</div>
+		<iframe id="chat-pop-up-frame-id" class="chat-pop-up-frame" src="<%= post_chats_path(post, :mode => "embed")%>"></iframe> 
+		<!-- <iframe src="http://localhost:3000/"></iframe> -->
+	</div>
+	</a>
+<% end %>
+<% content_for :scripts do %>
+	<script type="text/javascript">
+		(function() {
+			var popUpElementId = "#chat-pop-up-post-id-<%= post.id %>"; // can be improved to find the elements after selecting this.
+			$(popUpElementId + ' .chat-pop-up-header').click(function() {
+			    var frame = $(popUpElementId + ' .chat-pop-up-frame');
+			   	frame.toggle(500);
+			   	var title = $(popUpElementId + ' .chat-pop-up-post-title');
+			   	if (title.hasClass('text-hidden')) {
+			   		title.removeClass('text-hidden');
+			   	} else {
+			   		title.addClass('text-hidden');
+			   	}
+			});
+			$(popUpElementId + ' .chat-pop-up-close').click(function() {
+			    console.log("close clicked");
+			    var frame = $(popUpElementId);
+			   	frame.hide(500);
+			   	return false;
+			});
+		})();
+		
+	</script>
+<% end %>
