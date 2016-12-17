@@ -16,7 +16,9 @@ function chatController(postId) {
     var chat = new Chat(new User(current_user), members, {}, function(message, callback) {
       myMessageSent = true;
       chatDAO.sendMessage(message, function(error, data) {
-        callback(error, data);
+        if (callback) {
+          callback(error, data);
+        }
       });
     });
     
