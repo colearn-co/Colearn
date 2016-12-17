@@ -199,12 +199,8 @@
 	<% (current_user.participated_posts rescue []).each do |p| %>
 		<div id="chat_div<%=p.id %>"></div>
 		<% if (p.members.count > 1) %>
-			<script type="text/javascript">
-				jQuery(document).ready(function()  {
-					setTimeout(function() {
-						<%= raw("showChat("+ p.id.to_s + ",'" + p.title.to_s + "','" + current_user.name.to_s + "');")  %>
-					}, 2000);
-				});
+			<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p} %>
+			
 			</script>
 		<% end %>
 	<% end %>
