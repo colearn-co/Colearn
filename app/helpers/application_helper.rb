@@ -21,5 +21,13 @@ module ApplicationHelper
   def asset_url_h(asset)
       "#{configatron.base_url}#{asset_path(asset)}"
   end
+
+  def on_click_js_event(popup_selector)
+    if !mobile_device?
+      raw("$('#{popup_selector}').show(500); return false;")
+    else
+      "return true;"
+    end
+  end
 	   
 end
