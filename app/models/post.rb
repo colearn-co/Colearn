@@ -16,6 +16,7 @@ class Post < ActiveRecord::Base
 	has_many :comments, :as => :commentable
 	has_many :skills
 	has_many :tags
+	has_many :user_chat_infos
 	scope :order_by_recency, -> {order(id: :desc)}
 	
 	validates_presence_of :user
@@ -29,6 +30,15 @@ class Post < ActiveRecord::Base
 	
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
+	end
+
+	def unread_messages_count(usr)
+		begin
+			last_visited = self.user_chat_infos.where(:user => usr).first.last_visited
+			return self.chats.where("created_at > ?", last_visited).count
+		rescue => e
+			return 0
+		end
 	end
 
 	def user_visited_post_chat(user)

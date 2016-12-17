@@ -25,7 +25,7 @@ body .content {
     width: 100%;
     display: block;
     border-bottom: 1px solid grey;
-    padding: 11px;
+    padding: 6px 11px 6px 11px;
     font-weight: bold;
     -webkit-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 -moz-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
@@ -275,8 +275,10 @@ a.logo-container:focus, a.logo-container:hover {
     padding: 0;
 }
 .chat-post-title {
-	max-width: 81%;
+	max-width: 85%;
+    max-height: 100%;
     display: inline-block;
+    overflow-y: hidden;
 }
 .chat-user-list {
 	display: none;
@@ -365,6 +367,14 @@ a.logo-container:focus, a.logo-container:hover {
 .message-html .linkified {
     display: inline-block;
     word-break: break-all;
+}
+
+.embed .chat-title-bar {
+	height: 34px;
+	padding: 2px;
+}
+.embed .chat-title-bar .chat-user-list {
+	font-size: 20px;
 }
 
 @media only screen and (max-width: 768px) {

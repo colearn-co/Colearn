@@ -257,6 +257,21 @@ display : none;
         display: inline-block !important;
 
     }
+
+.notify_count {
+    background-color: #eb4d5c;
+    position: absolute;
+    top: -10px;
+    color: #fff;
+    min-width: 21px;
+    display: inline-block;
+    font-size: 13px;
+    border-radius: 15px;
+    padding: 1px;
+}
+.chat-action-container {
+    position: relative;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .feedback_trigger {
