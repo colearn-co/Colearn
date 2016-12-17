@@ -68,10 +68,10 @@
 
   $(document).ready(function() {
 
-    $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
-
+   
+    reset_frame();
     $( window ).resize(function() {
-      $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
+      reset_frame();
     });
 
    
@@ -96,6 +96,9 @@
       $('.js_users').hide('slide', {direction: 'left'}, 500);
     });
   }); 
+  function reset_frame() {
+     $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
+  }
 </script>
 
 <% end %>

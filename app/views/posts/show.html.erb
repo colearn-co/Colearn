@@ -126,11 +126,16 @@
 				<div>
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
 					<% if @post.is_member?(current_user) %>
-						<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('#chat-pop-up-post-id-' + @post.id.to_s), class: "show_chat anchor-button" %>
-							<% if @post.unread_messages_count(current_user) > 0 %>
-										<span class="notify_count show-page"><%= @post.unread_messages_count(current_user) %></span>
-									<% end %>
-						</span>
+						<% if @post.members.count > 1 %>
+							<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('#chat-pop-up-post-id-' + @post.id.to_s), class: "show_chat anchor-button" %>
+								<% if @post.unread_messages_count(current_user) > 0 %>
+											<span class="notify_count show-page"><%= @post.unread_messages_count(current_user) %></span>
+										<% end %>
+							</span>
+						<% else %>
+							<div style="font-size: 10px;">You can chat once someone joins</div>
+
+						<% end %>
 					<% end %>
 					</div>
 						
@@ -356,5 +361,8 @@
 		modal.find('form').attr("action", $(this).data("path"));
 		modal.modal('show')
 	});
+	function popup_toggle_callback(sel) {
+
+	}
 	
 </script>
