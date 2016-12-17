@@ -29,7 +29,7 @@ body .content {
     font-weight: bold;
     -webkit-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 -moz-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
+box-shadow: 0px 2px 8px -4px rgba(0,0,0,0.72);
   
 }
 .chat-area {
@@ -62,6 +62,7 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 
     width: 80%;
     min-width: 0;
+    width: 80%;
 }
 .chat-box {
    min-height: 300px;
@@ -141,18 +142,6 @@ a.logo-container:focus, a.logo-container:hover {
 	margin-bottom: 8px;
     display: flex;
     padding-top: 2px;
-}
-.message-area {
-	    margin-top: 0;
-    overflow: hidden;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
 }
 .circleBase {
     border-radius: 50%;
@@ -249,6 +238,13 @@ a.logo-container:focus, a.logo-container:hover {
 	display: inline-block;
     color: #439fe0;
     margin-left: 5px;
+    margin-left: 5px;
+    text-decoration: none;
+
+}
+.attachment .file-name:hover {
+    color: #439fe0;
+    text-decoration: none;
 
 }
 .attachment .attachment-label {
@@ -366,19 +362,22 @@ a.logo-container:focus, a.logo-container:hover {
     max-width: 82%;
 }
 
+.message-html .linkified {
+    display: inline-block;
+    word-break: break-all;
+}
+
 @media only screen and (max-width: 768px) {
 	.user-container {
 		display: none;
-	}
-
-	.chat-user-list {
-		display: inline-block;
+		width: 100%;
 	}
 	.chat-post-title {
 		max-width: 56%;
 	    white-space: nowrap;
 	    overflow: hidden;
 	    text-overflow: ellipsis;
+	    line-height: 1;
 	}
 	.add-attachment {
 		width: 12%;
@@ -402,6 +401,7 @@ a.logo-container:focus, a.logo-container:hover {
 	    line-height: 1.6;
 	    margin-right: 13px;
 	    font-size: 25px;
+	    cursor: pointer;
 	}
 	.logo-container {
 		display: inline-block;
@@ -409,6 +409,10 @@ a.logo-container:focus, a.logo-container:hover {
 	.chat-title-bar .chat-user-list {
 		padding: 0px 12px;
 		font-size: 25px;
+		cursor: pointer;
+		display: inline-block;
+		line-height: 1;
+
 	}
 }
 

@@ -4,7 +4,7 @@ function chatController(postId) {
   var lastChatId;
   var firstChatId;
   var isScrollingUp;
-  chatDAO.getChatsInfo({limit: 10}, function(chatsInfo) {
+  chatDAO.getChatsInfo({limit: 30}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
     chatsInfo.members.forEach(function(m) {

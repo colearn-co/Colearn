@@ -47,7 +47,7 @@ Message.prototype.getMessageHTML = function() {
 		//TODO check if this is a image file link?
 		var attachment_div = '<div class="attachment">' 
 									+ '<div class="attachment-label">uploaded a file: </div>'
-									+ '<div class="file-name">' + file_name + '</div>' 
+									+ '<a class="file-name" target="_tab" href="' + resource_path + '">' + file_name + '</a>' 
 									+ '<a target="_tab" class="attachment-action glyphicon glyphicon-download" href="' + resource_path + '">' + '</a>';
 						+ '</div>';
 		if (isImage(resource_type)) {
