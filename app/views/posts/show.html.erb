@@ -126,7 +126,11 @@
 				<div>
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
 					<% if @post.is_member?(current_user) %>
-						<span style="display: block; font-size: 12px;"><%=  link_to "Show Chat", post_chats_path(@post), remote: true, onclick: "$('.chat-pop-up').show(500); return false;", class: "show_chat anchor-button mobile-hide" %></span>
+						<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('.chat-pop-up'), class: "show_chat anchor-button" %>
+							<% if @post.unread_messages_count(current_user) > 0 %>
+										<span class="notify_count show-page"><%= @post.unread_messages_count(current_user) %></span>
+									<% end %>
+						</span>
 					<% end %>
 					</div>
 						
@@ -334,7 +338,9 @@
 
   </div>
 </div>
-<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => @post} %>
+<% if !mobile_device? %>
+	<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => @post} %>
+<% end %>
 
 <div style="clear: both;"></div>
 <script type="text/javascript">

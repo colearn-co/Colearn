@@ -269,6 +269,10 @@ display : none;
     border-radius: 15px;
     padding: 1px;
 }
+.show-page.notify_count {
+    font-size: 10px;
+    top: -3px;
+}
 .chat-action-container {
     position: relative;
 }
