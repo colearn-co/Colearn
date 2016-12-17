@@ -72,13 +72,6 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	  }
 	}
 
-
-	/*//// PREVENT SCROLL TO BOTTOM WHILE READING OLD MESSAGES
-	$printer.hover(function( e ) {
-	  preventNewScroll = e.type=='mouseenter' ? true : false ;
-	  if (!preventNewScroll) { scrollBottom(); } // On mouseleave go to bottom
-	});*/
-
 	$textArea.keyup(postMessage);
 
 	function addHtmlToChatBox(html) {
