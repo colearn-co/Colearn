@@ -24,7 +24,7 @@ module ApplicationHelper
 
   def on_click_js_event(popup_selector) #TODO: rename this?
     if !mobile_device?
-      raw("$('#{popup_selector}').show(500); return false;")
+      raw("$('#{popup_selector}').toggle(500, function(){popup_toggle_callback('#{popup_selector}')}); return false;")
     else
       "return true;"
     end

@@ -116,10 +116,12 @@
 							
 							
 							<div class="chat-action-container" style="float: right; width: 95px; text-align: center;">
-								<%=  link_to post_chats_path(p), onclick: on_click_js_event('#chat-pop-up-post-id-' + p.id.to_s), class: "show_chat anchor-button" do %>
-									Open chat
-									<% if p.unread_messages_count(current_user) > 0 %>
-										<span class="notify_count"><%= p.unread_messages_count(current_user) %></span>
+								<% if p.members.count > 1 %>
+									<%=  link_to post_chats_path(p), onclick: on_click_js_event('#chat-pop-up-post-id-' + p.id.to_s), class: "show_chat anchor-button" do %>
+										Open chat
+										<% if p.unread_messages_count(current_user) > 0 %>
+											<span class="notify_count"><%= p.unread_messages_count(current_user) %></span>
+										<% end %>
 									<% end %>
 								<% end %>
 
@@ -204,13 +206,24 @@
 
 	<% (current_user.participated_posts rescue []).each_with_index do |p, index| %>
 		<% if (p.members.count > 1) %>
-			<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p, :hidden => index != 0} %>
+			<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p, :hidden => true} %>
 		<% end %>
 	<% end %>
 </div>
 <script type="text/javascript">
 	$('.ga_post_create').click(function() {
 		_gaq.push(['_trackEvent', 'Post', 'create', 'click']);	
+	})
+
+	function popup_toggle_callback(sel) {
+		if ($(sel).data("hidden") == true) {
+			$(sel).data("hidden", false)
+			var iframe = $(sel).find('iframe');
+			iframe.attr('src', iframe.data('src'));
+		}
+	}
+	$(document).ready(function() {
+		$('.show_chat').first().click();
 	})
 	
 </script>

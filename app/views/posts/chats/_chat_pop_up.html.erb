@@ -1,26 +1,29 @@
 <% hidden = local_assigns[:hidden] || false %>
 <% if post.is_member?(current_user) && post.members.count > 1 %>
 
-	<div id="chat-pop-up-post-id-<%= post.id %>" class="chat-pop-up"> <!--TODO: move this helper -->
+	<div id="chat-pop-up-post-id-<%= post.id %>" data-hidden="<%= hidden %>" style="<%= hidden ? 'display: none;' : ''; %>" class="chat-pop-up"> <!--TODO: move this helper -->
 		<div class="chat-pop-up-header btn">
 			<div class="chat-pop-up-post-title text-hidden"><%= post.title %></div> 
 			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>
-			<a target="_tab" class="chat-pop-up-maximize btn" href="<%= post_chats_path(post)%>">
+			<a target="_blank" class="chat-pop-up-maximize btn" href="<%= post_chats_path(post)%>">
 				<div  ><i class="fa fa-expand" aria-hidden="true"></i></div>
 			</a>
 			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
 		</div>
-		<iframe id="chat-pop-up-frame-id" class="chat-pop-up-frame" src="<%= post_chats_path(post, :mode => "embed")%>"></iframe> 
+			<iframe id="chat-pop-up-frame-id" data-src="<%= post_chats_path(post, :mode => 'embed') %>" class="chat-pop-up-frame" src="<%= hidden ? '' : post_chats_path(post, :mode => "embed") %>">Loading...</iframe> 
+		
 		<!-- <iframe src="http://localhost:3000/"></iframe> -->
 	</div>
 	</a>
 <% end %>
 <% content_for :scripts do %>
 	<script type="text/javascript">
+
 		(function() {
 
 			var hidden = <%= hidden %>;
 			var popUpElementId = "#chat-pop-up-post-id-<%= post.id %>"; // can be improved to find the elements after selecting this.
+
 			if (hidden) {
 				$(popUpElementId).hide();
 			}
