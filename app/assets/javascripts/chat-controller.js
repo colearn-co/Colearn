@@ -4,7 +4,7 @@ function chatController(postId) {
   var lastChatId;
   var firstChatId;
   var isScrollingUp;
-  chatDAO.getChatsInfo({limit: 10}, function(chatsInfo) {
+  chatDAO.getChatsInfo({limit: 30}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
     chatsInfo.members.forEach(function(m) {
@@ -70,7 +70,7 @@ function chatController(postId) {
       return members;
     }
 
-    function fetchLattestMessages(lastChatId) {
+    function fetchLattestMessages() {
       chatDAO.getChatsInfo({after_id: lastChatId}, function(ci) {
         if (ci.chats.length > 0) {
           lastChatId = ci.chats[ci.chats.length - 1].id; // move this to a function

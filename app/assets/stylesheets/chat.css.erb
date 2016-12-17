@@ -29,7 +29,7 @@ body .content {
     font-weight: bold;
     -webkit-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 -moz-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
-box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
+box-shadow: 0px 2px 8px -4px rgba(0,0,0,0.72);
   
 }
 .chat-area {
@@ -38,7 +38,7 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
 }
 .user-container {
 	position: relative;
-    width: 25.75rem;
+    width: 20%;
     max-width: 260px;
     background-color: #4d394b;
     color: white;
@@ -60,6 +60,7 @@ box-shadow: 0px 4px 11px -4px rgba(0,0,0,0.72);
     -ms-flex-positive: 1;
     flex-grow: 1;
     min-width: 0;
+    width: 80%;
 }
 .chat-box {
    min-height: 300px;
@@ -140,18 +141,6 @@ a.logo-container:focus, a.logo-container:hover {
 	margin-bottom: 8px;
     display: flex;
     padding-top: 2px;
-}
-.message-area {
-	    margin-top: 0;
-    overflow: hidden;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
 }
 .circleBase {
     border-radius: 50%;
@@ -248,6 +237,13 @@ a.logo-container:focus, a.logo-container:hover {
 	display: inline-block;
     color: #439fe0;
     margin-left: 5px;
+    margin-left: 5px;
+    text-decoration: none;
+
+}
+.attachment .file-name:hover {
+    color: #439fe0;
+    text-decoration: none;
 
 }
 .attachment .attachment-label {
@@ -357,9 +353,15 @@ a.logo-container:focus, a.logo-container:hover {
     font-size: 10px;
 }
 
+.message-html .linkified {
+    display: inline-block;
+    word-break: break-all;
+}
+
 @media only screen and (max-width: 768px) {
 	.user-container {
 		display: none;
+		width: 100%;
 	}
 
 	.chat-user-list {
@@ -392,6 +394,7 @@ a.logo-container:focus, a.logo-container:hover {
 	    line-height: 1.6;
 	    margin-right: 13px;
 	    font-size: 25px;
+	    cursor: pointer;
 	}
 	.logo-container {
 		display: inline-block;
@@ -399,6 +402,8 @@ a.logo-container:focus, a.logo-container:hover {
 	.chat-title-bar .chat-user-list {
 		padding: 0px 12px;
 		font-size: 25px;
+		cursor: pointer;
+
 	}
 }
 
