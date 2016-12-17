@@ -338,14 +338,14 @@
 
 	<div class="chat-pop-up">
 		<div class="chat-pop-up-header btn">
-			<div class="chat-pop-up-post-title"></div> 
+			<div class="chat-pop-up-post-title text-hidden"><%= @post.title %></div> 
 			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>
 			<a target="_tab" class="chat-pop-up-maximize btn" href="<%= post_chats_path(@post)%>">
 				<div  ><i class="fa fa-expand" aria-hidden="true"></i></div>
 			</a>
 			<div class="chat-pop-up-close btn"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
 		</div>
-		<iframe id="chat-pop-up-frame-id" class="chat-pop-up-frame" src="<%= post_chats_path(@post)%>"></iframe> 
+		<iframe id="chat-pop-up-frame-id" class="chat-pop-up-frame" src="<%= post_chats_path(@post, :mode => "embed")%>"></iframe> 
 		<!-- <iframe src="http://localhost:3000/"></iframe> -->
 	</div>
 	</a>
@@ -354,19 +354,6 @@
 <div style="clear: both;"></div>
 <script type="text/javascript">
 	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
-		var receiver = document.getElementById('chat-pop-up-frame-id').contentWindow;
-		var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-		var eventer = window[eventMethod];
-		var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-
-		// Listen to message from child window
-		eventer(messageEvent,function(e) {
-		    var key = e.message ? "message" : "data";
-		    var data = e[key];
-		    receiver.postMessage({mode: "embed"}, "*");
-		    //run function//
-		}, false);
-
 		/*setTimeout(function() {
 			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
 		}, 2000);*/
@@ -398,6 +385,12 @@
 	$('.chat-pop-up-header').click(function() {
 	    var frame = $('.chat-pop-up-frame');
 	   	frame.toggle(500);
+	   	var title = $('.chat-pop-up-post-title');
+	   	if (title.hasClass('text-hidden')) {
+	   		title.removeClass('text-hidden');
+	   	} else {
+	   		title.addClass('text-hidden');
+	   	}
 	});
 	$('.chat-pop-up-close').click(function() {
 	    console.log("close clicked");
