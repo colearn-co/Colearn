@@ -116,7 +116,7 @@
 							
 							
 							<div class="chat-action-container" style="float: right; width: 95px; text-align: center;">
-								<%=  link_to post_chats_path(p), onclick: on_click_js_event('.chat-pop-up'), class: "show_chat anchor-button" do %>
+								<%=  link_to post_chats_path(p), onclick: on_click_js_event('#chat-pop-up-post-id-' + p.id.to_s), class: "show_chat anchor-button" do %>
 									Open chat
 									<% if p.unread_messages_count(current_user) > 0 %>
 										<span class="notify_count"><%= p.unread_messages_count(current_user) %></span>

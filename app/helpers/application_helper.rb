@@ -22,7 +22,7 @@ module ApplicationHelper
       "#{configatron.base_url}#{asset_path(asset)}"
   end
 
-  def on_click_js_event(popup_selector)
+  def on_click_js_event(popup_selector) #TODO: rename this?
     if !mobile_device?
       raw("$('#{popup_selector}').show(500); return false;")
     else

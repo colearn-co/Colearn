@@ -1,7 +1,7 @@
 <% hidden = local_assigns[:hidden] || false %>
 <% if post.is_member?(current_user) && post.members.count > 1 %>
 
-	<div id="chat-pop-up-post-id-<%= post.id %>" class="chat-pop-up">
+	<div id="chat-pop-up-post-id-<%= post.id %>" class="chat-pop-up"> <!--TODO: move this helper -->
 		<div class="chat-pop-up-header btn">
 			<div class="chat-pop-up-post-title text-hidden"><%= post.title %></div> 
 			<div class="chat-pop-up-minimize btn"><i class="fa fa-window-minimize"></i></div>

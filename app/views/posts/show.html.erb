@@ -126,7 +126,7 @@
 				<div>
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
 					<% if @post.is_member?(current_user) %>
-						<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('.chat-pop-up'), class: "show_chat anchor-button" %>
+						<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('#chat-pop-up-post-id-' + @post.id.to_s), class: "show_chat anchor-button" %>
 							<% if @post.unread_messages_count(current_user) > 0 %>
 										<span class="notify_count show-page"><%= @post.unread_messages_count(current_user) %></span>
 									<% end %>
@@ -263,9 +263,6 @@
 				
 			<% end %>
 		</div>
-
-
-		<div id="chat_div<%= @post.id %>"> <!-- todo: create chat_div id using a helper method.-->
 		</div>
 
 	</div>
@@ -303,15 +300,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <!-- Modal -->
 <div id="reject-message" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -344,12 +332,7 @@
 
 <div style="clear: both;"></div>
 <script type="text/javascript">
-	<% if @post.is_member?(current_user) && @post.members.count > 1 %>
-		/*setTimeout(function() {
-			showChat(<%= @post.id %>, "<%= escape_javascript(@post.title.to_s) %>", "<%= current_user.name.to_s %>"); 
-		}, 2000);*/
-		
-	<% end %>
+	
 	$('#invite-req').click(function() {
 		<% if current_user %>
 			ga("send", "event", "Post", "Invites", "join_post_req_logged_in", <%= @post.id%>);
