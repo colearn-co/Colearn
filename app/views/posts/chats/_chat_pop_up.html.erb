@@ -1,3 +1,4 @@
+<% hidden = local_assigns[:hidden] || false %>
 <% if post.is_member?(current_user) && post.members.count > 1 %>
 
 	<div id="chat-pop-up-post-id-<%= post.id %>" class="chat-pop-up">
@@ -17,7 +18,12 @@
 <% content_for :scripts do %>
 	<script type="text/javascript">
 		(function() {
+
+			var hidden = <%= hidden %>;
 			var popUpElementId = "#chat-pop-up-post-id-<%= post.id %>"; // can be improved to find the elements after selecting this.
+			if (hidden) {
+				$(popUpElementId).hide();
+			}
 			$(popUpElementId + ' .chat-pop-up-header').click(function() {
 			    var frame = $(popUpElementId + ' .chat-pop-up-frame');
 			   	frame.toggle(500);

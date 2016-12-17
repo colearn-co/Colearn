@@ -196,12 +196,10 @@
 	<div style="clear: both;"></div>
 	</div>
 	<!--:FIXME: unmaintainable code: this div is used to show chat pop up id exp for post id 1: 'chat_div1' -->
-	<% (current_user.participated_posts rescue []).each do |p| %>
-		<div id="chat_div<%=p.id %>"></div>
+
+	<% (current_user.participated_posts rescue []).each_with_index do |p, index| %>
 		<% if (p.members.count > 1) %>
-			<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p} %>
-			
-			</script>
+			<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p, :hidden => index != 0} %>
 		<% end %>
 	<% end %>
 </div>
