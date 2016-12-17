@@ -22,7 +22,7 @@ class InvitesController < ApplicationController
 			@invite.update_attributes(:status => params[:status], :accepting_user => current_user, 
 				:reject_message => params[:reject_message])
 			flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Rejected invite requested"
-			if @invite.valid?
+			if @invite.valid? && @invite.status == Invite::STATUS[:rejected]
 				UserMailer.join_rejection_mail(@invite).deliver()
 			end
 			render "/#{@post.class.name.underscore}s/invites/response".downcase
