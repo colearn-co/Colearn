@@ -280,11 +280,12 @@ a.logo-container:focus, a.logo-container:hover {
     bottom: 0;
     right: 20px;
     height: 370px;
-    
+    visibility: hidden;
 
 }
 /***post page css**/
 .chat-pop-up {
+    visibility: hidden;
     float: right;
     margin-right: 10px;
     margin-left: 5px;
@@ -294,13 +295,20 @@ a.logo-container:focus, a.logo-container:hover {
     
     bottom: 0;*/
 }
-.chat-pop-up > iframe {
+.chat-pop-up-inner {
+    visibility: visible;
+   
+    
+}
+.chat-pop-up-inner > iframe {
     height: 320px;
     width: 350px;
     
 }
 .chat-header-to-bottom {
     height: 320px;
+    width: 350px;
+    visibility: hidden;
     pointer-events:none;
 }
 .chat-pop-up-header {

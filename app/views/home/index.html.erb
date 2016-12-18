@@ -205,8 +205,7 @@
 	</div>
 	<div class="chat-popups-container">
 		<% (current_user.participated_posts rescue []).each_with_index do |p, index| %>
-			<% if (p.members.count > 1) %>
-				
+			<% if (p.members.count > 1) %> 
 					<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => p, :hidden => true} %>
 				
 			<% end %>
