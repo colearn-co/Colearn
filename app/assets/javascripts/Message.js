@@ -14,17 +14,43 @@ function Message(message, user) {
 	}
 }
 
-Message.prototype.getMessageHTML = function() {
-	var date = new Date(this.time);
-	var msgContent;
-
+Message.prototype.getMessageContent = function() {
+	var content;
 	if (!this.resource_path) {
-		msgContent = getTextMsgHtml(this.text);
+		content = this.getTextMsgHtml();
 	} else {
-		msgContent = "<div class='file-msg'>" 
-					+ getFilePreview(this.resource_path, this.resource_type, this.file_name) +
+		content = "<div class='file-msg'>" 
+					+ this.getFilePreview() +
 					"</div>"
 	}
+	return content;
+}
+Message.prototype.getTextMsgHtml = function() {
+	return "<div class='text-msg'>" + 
+					emojione.toImage(linkifyHtml(this.text, {defaultProtocal: 'http'})) + //TODO: html encode text
+				"</div>";	
+}
+Message.prototype.isImage = function() {
+	return this.resource_type.startsWith("image/");
+}
+Message.prototype.getFilePreview = function() {
+	//TODO check if this is a image file link?
+		var attachment_div = '<div class="attachment">' 
+									+ '<div class="attachment-label">uploaded a file: </div>'
+									+ '<a class="file-name" target="_tab" href="' + this.resource_path + '">' + this.file_name + '</a>' 
+									+ '<a target="_tab" class="attachment-action glyphicon glyphicon-download" href="' + this.resource_path + '">' + '</a>';
+						+ '</div>';
+		if (this.isImage()) {
+			return attachment_div + '<div class="attachment-preview">' + '<img class="chat-img-preview js_img_preview" src="' + this.resource_path + '">' + '</div>';
+		} else {
+			return attachment_div;
+		}
+}
+
+Message.prototype.getMessageHTML = function() {
+	var date = new Date(this.time);
+	var msgContent = this.getMessageContent();
+	
 		
 	var msgHtml = "<div class='text-msg-area'>" + 
 					msgContent;
@@ -43,28 +69,6 @@ Message.prototype.getMessageHTML = function() {
 		 		
 	return msgHtml;
 
-	function getFilePreview(resource_path, resource_type, file_name) {
-		//TODO check if this is a image file link?
-		var attachment_div = '<div class="attachment">' 
-									+ '<div class="attachment-label">uploaded a file: </div>'
-									+ '<a class="file-name" target="_tab" href="' + resource_path + '">' + file_name + '</a>' 
-									+ '<a target="_tab" class="attachment-action glyphicon glyphicon-download" href="' + resource_path + '">' + '</a>';
-						+ '</div>';
-		if (isImage(resource_type)) {
-			return attachment_div + '<div class="attachment-preview">' + '<img class="chat-img-preview js_img_preview" src="' + resource_path + '">' + '</div>';
-		} else {
-			return attachment_div;
-		}
-	}
 
-	function isImage(resource_type) {
-		return resource_type.startsWith("image/");
-	}
 
-	
-	function getTextMsgHtml(text) {
-		return "<div class='text-msg'>" + 
-						emojione.toImage(linkifyHtml(text, {defaultProtocal: 'http'})) + //TODO: html encode text
-					"</div>";
-	}
 }
