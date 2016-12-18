@@ -42,7 +42,6 @@ function chatController(postId) {
     });
     chat.addMessages(getMessagesFromChatInfo(chatsInfo));
     $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
-      console.log('adsaasd', e, data);
       var c = JSON.parse(data.responseText).chat;
       var msg = new Message(c, membersMap[c.user.id]);
       chat.addMessage(msg);

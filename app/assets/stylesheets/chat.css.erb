@@ -275,20 +275,33 @@ a.logo-container:focus, a.logo-container:hover {
 .user-menu-close {
 	display: none;
 }
+.chat-popups-container {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    height: 370px;
+    
 
-
+}
 /***post page css**/
 .chat-pop-up {
+    float: right;
+    margin-right: 10px;
+    margin-left: 5px;
    /* border: 3px solid #73AD21;*/
-    position: fixed;
+   /* position: fixed;
     right: 30px;
     
-    bottom: 0;
+    bottom: 0;*/
 }
-.chat-pop-up > iframe{
+.chat-pop-up > iframe {
     height: 320px;
     width: 350px;
     
+}
+.chat-header-to-bottom {
+    height: 320px;
+    pointer-events:none;
 }
 .chat-pop-up-header {
     width: 350px;
