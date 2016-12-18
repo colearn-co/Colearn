@@ -56,9 +56,12 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	function postMessage(e) {  
 	  // on Post click or 'enter' but allow new lines using shift+enter
 	  if (e.type=='click' || (e.which==13 && !e.shiftKey)) { 
-	    e.preventDefault();
+	    //e.preventDefault();
 	    var msg = $textArea.val(); // not empty / space
-	    if($.trim(msg)) {
+	    $textArea[0].value=''; // CLEAR TEXTAREA
+	    msg = msg.replace(/^\s+|\s+$/g, ''); // replaceing linebreaks
+	    msg = $.trim(msg);
+	    if(msg) {
 	      var currentMsg = new Message({
 	      	message: msg, created_at: new Date()
 	      }, currentUser);
@@ -66,7 +69,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	      	newMsgCallback(currentMsg.text);
 	      }
 	      addMessage(currentMsg);
-	      $textArea[0].value=''; // CLEAR TEXTAREA
+	     
 	      scrollBottom(); // DO ON POST
 	        
 	    } 
