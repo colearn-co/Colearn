@@ -26,9 +26,18 @@ Message.prototype.getMessageContent = function() {
 	return content;
 }
 Message.prototype.getTextMsgHtml = function() {
-	return "<div class='text-msg'>" + 
-					emojione.toImage(linkifyHtml(this.text, {defaultProtocal: 'http'})) + //TODO: html encode text
-				"</div>";	
+	var texts = this.text.split("\n");
+	var ret = [];
+	texts.forEach(function(text) {
+		if (text.length > 0) {
+			ret.push("<div class='text-msg'>" + 
+					emojione.toImage(linkifyHtml(text, {defaultProtocal: 'http'})) + //TODO: html encode text
+				"</div>");	
+		}
+		
+	});
+	return ret.join("");
+		
 }
 Message.prototype.isImage = function() {
 	return this.resource_type.startsWith("image/");
