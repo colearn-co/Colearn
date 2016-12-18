@@ -14,9 +14,9 @@ User.prototype.getUserHTMLUserArea = function() {
 		this.picture +
 	'"></div><div class="chat-username"><div>' + this.name + '</div>'
 
-	if (this.status == 'offline') {
+	if (this.status == 'offline' && this.last_visited) {
 		html += '<div class="last-seen-time">Active: <time class="timeago" datetime="' + new Date(this.last_visited).toISOString() + '">' 
-				+ (this.last_visited == null ? '' : new Date(this.last_visited).toString()) + '</time></div>'
+				+ (new Date(this.last_visited).toString()) + '</time></div>'
 	}
 	html += '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);

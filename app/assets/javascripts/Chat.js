@@ -41,6 +41,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		users.forEach(function(user) {
 			addUserToUserArea(user);
 		});
+		$('.timeago').timeago('refresh'); //TODO fix dom parsing every time for time update
 	}
 
 	//// SCROLL BOTTOM	

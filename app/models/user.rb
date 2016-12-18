@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 
 	def self.json_info
 		{
-			:only => [:id, :name, :picture],
+			:only => [:id, :name],
 			:methods => [:picture]
 		}
 	end
