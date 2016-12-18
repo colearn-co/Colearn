@@ -99,6 +99,13 @@
   function reset_frame() {
      $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
   }
+
+
+  $( ".js_users" ).on( "swl", function() {
+    $('.js_users').hide('slide', {direction: 'left'}, 500);
+    return false;
+  });
+
 </script>
 
 <% end %>
