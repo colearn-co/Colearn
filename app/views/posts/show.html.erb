@@ -332,7 +332,9 @@
   </div>
 </div>
 <% if !mobile_device? %>
-	<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => @post} %>
+	<div class="chat-popups-container">
+		<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => @post} %>
+	</div>
 <% end %>
 
 <div style="clear: both;"></div>
