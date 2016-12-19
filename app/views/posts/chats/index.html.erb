@@ -5,17 +5,17 @@
       <a href="<%= params[:mode] == 'embed' ? 'javascript:void(0);' : root_path %>" class="logo-container">
         Colearn
       </a>
-      <span class="user-menu-close glyphicon glyphicon-align-justify js_user_menu_close"></span>
+      <span class="user-menu-close glyphicon glyphicon-align-justify js_user_menu_close ga_user_list_hide"></span>
       <div class="participate-mem">
         Participating members
       </div>
-      <div class="user-area">
+      <div class="user-area ga_user_area">
         
       </div>
     </div>
     <div class="messages-area <%= params[:mode] %>">
       <header class="chat-title-bar">
-      <span class="chat-user-list glyphicon glyphicon-align-justify btn js_chat_list_btn"></span>
+      <span class="chat-user-list glyphicon glyphicon-align-justify btn js_chat_list_btn ga_user_list_show"></span>
         <span class="chat-post-title"><%= @chatable.title %></span>
         <% if params[:mode] != 'embed' %> 
 
@@ -33,14 +33,14 @@
       </div>
     <div class="input-container">
     <div class="add-attachment">
-    <div class="upload-button glyphicon glyphicon-plus js_add_attachment"></div>
+    <div class="upload-button glyphicon glyphicon-plus js_add_attachment ga_add_attachment"></div>
       <%= form_for Chat.new, url: post_chats_path(@chatable), remote: true, html: {class: "chat-form js_upload_form", enctype: "multipart/form-data" } do |f| %>
         <%= f.hidden_field :message, :value => "Attachment"%>
         <input type="file" name="avatar"/> 
         <%= f.submit "Upload", :class => "upload-submit" %>
       <% end %>
     </div>
-      <input type="text" class="message-input-area" placeholder="Message here" />
+      <textarea class="message-input-area" placeholder="Message here" ></textarea>
       <iframe name="hidden-iframe" style="display: none;">
         
       </iframe>
@@ -95,10 +95,34 @@
     $('.js_user_menu_close').click(function() {
       $('.js_users').hide('slide', {direction: 'left'}, 500);
     });
+
+    $('.ga_user_list_show').click(function() {
+      ga("send", "event", "Chat-Popup", "show-user-sidebar", "click");
+    });
+    $('.ga_user_list_hide').click(function() {
+      ga("send", "event", "Chat-Popup", "hide-user-sidebar", "click");
+    });
+    $('.ga_add_attachment').click(function() {
+      ga("send", "event", "Chat-screen", "add-attachment", "click");
+    });
+    $('.ga_user_area').click(function() {
+      ga("send", "event", "Chat-screen", "user-area", "click");
+    });
+
   }); 
+
+
+
   function reset_frame() {
      $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
   }
+
+
+  $( ".js_users" ).on( "swl", function() {
+    $('.js_users').hide('slide', {direction: 'left'}, 500);
+    return false;
+  });
+
 </script>
 
 <% end %>

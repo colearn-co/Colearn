@@ -41,6 +41,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		users.forEach(function(user) {
 			addUserToUserArea(user);
 		});
+		$('.timeago').timeago('refresh'); //TODO fix dom parsing every time for time update
 	}
 
 	//// SCROLL BOTTOM	
@@ -55,9 +56,12 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	function postMessage(e) {  
 	  // on Post click or 'enter' but allow new lines using shift+enter
 	  if (e.type=='click' || (e.which==13 && !e.shiftKey)) { 
-	    e.preventDefault();
+	    //e.preventDefault();
 	    var msg = $textArea.val(); // not empty / space
-	    if($.trim(msg)) {
+	    $textArea[0].value=''; // CLEAR TEXTAREA
+	    msg = msg.replace(/^\s+|\s+$/g, ''); // replaceing linebreaks
+	    msg = $.trim(msg);
+	    if(msg) {
 	      var currentMsg = new Message({
 	      	message: msg, created_at: new Date()
 	      }, currentUser);
@@ -65,7 +69,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	      	newMsgCallback(currentMsg.text);
 	      }
 	      addMessage(currentMsg);
-	      $textArea[0].value=''; // CLEAR TEXTAREA
+	     
 	      scrollBottom(); // DO ON POST
 	        
 	    } 
@@ -100,31 +104,45 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	}
 
 	function getMessageHtml(message) {
-		return '<div class="message-html">'+ message.getMessageHTML() + "</div>";
+		return '<div class="message-html" data-uid="' + message.user.id + '" data-time="' + message.time + '" >'
+										+ message.getMessageHTML() + "</div>";
 	}
 	function addMessage(message) {
-		addHtmlToChatBox(getMessageHtml(message));
+		var lastElem = $('.messages .message-html:last');
+		if (lastElem.data("uid") == message.user.id && message.time - parseInt(lastElem.data('time')) < 60 *1000) {
+			lastElem.data('time', message.time);
+			lastElem.find('.text-msg-area').append(message.getMessageContent())
+		}
+		else {
+			addHtmlToChatBox(getMessageHtml(message));
+		}
 		$('.timeago').timeago('refresh');
 	}
 	function addMessages(messages) {
 		if (messages.length > 0) {
-			var htmls = [];
 			for (i = 0; i < messages.length; i++) {
-				htmls.push(getMessageHtml(messages[i]));
+				addMessage(messages[i]);
 			}
-			addHtmlsToChatBox(htmls);
-			//scrollBottom();
 			$('.timeago').timeago('refresh');	
 		}
 	}
 	function addMessagesToTop(messages) {
 		if (messages.length > 0) {
 			var firstMsg = $('.messages .message-html:first'); // get top element of div.
-			var htmls = [];
+				var lastElem = $('');
 			for (i = 0; i < messages.length; i++) {
-				htmls.push(getMessageHtml(messages[i]));
+				var message = messages[i];
+				if (lastElem.data("uid") == message.user.id &&  parseInt(lastElem.data('time') - message.time) < 60 *1000) {
+					lastElem.data('time', message.time);
+					lastElem.find('.text-msg-area').prepend(message.getMessageContent());
+					lastElem.find('.username-msg-area .msg-timestamp .timeago').attr('datatime', new Date(message.time).toISOString())
+			
+				}
+				else {
+					prependHtmlsToChatBox([getMessageHtml(messages[i])]);
+				}
+				var lastElem = $('.messages .message-html:first');
 			}
-			prependHtmlsToChatBox(htmls);
 			$(".messages").scrollTop(firstMsg.position().top)
 			$('.timeago').timeago('refresh');	
 		}

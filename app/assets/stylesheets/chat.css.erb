@@ -95,6 +95,7 @@ box-shadow: 0px 2px 8px -4px rgba(0,0,0,0.72);
 }
 .user-container .user-picture {
     display: inline-block;
+    float: left;
 }
 .logo-container {
 	padding: 8px 0 18px 19px;
@@ -103,6 +104,10 @@ box-shadow: 0px 2px 8px -4px rgba(0,0,0,0.72);
     color: white;
     text-decoration: none;
     display: block;
+}
+.chat-username .last-seen-time {
+    font-size: 10px;
+    font-style: italic;
 }
 a.logo-container:focus, a.logo-container:hover {
     color: #fff;
@@ -122,6 +127,7 @@ a.logo-container:focus, a.logo-container:hover {
 	    display: inline-block;
     margin-left: 5px;
         color: #ab9ba9;
+        line-height: 1;
 }
 .msg-timestamp {
 	margin-left: 12px;
@@ -152,7 +158,6 @@ a.logo-container:focus, a.logo-container:hover {
     display: inline-block;
     border-radius: 10px;
     background-color: #93cc93;
-    margin-left: 24px;
 }
 
 .offline {
@@ -161,7 +166,6 @@ a.logo-container:focus, a.logo-container:hover {
     display: inline-block;
     border-radius: 10px;
     background-color: #555459;
-    margin-left: 24px;
 }
 .input-container {
     padding: 15px;
@@ -211,6 +215,7 @@ a.logo-container:focus, a.logo-container:hover {
 	float: right;
     margin-top: 6px;
     margin-right: 29px;
+    margin-left: 6px;
 }
 .username-msg-area .chat-username {
 	font-weight: bold;

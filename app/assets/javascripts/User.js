@@ -12,7 +12,13 @@ User.prototype.getUserHTMLUserArea = function() {
 	var html = '<div id="' + this.getUserElementId() + '" class="user-display-area"><div class="user-picture">'
 	+ '<img class="' + '" src="' + 
 		this.picture +
-	'"></div><div class="chat-username">' + this.name + '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
+	'"></div><div class="chat-username"><div>' + this.name + '</div>'
+
+	if (this.status == 'offline' && this.last_visited) {
+		html += '<div class="last-seen-time">Active: <time class="timeago" datetime="' + new Date(this.last_visited).toISOString() + '">' 
+				+ (new Date(this.last_visited).toString()) + '</time></div>'
+	}
+	html += '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);
 	return html;
 	function getStatusClass(status) {
