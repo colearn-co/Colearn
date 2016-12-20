@@ -130,6 +130,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		if (messages.length > 0) {
 			var firstMsg = $('.messages .message-html:first'); // get top element of div.
 				var lastElem = $('');
+			messages = messages.reverse();
 			for (i = 0; i < messages.length; i++) {
 				var message = messages[i];
 				if (lastElem.data("uid") == message.user.id &&  parseInt(lastElem.data('time') - message.time) < 60 *1000) {
@@ -137,8 +138,7 @@ function Chat(currentUser, users, options, newMsgCallback) {
 					lastElem.find('.text-msg-area').prepend(message.getMessageContent());
 					lastElem.find('.username-msg-area .msg-timestamp .timeago').attr('datatime', new Date(message.time).toISOString())
 			
-				}
-				else {
+				} else {
 					prependHtmlsToChatBox([getMessageHtml(messages[i])]);
 				}
 				var lastElem = $('.messages .message-html:first');
