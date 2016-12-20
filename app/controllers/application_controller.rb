@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_filter :store_current_location, :unless => :devise_controller?
+   before_filter :track_user
   before_filter do
     # sign_in(:user, User.find(4))
     resource = controller_name.singularize.to_sym
@@ -30,6 +31,12 @@ class ApplicationController < ActionController::Base
     # and signing up work automatically.
   def store_current_location
     store_location_for(:user, request.url) unless request.xhr?
+  end
+
+  def track_user
+    if !current_user && cookies[:referrer].blank?
+      cookies[:referrer] = request.referer || "/"
+    end
   end
   protect_from_forgery with: :exception
 end
