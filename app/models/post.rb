@@ -2,6 +2,10 @@ class Post < ActiveRecord::Base
 	STATUS = {
 		:open => 1,
 		:closed => 2
+	}	
+	PUBLISH_STATUS = {
+		:unpublished => 1,
+		:published => 2
 	}
 	belongs_to :user
 	has_many :chats,:as => :chatable
@@ -18,13 +22,15 @@ class Post < ActiveRecord::Base
 	has_many :tags
 	has_many :user_chat_infos
 	scope :order_by_recency, -> {order(id: :desc)}
+	scope :published, -> { where.not(:publish_status => PUBLISH_STATUS[:unpublished]) }
 	
 	validates_presence_of :user
 
 	validates :title, presence: true,
-                    length: { minimum: 1 }
+                    length: { minimum: 1 }      
 	
 	after_create :add_own_user
+	before_create :fill_publish_status
 
 	accepts_nested_attributes_for :skills
 	
@@ -80,6 +86,12 @@ class Post < ActiveRecord::Base
 
 	def user_vote_type(user)
 		self.votes.where(user: user).first.try(:vote_type)
+	end
+
+	def fill_publish_status
+		if self.publish_status.blank?
+			self.publish_status = PUBLISH_STATUS[:published]
+		end
 	end
 
 end

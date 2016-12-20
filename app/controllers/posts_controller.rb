@@ -18,7 +18,6 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		puts post_params
 		current_user.posts << @post = Post.new(post_params)
 		redirect_to root_path
 	end
