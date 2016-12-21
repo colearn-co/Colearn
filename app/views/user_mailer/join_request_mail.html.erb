@@ -1,7 +1,9 @@
+<%= render :partial => 'mail_header'%>
+<%= render :partial => 'mail_header'%>
 <div>
 	<p>Hi <%= @to.name %>,</p>
-	<p><%= @from.name %> wants to join the post <b><%= @post.title %></b>.
-	Click <a href="<%= post_url(@post) %>">here</a>.
+	<p><%= @from.name %> wants to join the post <a href="<%= post_url(@post) %>"><b><%= @post.title %></b></a>.
 	</p>
 
 </div>
+<%= render :partial => 'mail_footer'%>
