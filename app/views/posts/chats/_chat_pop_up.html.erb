@@ -2,6 +2,8 @@
 <% if post.is_member?(current_user) && post.members.count > 1 %>
 
 	<div id="chat-pop-up-post-id-<%= post.id %>" data-hidden="<%= hidden %>" style="<%= hidden ? 'display: none;' : ''; %>" class="chat-pop-up"> <!--TODO: move this helper -->
+		<div class="chat-pop-up-padding-placeholder"></div>
+		<div class="chat-pop-up-inner">
 		<div class="chat-pop-up-header btn">
 			<div class="chat-pop-up-post-title ga_embed_title text-hidden"><%= post.title %></div> 
 			<div class="chat-pop-up-minimize btn ga_embed_min"><i class="fa fa-window-minimize"></i></div>
@@ -11,7 +13,7 @@
 			<div class="chat-pop-up-close btn ga_embed_close"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></div>
 		</div>
 			<iframe id="chat-pop-up-frame-id" data-src="<%= post_chats_path(post, :mode => 'embed') %>" class="chat-pop-up-frame" src="<%= hidden ? '' : post_chats_path(post, :mode => "embed") %>">Loading...</iframe> 
-		
+		</div>
 		<!-- <iframe src="http://localhost:3000/"></iframe> -->
 	</div>
 	</a>
@@ -31,10 +33,13 @@
 			    var frame = $(popUpElementId + ' .chat-pop-up-frame');
 			   	frame.toggle(500);
 			   	var title = $(popUpElementId + ' .chat-pop-up-post-title');
+			   	var paddingPlaceholder = $(popUpElementId + ' .chat-pop-up-padding-placeholder');
 			   	if (title.hasClass('text-hidden')) {
-			   		title.removeClass('text-hidden');
+			   		title.toggleClass('text-hidden', 500);
+			   		paddingPlaceholder.toggleClass("chat-header-to-bottom", 500);
 			   	} else {
-			   		title.addClass('text-hidden');
+			   		title.toggleClass('text-hidden', 500);
+			   		paddingPlaceholder.toggleClass("chat-header-to-bottom", 500);
 			   	}
 			});
 			$(popUpElementId + ' .chat-pop-up-close').click(function() {
