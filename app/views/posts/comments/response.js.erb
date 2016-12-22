@@ -1,2 +1,6 @@
 $('#comment-list').append("<%= escape_javascript render :partial => 'posts/single_chat', :locals => {:comment => @comment} %>");
 $('#comment').val('');
+
+$('#comment-list').linkify({ //TODO: only select last
+    	target: "_blank"
+});

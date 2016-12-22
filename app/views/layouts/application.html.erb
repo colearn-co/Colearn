@@ -102,20 +102,10 @@
     		<div class="modal fade" id="login-div" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               	<div class="modal-dialog modal-sm" role="document">
                 	<div class="modal-content">
-                  		<div class="modal-header">
-                    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    		<h4 class="modal-title" id="myModalLabel">Sign in/ Sign up</h4>
-                  		</div>
+                  		
                   		<div class="modal-body">
                     		<div class="row text-center">
-	        
-						        <h6>Hi there! Let's start with signing you in.</h6>
-						        <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but">
-						        	<img src="<%= asset_path('google-login.png') %>" style="max-width: 100%; border-radius: 25px;">
-						        </a>
-						        <a href="<%= user_facebook_omniauth_authorize_path %>" id="fb-login-but">
-						        	<img src="<%= asset_path('fb-login.png') %>" style="max-width: 100%; border-radius: 25px;">
-						        </a>
+						        <%= render "devise/sessions/new_sign_in_form" %>
 					    	</div>
 					    </div>
 				    	<div class="modal-footer">
@@ -148,9 +138,11 @@
 <script type="text/javascript">
         $('.login').click(function() {
             $('#login-div').modal('show');
+            $('#sign-up-form .js_sign_in_path').click();
         });
         $('.sign-up').click(function() {
             $('#login-div').modal('show');
+            $('#sign-in-form .js_sign_up_path').click();
         });
 
         $('.ajax-loader').click(function() {
