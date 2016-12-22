@@ -1,24 +1,25 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+<%- if entry_type != 'existing' %>
+	<div style="margin-top: 14px;">
+	  	<span>Already a member? </span><%= link_to "Sign in here", "javascript:void(0)", :class => "js_sign_in_path" %><br />
+	</div>
 <% end -%>
 
-
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+<div class="external-label">
+<%- if entry_type != 'existing' %>
+  Sign up with
+<% else %>
+	Sign in with
 <% end -%>
+</div>
 
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
-<% end -%>
 
 <%- if devise_mapping.omniauthable? %>
- <div style="display: block;">
+ <div class="external-links" style="">
 	 <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but">
-							        	<img src="<%= asset_path('google-login.png') %>" style="max-width: 100%; width: 298px; height: 65px; border-radius: 25px; display: block; margin-bottom: 10px">
+							        	<img src="<%= asset_path('google-login.png') %>" style="">
 							        </a>
 							        <a href="<%= user_facebook_omniauth_authorize_path %>" id="fb-login-but">
-							        	<img src="<%= asset_path('fb-login.png') %>" style="max-width: 100%; border-radius: 25px; width: 298px; height: 65px; display: block;">
+							        	<img src="<%= asset_path('fb-login.png') %>" style="">
 							        </a>
 </div>
 <% end -%>
