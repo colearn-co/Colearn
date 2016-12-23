@@ -21,6 +21,7 @@
       <div class="field">
         <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password' %>
       </div>
+      <%= f.hidden_field :referrer, value: cookies[:referrer] %>
 
       <div class="actions">
         <%= f.submit "Sign up", class: "register-action btn" %>
