@@ -110,7 +110,7 @@
 											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" style="margin-right: 10px;" href="javascript:void(0)" class="js_reject_call">
 												<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" style="color: red; font-size: 18px;"></i>
 											</a>
-											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true">
+											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true" class="ajax-loader">
 												<i class="remove glyphicon glyphicon-ok glyphicon-white" style="color: green; font-size: 18px;"></i>
 											</a>
 										</span>
