@@ -274,15 +274,15 @@ display : none;
     top: -3px;
 }
 .external-label {
-    font-weight: bold; text-align: center;
-    padding-top: 14px; margin-top: 18px;
-    border-top: 1px dashed gray;
+    font-weight: bold;
+    text-align: center;
 }
 .external-links {
     display: block; text-align: center;
+    margin-top: 15px;
 }
 .external-links a {
-    display: inline-block; width: 49%;
+    display: inline-block; width: 42%;
 }
 .external-links img {
     display: block;
@@ -326,9 +326,56 @@ display : none;
 #login-div .modal-body {
     padding-top: 0px;
 }
+.ext-login-icon {
+
+        float: left;
+    font-size: 23px;
+    color: #fff;
+    border-right: 1px solid rgba(12,13,14,0.1);
+    padding: 7px;
+    width: 41px;
+    line-height: 1;
+}
+.ext-login-icon i {
+    font-size: 18px;
+}
+#google-login-but {
+    background: #e0492f;
+
+}
+#fb-login-but {
+    background: #395697;
+}
+.external-links .but-text {
+    line-height: 2.5;
+    color: white;
+    font-weight: bold;
+}
+.login-anchor {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+}
+a.login-anchor:hover {
+    text-decoration: none;
+
+}
+.login-form-sep {
+        text-align: center;
+    margin: 11px 0;
+}
+.register-form input.last-login-field {
+    border-bottom: 1px solid #d7dbe9;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
+    .external-links a {
+      display: inline-block; width: 48%;
+    }
 
+    #login-div.modal .modal-content {
+        display: block;
+    }
     .register-inner {
         width: 90%;
     }

@@ -1,7 +1,13 @@
 
 <div id="sign-up-form" class="register-wrap" style="text-align: center;">
   <div class="register-inner">
-    <h2>Sign up</h2>
+
+    <div>
+      <%= render :partial => "devise/shared/links", :locals => {:entry_type => 'new'} %>
+    </div>
+
+    <div class="login-form-sep"><span>OR</span></div>
+    <h4>Sign up</h4>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "register-form"}) do |f| %>
       <%= devise_error_messages! %>
@@ -15,11 +21,11 @@
       </div>
 
       <div class="field">
-        <%= f.password_field :password, autocomplete: "off", placeholder: "Password (#{@minimum_password_length} characters minimum)" %>
+        <%= f.password_field :password, autocomplete: "off", placeholder: "Password (6 characters minimum)" %>
       </div>
 
       <div class="field">
-        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password' %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password', class: 'last-login-field' %>
       </div>
       <%= f.hidden_field :referrer, value: cookies[:referrer] %>
 
@@ -27,9 +33,9 @@
         <%= f.submit "Sign up", class: "register-action btn" %>
       </div>
     <% end %>
-    <div>
-      <%= render :partial => "devise/shared/links", :locals => {:entry_type => 'new'} %>
-    </div>
+      <div style="margin-top: 14px;">
+        <span>Already a member? </span><%= link_to "Sign in here", "javascript:void(0)", :class => "js_sign_in_path" %><br />
+      </div>
 
   </div>
 </div>
