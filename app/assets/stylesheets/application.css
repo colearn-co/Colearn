@@ -396,7 +396,10 @@ a.login-anchor:hover {
     }
     .login.btn {
             padding: 2px 1px !important;
-            font-size: 17px;
+            font-size: 14px;
+    }
+    .sign-up.btn {
+        padding: 3px 3px;
     }
     .username {
         display: none !important;
