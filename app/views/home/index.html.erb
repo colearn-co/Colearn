@@ -1,10 +1,10 @@
 <% content_for :head do %>
 	<style type="text/css">
 		.participated {
-			float: left; 
-			display: inline-block; 
-			border: 1px solid rgb(232, 232, 232); 
-			box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.05);
+			right: 47px;
+			display: inline-block;
+			margin-top: 77px;
+			width: 27%; position: fixed; overflow: auto; max-height: 76vh;
 		}
 		.anchor-button {
 			background: #4e9caf none repeat scroll 0 0;
@@ -22,17 +22,19 @@
 			color: white;
 		}
 		.post-title {
-			display: block; font-weight: bold; font-size: 19px; margin-bottom: 6px;
+			display: block; font-weight: bold; font-size: 20px; margin-bottom: 6px;
 		}
 		.user-post-ic {
 			float: left;
 		}
 
 		.user-info {
-			display: block; line-height: 19px; margin-left: 43px;
+			display: inline-block;
+			line-height: 19px;
+			margin-left: 6px;
 		}
 		.user-name {
-			color: rgb(88, 88, 88); font-size: 13px;
+			color: rgb(88, 88, 88); font-size: 14px;
 
 		}
 		.time-dist {
@@ -42,6 +44,7 @@
 		.post-message {
 			display: block; 
 			margin-top: 12px;
+			font-size: 15px;
 
 		}
 		.post-message:hover {
@@ -60,11 +63,7 @@
 		.skill-wrap {
 			display: block; margin: 8px 0px;
 			text-align: center;
-		}
-		.back-text {
-			background-color: rgb(249, 249, 250);
-
-		}
+		} 
 		.main-skills {
 			font-size: 13px;
 			color: #8d8d8d;
@@ -72,7 +71,39 @@
 		.user-info-tag {
 			display: inline-block; border: 1px solid rgb(229, 229, 229); border-radius: 14px; background-color: white; padding: 4px 8px 2px 10px;
 		}
-
+		.back-text {
+			font-size: 14px;
+			    font-size: 14px;
+			    display: inline-block;
+			    background-color: #fff;
+			    margin-top: -3px;
+		}
+		.mot-text {
+			padding: 16px 0;
+		    text-align: center;
+		    font-size: 26px;
+		    font-family: initial;
+		}
+		.post-extra-info {
+			display: inline-block;
+		    float: right;
+		    color: rgba(0,0,0,.6);
+		    font-size: 18px;
+		}
+		.post-extra-info .post-info {
+			padding-left: 66px;
+		}
+		.post-action-icon {
+			color: #0ab575;
+			font-size: 20px;
+			padding-right: 11px;
+		}
+		.margin-div {
+			margin-left: 120px;margin-right: 100px;
+		}
+		.post-title a:hover {
+			text-decoration: none;
+		}
 		@media only screen and (max-width: 768px) {
 			/* For mobile phones: */
 			.participated {
@@ -95,9 +126,9 @@
 	</style>
 <% end %>
 <div>
-	<div class="margin-div" style="margin-left: 50px; margin-right: 50px;">
+	<div class="margin-div">
 
-	<div class="participated" style="width: 27%; position: fixed;">
+	<div class="participated">
 		<% if current_user && !current_user.participated_posts.blank? %>
 
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participated Learnings</b></div>
@@ -134,54 +165,39 @@
 
 					<% end %>
 		<% else %>
-		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center; font-size: 23px; font-family: initial;">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
+		<div class="mot-text">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
 
 		<% end %>
 		<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
-		<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px;">Create learning post</div></a>
+		<div class="create-post-btn btn btn-primary">Create new learning post</div></a>
 
 	</div>
-
-	<div class="all-posts" style="float: right; width: 69%;">
-		<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; "><b>Recent learning posts</b></div>
+	<div class="all-posts" style="float: left; width: 69%;">
+		<div style="padding: 16px 0; font-size: 25px;"><b>Recent learning posts</b></div>
 		<div>
 			<% Post.all.published.order_by_recency.each do |post| %>
 
 
-				<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px;">
-					<span class="post-title"><a href="<%= post_path(post) %>" style="color: #333;"><%= post.title %></a></span>
-					<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
-					</span>
-					<span class="user-info">
-						<span class="user-name"><%= post.user.name %></span>
-						<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+				<div class="single-post-card">
+					<div>
+						<div style="display: inline-block;">
+							<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
+							</span>
+							<span class="user-info">
+								<span class="user-name"><%= post.user.name %></span>
+								<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
 
-					</span>
-					
+							</span>
+						</div>
+						<div class="post-extra-info">
+							<span class="post-info" title="<%= post.upvotes.count %> Upvotes"><i class="fa fa-arrow-up post-action-icon" aria-hidden="true"></i><span><%= post.upvotes.count %></span></span>
+							<span class="post-info" title="<%= post.members.count %> Participating members"><i class="fa fa-user post-action-icon" aria-hidden="true"></i> <span><%= post.members.count %></span></span>
+						</div>
+					</div>
+					<h3 class="post-title"><a href="<%= post_path(post) %>" style="color: #000;"><%= post.title %></a></h3>
 					<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
 
-
-					<% if post.members.length > 1 %>
-						<span style="display: block; margin-top: 21px; margin-bottom: 30px;">
-							<span class="post-skills"></span>
-								<span class="skill-wrap">
-									<span class="background" style="margin-bottom: 8px;">
-										<span class="back-text">Participating Members</span>
-									</span>
-									<span class="main-skills">
-										<% post.members.each do |u| %>
-										<div class="user-info-tag">
-											<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 20px; width: 20px; border-radius: 20px;"} %>
-											<span style="color: rgb(68, 68, 68); font-size: 12px;"><%= u.name rescue "N/A" %></span>
-
-										</div>
-										<% end %>
-									</span>
-								</span>			
-								
-						</span>
-					<% end %>
-					<span style="display: block;">
+					<span style="display: block; margin-top: 28px;">
 						<span class="post-skills"></span>
 							<span class="skill-wrap">
 								<span class="background">
@@ -201,6 +217,7 @@
 			<% end %>
 		</div>
 	</div>
+		
 	<div style="clear: both;"></div>
 	</div>
 	<div class="chat-popups-container">

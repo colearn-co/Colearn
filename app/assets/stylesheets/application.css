@@ -367,6 +367,19 @@ a.login-anchor:hover {
 .register-form input.last-login-field {
     border-bottom: 1px solid #d7dbe9;
 }
+.create-post-btn {
+    margin-top: 23px;
+    width: 100%;
+    font-size: 18px;
+}
+.single-post-card {
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    margin: 9px 0;
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 3px;
+    padding: 16px;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .external-links a {
