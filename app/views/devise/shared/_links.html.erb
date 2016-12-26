@@ -1,25 +1,17 @@
-<%- if entry_type != 'existing' %>
-	<div style="margin-top: 14px;">
-	  	<span>Already a member? </span><%= link_to "Sign in here", "javascript:void(0)", :class => "js_sign_in_path" %><br />
-	</div>
-<% end -%>
-
-<div class="external-label">
-<%- if entry_type != 'existing' %>
-  Sign up with
-<% else %>
-	Sign in with
-<% end -%>
-</div>
-
 
 <%- if devise_mapping.omniauthable? %>
  <div class="external-links" style="">
-	 <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but">
-							        	<img src="<%= asset_path('google-login.png') %>" style="">
+	 <a href="<%= user_google_oauth2_omniauth_authorize_path() %>" id="google-login-but" class="login-anchor">
+	 								<div class="ext-login-icon">
+							        	<i class="fa fa-google-plus" aria-hidden="true"></i>
+							        </div>
+							        	<span class="but-text">Google</span>
 							        </a>
-							        <a href="<%= user_facebook_omniauth_authorize_path %>" id="fb-login-but">
-							        	<img src="<%= asset_path('fb-login.png') %>" style="">
+							        <a href="<%= user_facebook_omniauth_authorize_path %>" id="fb-login-but" class="login-anchor">
+							        <div class="ext-login-icon">
+							        	<i class="fa fa-facebook" aria-hidden="true"></i>
+							        </div>
+							        	<span class="but-text">Facebook</span>
 							        </a>
 </div>
 <% end -%>

@@ -4,6 +4,41 @@
 		.user-post-ic {
 			float: left;
 		}
+		.suggest-block {
+			background-color: #fff;
+			box-shadow: 0 1px 4px rgba(0,0,0,.04);
+			margin: 9px 0;
+			border: 1px solid rgba(0,0,0,.09);
+			border-radius: 3px;
+			padding: 16px; text-align: left;
+		}
+		.suggest-vote-area {
+			line-height: 1;
+		}
+		.suggestion-wrap {
+			padding-bottom: 14px;
+    		border-bottom: 1px solid #c7c7c7;
+    		margin-top: 37px;
+		}
+		.suggestion-wrap:last-child {
+			border-bottom: none;
+		}
+		.suggest-content {
+			float: left;
+			text-align: left;
+			max-width: 91%;
+		}
+		.comment-info {
+			float: right;
+			color: #0ab575;
+		}
+		.comment-section {
+			cursor: pointer;
+		}
+		.comment-info i {
+			font-size: 18px;
+			font-weight: bold;
+		}
 
 		.user-info {
 			display: block; line-height: 19px; margin-left: 43px;
@@ -17,10 +52,11 @@
 
 		}
 		.participated {
-			float: left; 
 			display: inline-block; 
-			border: 1px solid rgb(232, 232, 232); 
-			box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.05);
+			width: 28%;
+			position: fixed;
+			right: 56px;
+			margin-top: 40px;
 		}
 		.anchor-button {
 			    background: #4e9caf none repeat scroll 0 0;
@@ -38,27 +74,56 @@
 			color: white;
 		}
 		.post-skills {
-				border-top: 1px solid #c7c7c7;
-			    color: rgb(137, 137, 137);
-			    display: block;
-			    margin-top: 10px;
+			border-top: 1px solid #c7c7c7;
+		    color: rgb(137, 137, 137);
+		    display: block;
+		    margin-top: 10px;
 
-			}
-			.background {
-				text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: #686868;
-			}
-			.skill-wrap {
-				display: block; margin: 8px 0px;
-				text-align: center;
-			}
-			.back-text {
-			background-color: #e9eaec;
+		}
+		.background {
+			text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: #686868;
+		}
+		.skill-wrap {
+			display: block; margin: 8px 0px;
+			text-align: center;
+		}
+		.back-text {
+			background-color: #fff;
+			padding: 0 9px;
 
-			}
-			.main-skills {
-				font-size: 13px;
-				color: #8d8d8d;
-			}
+		}
+		.main-skills {
+			font-size: 14px;
+			color: #8d8d8d;
+		}
+		.post-detail-card {
+
+		}
+		.post-detail {
+			width: 58%;
+		    display: inline-block;
+		    float: left;
+		    margin-left: 37px;
+		    text-align: left;
+		}
+		.side-float-btn {
+			background-color: rgb(78, 156, 175); */
+		    font-size: 19px;
+		    margin-top: 16px;
+		    width: 100%;
+		}
+		.post-info {
+			background-color: #fff;
+		    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		    margin: 9px 0;
+		    border: 1px solid rgba(0,0,0,.09);
+		    border-radius: 3px;
+		    padding: 16px;
+		}
+		.suggest-vote-area {
+			display: inline-block;
+			float: left;
+		}
 
 		@media only screen and (max-width: 768px) {
 			/* For mobile phones: */
@@ -67,12 +132,14 @@
 				position: unset !important;
 				float: unset !important;
 				display: block !important;
+				margin-top: 0;
 
 			}
 			.post-detail {
 				width: 100% !important; margin-top: 12px !important;
 				float: unset !important;
 				display: block !important;
+				margin-left: 0px;
 			}
 			.ui-widget.ui-corner-top.ui-chatbox {
 				display: none !important;
@@ -90,7 +157,7 @@
 
 <div style="">
 	
-	<div style="width: 25%; <%= @post.user == current_user ? '' : 'position: fixed;' %>" class="participated">
+	<div class="participated">
 
 				<% if @post.is_member?(current_user) %>
 					<div style="margin-bottom: 30px;">
@@ -110,7 +177,7 @@
 											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" style="margin-right: 10px;" href="javascript:void(0)" class="js_reject_call">
 												<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" style="color: red; font-size: 18px;"></i>
 											</a>
-											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true">
+											<a href="<%= post_invite_path(@post, i, :status => 2) %>" data-method="put" data-remote="true" class="ajax-loader">
 												<i class="remove glyphicon glyphicon-ok glyphicon-white" style="color: green; font-size: 18px;"></i>
 											</a>
 										</span>
@@ -124,10 +191,10 @@
 				<% end %>
 
 				<div>
-					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participating members</b>
+					<div style="padding: 16px; text-align: left;"><b>Participating members</b>
 					<% if @post.is_member?(current_user) %>
 						<% if @post.members.count > 1 %>
-							<span style="position: relative; display: block; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('#chat-pop-up-post-id-' + @post.id.to_s), class: "show_chat ga_show_chat anchor-button" %>
+							<span style="position: relative; font-size: 12px;"><%=  link_to "Open Chat", post_chats_path(@post), onclick: on_click_js_event('#chat-pop-up-post-id-' + @post.id.to_s), class: "show_chat ga_show_chat anchor-button" %>
 								<% if @post.unread_messages_count(current_user) > 0 %>
 											<span class="notify_count show-page"><%= @post.unread_messages_count(current_user) %></span>
 										<% end %>
@@ -157,56 +224,87 @@
 						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
 					</a>
                 <% else %>
-                   	<div id="invite-req" style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" >Interested? join this post!</div>
+                   	<div id="invite-req" class="btn btn-primary side-float-btn" >Interested? join this post!</div>
                    	<div style="margin: 12px; text-align: center"><div>OR</div></div>
                    	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
-						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
+						<div class="btn btn-primary side-float-btn">Create new learning post</div>
 					</a>
                 <% end %>
             <% elsif !@post.is_member?(current_user) %>
 
-				<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; margin-top: 16px; border-radius: 14px; cursor: pointer;" > Join request sent already</div>
+				<div class="btn btn-primary side-float-btn"> Join request sent already</div>
 			<% end %>
 		<% end %>
 
 	</div>
 	
-	<div class="post-detail" style="width: 69%; display: inline-block; float: right; margin-right: 37px; text-align: left;">
+	<div class="post-detail">
 		
-		<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
-		<% if @post.user == current_user && !@post.is_closed? %>
-			<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
-				Mark as closed
-			<% end %>
-		<% end %>
-		<hr>
-		<div class="post-area">
+		<div class="post-detail-card">
+			<div class="post-info">
+				<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
+				<% if @post.user == current_user && !@post.is_closed? %>
+					<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
+						Mark as closed
+					<% end %>
+				<% end %>
+				<hr>
+				<div class="post-area">
 
-			<div class="vote-area">
-				<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , :title => "Post is clear and shows dedication for learning", remote: true, method: :post%>
-				<br>
-				<div class="vote-count" ><%= @post.total_vote_count %></div>
-				
-				<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", :title => "Post is not clear and does not shows dedication for learning" , remote: true, method: :post %>
-			</div>
-			<div > 
-				<p style="margin-bottom: 20px; display: inline;">
-					<%= markdown(@post.message) %>
-				</p>
-				<span style="display: block;">
-					<span class="post-skills"></span>
-					<span class="skill-wrap">
-						<span class="background">
-							<span class="back-text">Background</span>
+					<div class="vote-area" id="post-vote">
+						<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , :title => "Post is clear and shows dedication for learning", remote: true, method: :post%>
+						<br>
+						<div class="vote-count" ><%= @post.total_vote_count %></div>
+						
+						<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", :title => "Post is not clear and does not shows dedication for learning" , remote: true, method: :post %>
+					</div>
+					<div style="width: 100%;"> 
+						<div style="margin-bottom: 20px; font-size: 16px; display: inline;">
+							<%= markdown(@post.message) %>
+						</div>
+						<span style="display: block; margin-top: 20px;">
+							<span class="post-skills"></span>
+							<span class="skill-wrap">
+								<span class="background">
+									<span class="back-text">Background</span>
+								</span>
+								<span class="main-skills">
+									<%= @post.skills.first.title rescue "NA" %>
+								</span>
+							</span>			
+									
 						</span>
-						<span class="main-skills">
-							<%= @post.skills.first.title rescue "NA" %>
-						</span>
-					</span>			
-							
-				</span>
+					</div>
+					
+				</div>
+				<div class="comment-section js_comment_sec">
+					<div class="comment-info">
+						<i class="fa fa-caret-down js_caret_down" aria-hidden="true"></i>
+						<i class="fa fa-caret-up js_caret_up" aria-hidden="true" style="display: none;"></i>
+						<span><%= @post.comments.count %></span> <span> Comments</span>
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+
+
+				<div style="padding: 16px; text-align: left; background-color: #fafafa; display: none;" class="js_all_comments">
+					<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
+					<div id="comment-list">
+						<% @post.comments.reorder(id: :asc).each do |c| %>
+							<%= render :partial => 'single_chat', :locals => {:comment => c} %>
+						<% end %>
+					</div>
+
+
+					<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+							<div class="form-group">
+							<%= f.text_field :message, :class => "form-control", :id => "comment", :style => "width: 560px; display: inline;" %>
+							<%= f.submit "Comment", :class => "btn-primary ajax-loader" %>
+							</div>
+						
+					<% end %>
+				</div>
 			</div>
-			
 		</div>	
 
 		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
@@ -227,7 +325,7 @@
 		<% if @post.members.length > 1 %>
 
 			<div style="padding: 16px; text-align: left; margin-top: 15px;">
-				<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members</p>
+				<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Participating members detail</p>
 				<div>
 					<% @post.accepted_invites.each do |invite| %>
 						<div style="margin-bottom: 10px;">
@@ -251,23 +349,38 @@
 
 
 
-		<div style="padding: 16px; text-align: left;">
-			<p style="font-weight: bold; border-bottom: 1px solid rgb(168, 168, 168);">Comments</p>
-			<div id="comment-list">
-				<% @post.comments.reorder(id: :asc).each do |c| %>
-					<%= render :partial => 'single_chat', :locals => {:comment => c} %>
+
+		<div class="suggest-block">
+			<p style="font-weight: bold;">Learning Suggestions</p>
+			<div id="suggestion-list">
+				<% @post.suggestions.reorder(id: :asc).each do |s| %>
+					
+						
+						<%= render :partial => 'single_suggestion', :locals => {:suggest => s} %>
+
 				<% end %>
 			</div>
 
 
-			<%= form_for Comment.new, :url => post_comments_path(@post), remote: true do |f| %>
+			<%= form_for Suggestion.new, :url => suggestion_post_path(@post), remote: true do |f| %>
 					<div class="form-group">
-					<%= f.text_field :message, :class => "form-control", :id => "comment", :style => "width: 600px; display: inline;" %>
-					<%= f.submit "Comment", :class => "btn-primary ajax-loader" %>
+					<%= f.text_area :message, :class => "form-control #{current_user ? '' : 'js_join_msg'}", :id => "suggestion", :style => "display: inline; min-height: 60px;", :placeholder => "Any suggestion relevant to this learning interest?", :"data-provide" => "markdown" %>
+					<%= f.submit "Submit", :class => "btn-primary ajax-loader", :style => "display: block;", :disabled => current_user.blank? %>
 					</div>
 				
 			<% end %>
 		</div>
+
+
+
+
+
+
+
+
+
+
+
 		</div>
 
 	</div>
@@ -374,4 +487,17 @@
 	$('#comment-list').linkify({
     	target: "_blank"
 	});
+	$('.js_comment_sec').click(function() {
+		if ($('.js_all_comments').is(':visible')) {
+			$('.js_caret_up').hide();
+			$('.js_caret_down').show();
+			$('.js_all_comments').slideUp(500);
+		}
+		else {
+			$('.js_caret_up').show();
+			$('.js_caret_down').hide();
+			$('.js_all_comments').slideDown(500);
+		}
+
+	})
 </script>

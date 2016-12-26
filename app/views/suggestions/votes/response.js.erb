@@ -1,0 +1,21 @@
+ var sugg_id = "#sugg-vote-<%= @votable.id %> ";
+ var voteCount = parseInt($(sugg_id + ".vote-count")[0].innerHTML);
+<% if @vote.vote_type == Vote::TYPE[:upvote] %>
+	$(sugg_id + ".upvote").addClass("upvoted");
+	$(sugg_id + ".downvote").removeClass("downvoted");
+	$(sugg_id + ".vote-count")[0].innerHTML = voteCount + 1;
+
+<% elsif @vote.vote_type == Vote::TYPE[:downvote] %>
+	$(sugg_id + ".downvote").addClass("downvoted");
+	$(sugg_id + ".upvote").removeClass("upvoted");
+	$(sugg_id + ".vote-count")[0].innerHTML = voteCount - 1;
+<% else %> 
+	if ($(sugg_id + ".downvote").hasClass('downvoted')) {
+		$(sugg_id + ".vote-count")[0].innerHTML = voteCount + 1;	
+		$(sugg_id + ".downvote").removeClass("downvoted");
+	} else {
+		$(sugg_id + ".vote-count")[0].innerHTML = voteCount - 1;	
+		$(sugg_id + ".upvote").removeClass("upvoted");
+	}
+
+<% end %>	

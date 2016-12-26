@@ -1,0 +1,16 @@
+<div class="suggestion-wrap">
+	<div class="suggest-vote-area" id="sugg-vote-<%= suggest.id %>">
+								<%= link_to 'upvote', suggestion_votes_path(suggest, :vote_type => 1), :class => "upvote arrow-up #{suggest.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , :title => "Good suggestion", remote: true, method: :post%>
+								<br>
+								<div class="vote-count" ><%= suggest.total_vote_count %></div>
+								
+								<%= link_to 'downvote', suggestion_votes_path(suggest, :vote_type => 2), :class => "downvote arrow-down #{suggest.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", :title => "Bad suggestion" , remote: true, method: :post %>
+							</div>
+	<div style="text-align: left; margin-bottom: 27px;" class="suggest-content">
+							
+							
+							<div style="margin-left: 16px;"><%= markdown(suggest.message) %></div>
+						</div>
+						<div style="clear: both;"></div>
+							<div style="color: rgb(130, 130, 130); font-size: 11px; text-align: right;"><%= suggest.user.name %>, <%= time_ago_in_words(suggest.created_at) %></div>
+</div>

@@ -1,0 +1,6 @@
+$('#suggestion-list').append("<%= escape_javascript render :partial => 'posts/single_suggestion', :locals => {:suggest => @suggestion} %>");
+$('#suggestion').val('');
+
+$('#suggestion-list').linkify({ //TODO: only select last
+    	target: "_blank"
+});
