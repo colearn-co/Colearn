@@ -4,6 +4,30 @@
 		.user-post-ic {
 			float: left;
 		}
+		.suggest-block {
+			background-color: #fff;
+			box-shadow: 0 1px 4px rgba(0,0,0,.04);
+			margin: 9px 0;
+			border: 1px solid rgba(0,0,0,.09);
+			border-radius: 3px;
+			padding: 16px; text-align: left;
+		}
+		.suggest-vote-area {
+			line-height: 1;
+		}
+		.suggestion-wrap {
+			padding-bottom: 14px;
+    		border-bottom: 1px solid #c7c7c7;
+    		margin-top: 37px;
+		}
+		.suggestion-wrap:last-child {
+			border-bottom: none;
+		}
+		.suggest-content {
+			float: left;
+			text-align: left;
+			max-width: 91%;
+		}
 		.comment-info {
 			float: right;
 			color: #0ab575;
@@ -69,7 +93,7 @@
 
 		}
 		.main-skills {
-			font-size: 13px;
+			font-size: 14px;
 			color: #8d8d8d;
 		}
 		.post-detail-card {
@@ -96,6 +120,10 @@
 		    border-radius: 3px;
 		    padding: 16px;
 		}
+		.suggest-vote-area {
+			display: inline-block;
+			float: left;
+		}
 
 		@media only screen and (max-width: 768px) {
 			/* For mobile phones: */
@@ -111,6 +139,7 @@
 				width: 100% !important; margin-top: 12px !important;
 				float: unset !important;
 				display: block !important;
+				margin-left: 0px;
 			}
 			.ui-widget.ui-corner-top.ui-chatbox {
 				display: none !important;
@@ -222,7 +251,7 @@
 				<hr>
 				<div class="post-area">
 
-					<div class="vote-area">
+					<div class="vote-area" id="post-vote">
 						<%= link_to 'upvote', post_votes_path(@post, :vote_type => 1), :class => "upvote arrow-up #{@post.user_vote_type(current_user) == Vote::TYPE[:upvote] ? 'upvoted' : ''}" , :title => "Post is clear and shows dedication for learning", remote: true, method: :post%>
 						<br>
 						<div class="vote-count" ><%= @post.total_vote_count %></div>
@@ -230,9 +259,9 @@
 						<%= link_to 'downvote', post_votes_path(@post, :vote_type => 2), :class => "downvote arrow-down #{@post.user_vote_type(current_user) == Vote::TYPE[:downvote] ? 'downvoted' : ''}", :title => "Post is not clear and does not shows dedication for learning" , remote: true, method: :post %>
 					</div>
 					<div style="width: 100%;"> 
-						<p style="margin-bottom: 20px; display: inline;">
+						<div style="margin-bottom: 20px; font-size: 16px; display: inline;">
 							<%= markdown(@post.message) %>
-						</p>
+						</div>
 						<span style="display: block; margin-top: 20px;">
 							<span class="post-skills"></span>
 							<span class="skill-wrap">
@@ -314,6 +343,39 @@
 
 			</div>
 		<% end %>
+
+
+
+
+
+
+
+		<div class="suggest-block">
+			<p style="font-weight: bold;">Learning Suggestions</p>
+			<div id="suggestion-list">
+				<% @post.suggestions.reorder(id: :asc).each do |s| %>
+					
+						
+						<%= render :partial => 'single_suggestion', :locals => {:suggest => s} %>
+
+				<% end %>
+			</div>
+
+
+			<%= form_for Suggestion.new, :url => suggestion_post_path(@post), remote: true do |f| %>
+					<div class="form-group">
+					<%= f.text_area :message, :class => "form-control #{current_user ? '' : 'js_join_msg'}", :id => "suggestion", :style => "display: inline; min-height: 60px;", :placeholder => "Any suggestion relevant to this learning interest?", :"data-provide" => "markdown" %>
+					<%= f.submit "Submit", :class => "btn-primary ajax-loader", :style => "display: block;", :disabled => current_user.blank? %>
+					</div>
+				
+			<% end %>
+		</div>
+
+
+
+
+
+
 
 
 

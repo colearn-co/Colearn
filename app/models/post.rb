@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
 	has_many :skills
 	has_many :tags
 	has_many :user_chat_infos
+	has_many :suggestions
 	scope :order_by_recency, -> {order(id: :desc)}
 	scope :published, -> { where.not(:publish_status => PUBLISH_STATUS[:unpublished]) }
 	

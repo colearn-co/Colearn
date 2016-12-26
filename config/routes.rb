@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     member do
       post 'close'
       get 'fetch_chat_info'
+      post 'suggestion'
     end
     resources :comments
     resources :votes
@@ -20,6 +21,10 @@ Rails.application.routes.draw do
       end
     end
     resources :invites
+  end
+
+  resources :suggestion do
+    resources :votes
   end
 
   post 'feedback' => 'home#feedback'

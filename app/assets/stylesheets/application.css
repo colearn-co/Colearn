@@ -380,10 +380,20 @@ a.login-anchor:hover {
     border-radius: 3px;
     padding: 16px;
 }
+.account-area .user-img {
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .external-links a {
       display: inline-block; width: 48%;
+    }
+    .account-area .user-img {
+        height: 26px;
+        width: 26px;
+        border-radius: 20px;
     }
 
     #login-div.modal .modal-content {
