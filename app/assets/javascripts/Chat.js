@@ -48,7 +48,10 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	function scrollBottom() {
 		$(".messages").scrollTop($(".messages")[0].scrollHeight); //TODO: add animation.
 		//$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
-	}	
+	}
+	$(window).resize(function() {
+		scrollBottom();
+	});	
 	scrollBottom(); 
 	window.onload = function() {
     	scrollBottom(); // scroll bottom again after all images are loaded.
@@ -111,9 +114,8 @@ function Chat(currentUser, users, options, newMsgCallback) {
 		var lastElem = $('.messages .message-html:last');
 		if (lastElem.data("uid") == message.user.id && message.time - parseInt(lastElem.data('time')) < 60 *1000) {
 			lastElem.data('time', message.time);
-			lastElem.find('.text-msg-area').append(message.getMessageContent())
-		}
-		else {
+			lastElem.find('.text-msg-area').append(message.getMessageContent());
+		} else {
 			addHtmlToChatBox(getMessageHtml(message));
 		}
 		$('.timeago').timeago('refresh');
