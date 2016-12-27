@@ -1,5 +1,5 @@
 <% hidden = local_assigns[:hidden] || false %>
-<% if post.is_member?(current_user) && post.members.count > 1 %>
+<% if post.is_member?(current_user) %>
 
 	<div id="chat-pop-up-post-id-<%= post.id %>" data-hidden="<%= hidden %>" style="<%= hidden ? 'display: none;' : ''; %>" class="chat-pop-up"> <!--TODO: move this helper -->
 		<div class="chat-pop-up-padding-placeholder"></div>

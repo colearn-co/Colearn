@@ -10,7 +10,7 @@ class ClientChat
 	def self.all_client_chats(post, params)
 		chats = post.chats.get_by_params(params)
 		members = post.members
-		ClientChat.new(:members => members, :chats => chats)
+		ClientChat.new(:members => members + [User.colearn_bot], :chats => chats)
 	end
 
 	def client_chats_json(post)

@@ -1,0 +1,1 @@
+# inti global project variables here
