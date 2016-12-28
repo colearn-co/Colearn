@@ -47,6 +47,11 @@ class Chat < ActiveRecord::Base
     end
 
     def chat_followup
-        self.chatable.chat_followup
+        begin
+            self.chatable.chat_followup
+        rescue => e
+            ExceptionNotifier.notify_exception(e)
+            ExceptionNotifier.notify_exception(e, data: { message: "chat followup error" })            
+        end
     end
 end
