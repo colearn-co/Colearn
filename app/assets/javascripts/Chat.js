@@ -15,6 +15,9 @@ function Chat(currentUser, users, options, newMsgCallback) {
 	    preventNewScroll = false;
 
 	$textArea.focus();
+	$textArea.click(function() {
+		scrollBottom();
+	});
 	$('.messages').scroll(function() {
 	    var pos = $('.messages').scrollTop();
 	    if (pos >= 0 && pos < 8) {
@@ -46,13 +49,9 @@ function Chat(currentUser, users, options, newMsgCallback) {
 
 	//// SCROLL BOTTOM	
 	function scrollBottom() {
-		$(".messages").scrollTop($(".messages")[0].scrollHeight); //TODO: add animation.
-		//$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
+		$(".messages").stop().animate({ scrollTop: $('.messages').prop("scrollHeight") }, 600);
 	}
-	$(window).resize(function() {
-		scrollBottom();
-	});	
-	scrollBottom(); 
+	
 	window.onload = function() {
     	scrollBottom(); // scroll bottom again after all images are loaded.
 	};
