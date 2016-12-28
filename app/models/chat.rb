@@ -4,6 +4,7 @@ class Chat < ActiveRecord::Base
 	validates :message, presence: true,
                     length: { minimum: 1 }
     has_one :chat_resource
+    after_create :chat_followup
 
     def self.get_by_params(params)
     	res = self.all
@@ -43,5 +44,9 @@ class Chat < ActiveRecord::Base
                 }
             }
         }
+    end
+
+    def chat_followup
+        self.chatable.chat_followup
     end
 end

@@ -37,6 +37,8 @@ gem "paperclip", "~> 4.3"
 gem 'aws-sdk', '1.66.0'
 gem 'remotipart', '~> 1.2'
 gem "font-awesome-rails"
+gem 'sidekiq', '4.1.1'
+gem 'redis', '3.2.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,0 +1,9 @@
+<div>
+	<p>You have unread chats for the post <b><%= @post.title %></b> checkout <a href="<%= post_chats_path(@post) %>">here</a></p>
+
+	<div>
+		<% @post.chats.last(5).each do |c| %>
+			<div><b><%= c.user.name %>: </b> <span><%= c.message %></span></div>
+		<% end %>
+	</div>
+</div>
