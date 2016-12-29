@@ -65,10 +65,12 @@ class User < ActiveRecord::Base
 	def self.find_or_create_user_auth(authentication, data, oauth_token, referrer) 
 		registered_user = authentication.user || User.where(:email => data[:email]).where.not(:email => nil).first
 		if !registered_user
-			registered_user = User.create(name: data[:name],
+			registered_user = User.new(name: data[:name],
 			email: data[:email], password: Devise.friendly_token[0,20],
 			:referrer => referrer
 			)
+			registered_user.skip_confirmation!
+			registered_user.save!
 		end
 		authentication.user = registered_user
 		authentication.save!
