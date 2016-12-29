@@ -7,7 +7,6 @@ class Post < ActiveRecord::Base
 		:unpublished => 1,
 		:published => 2
 	}
-	FOLLOWUP_TIME_SPAN = 30.seconds
 	belongs_to :user
 	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
