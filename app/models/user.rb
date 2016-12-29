@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email
  	has_many :user_chat_infos
+ 	has_and_belongs_to_many :roles
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable, :confirmable,
@@ -75,5 +76,9 @@ class User < ActiveRecord::Base
 		authentication.user = registered_user
 		authentication.save!
 		registered_user
+	end
+
+	def is_admin?
+		!self.roles.admin.blank?
 	end
 end
