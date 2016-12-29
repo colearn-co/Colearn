@@ -1,3 +1,4 @@
+<%= render :partial => 'mail_header'%>
 <div>
 	<p>Hi <%= @to.name %>,</p>
 	<p>You are now joined to <b><%= @post.title %>.</b>
@@ -5,3 +6,4 @@
 	</p>
 
 </div>
+<%= render :partial => 'mail_footer'%>
