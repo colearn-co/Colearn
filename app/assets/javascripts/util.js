@@ -12,3 +12,14 @@
  for(var a in touch){d.addEventListener(a,touch[a],false);}
 })(document);
 
+
+var util = {};
+util.escapeHtml = function(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
+

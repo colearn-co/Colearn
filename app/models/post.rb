@@ -56,6 +56,10 @@ class Post < ActiveRecord::Base
 		end
 	end
 
+	def chatting_allowed?(usr)
+		!usr.is_admin? && self.members.include?(usr)
+	end
+
 	def user_visited_post_chat(user)
 		info = UserChatInfo.find_or_create_by(:user => user, :post => self)
 		info.update_attributes(:last_visited => Time.now)

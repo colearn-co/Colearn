@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email
  	has_many :user_chat_infos
+ 	has_and_belongs_to_many :roles
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable, :confirmable,
@@ -77,13 +78,19 @@ class User < ActiveRecord::Base
 	def self.find_or_create_user_auth(authentication, data, oauth_token, referrer) 
 		registered_user = authentication.user || User.where(:email => data[:email]).where.not(:email => nil).first
 		if !registered_user
-			registered_user = User.create(name: data[:name],
+			registered_user = User.new(name: data[:name],
 			email: data[:email], password: Devise.friendly_token[0,20],
 			:referrer => referrer
 			)
+			registered_user.skip_confirmation!
+			registered_user.save!
 		end
 		authentication.user = registered_user
 		authentication.save!
 		registered_user
+	end
+
+	def is_admin?
+		!self.roles.admin.blank?
 	end
 end

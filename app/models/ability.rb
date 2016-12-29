@@ -2,6 +2,13 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+
+
+    if user.is_admin?
+      can :manage, :all
+    end
+
+
     can [:close], Post do |p|
         p.user == user
     end
@@ -9,6 +16,11 @@ class Ability
     can [:fetch_chat_info], Post do |p|
         p.members.include?(user)
     end
+
+    can [:resource_download_url], Chat do |c|
+        c.chatable.chatting_allowed?(user)
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
