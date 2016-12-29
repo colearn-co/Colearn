@@ -1,7 +1,11 @@
 <div>
 	<p>Hi <%= @to.name %>,</p>
-	<p><%= @from.name %> wants to join the post <b><%= @post.title %></b>.
-	Click <a href="<%= post_url(@post) %>">here</a>.
+	<p><%= @from.name %> wants to join the learning post <a href="<%= post_url(@post) %>"><b><%= @post.title %></b></a>.
 	</p>
+	<b><p> Message from <%= @from.name %></p></b>
+	<i><p><%= @post.getUserInvite(@from).message %></p></i>
+
+
+	<p> <a href="<%= post_url(@post) %>"> Click here </a> to <b>Accept / Reject</b> the request.</p>
 
 </div>

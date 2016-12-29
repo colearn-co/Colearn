@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+	ONLINE_STATUS = {
+		:online => 'online',
+		:offline => 'offline'
+	}
 	has_many :posts
 	has_many :votes
 	has_many :comments
@@ -29,6 +33,10 @@ class User < ActiveRecord::Base
 		self.user_chat_infos.where(:post => post).first
 	end
 
+	def is_unsubscribed?
+		Unsubscribe.where(:email => self.email).count > 0
+	end
+
 
 	def self.find_for_auth2(access_token, referrer = nil)
 		data = access_token.info
@@ -56,7 +64,11 @@ class User < ActiveRecord::Base
 
 	def online_status(post)
 		time = self.user_chat_infos.where(:post => post).first.last_visited rescue nil
-		Time.now.to_i - time.to_i <= 30 ? "online" : "offline"
+		Time.now.to_i - time.to_i <= 30 ? ONLINE_STATUS[:online] : ONLINE_STATUS[:offline]
+	end
+
+	def is_online?(post)
+		self.online_status(post) == ONLINE_STATUS[:online]
 	end
 
 	def last_visited(post)

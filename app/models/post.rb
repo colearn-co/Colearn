@@ -34,6 +34,14 @@ class Post < ActiveRecord::Base
 	before_create :fill_publish_status
 
 	accepts_nested_attributes_for :skills
+
+	def getUserInvite(user) 
+		self.invites.find_by(:user => user)
+	end
+
+	def self.min_followup_time
+		24.hours.to_i
+	end
 	
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
@@ -98,5 +106,44 @@ class Post < ActiveRecord::Base
 			self.publish_status = PUBLISH_STATUS[:published]
 		end
 	end
+
+	def self.chat_followup
+		Post.includes(:members).find_each(batch_size: 10) do |post|
+			post.members.each do |mem|
+
+				next if mem.is_unsubscribed?
+
+				last_chat = post.chats.last
+				if last_chat && last_chat.created_at.to_i > mem.last_visited(post).to_i &&
+					last_chat.user_id != mem.id &&
+				 	Time.now.to_i - mem.last_visited(post).to_i > Post.min_followup_time && 
+					Time.now.to_i - post.last_followup_time(mem) > Post.min_followup_time
+					puts "sending mail to #{mem.email}"
+					post.send_followup_mail(mem)					
+				end
+			end
+		end
+	end
+
+    def send_followup_mail(current_user)
+    	UserMailer.post_chat_followup(current_user, self).deliver
+    	update_last_followup_time(current_user)
+    end
+
+    def user_followup_key(usr)
+    	"#{self.id}-#{usr.id}"
+    end
+
+    def last_followup_time_key
+        RedisKeys::LAST_MAIL_FOLLOWUP_TIME
+    end
+
+    def last_followup_time(current_user)
+    	$redis.hget(self.last_followup_time_key, user_followup_key(current_user)).to_i
+    end
+
+    def update_last_followup_time(current_user)
+    	$redis.hset(self.last_followup_time_key, user_followup_key(current_user), Time.now.to_i)
+    end
 
 end
