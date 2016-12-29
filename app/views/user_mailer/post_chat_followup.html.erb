@@ -1,9 +1,24 @@
+<% content_for :head do %>
+	<style type="text/css">
+		.message {
+			overflow: hidden;
+			max-width: 300px;
+			display: inline-block;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	</style>
+<% end %>
 <div>
-	<p>You have unread chats for the post <b><%= @post.title %></b> checkout <a href="<%= post_chats_path(@post) %>">here</a></p>
-
-	<div>
+	<p>Hi <%= @user.name %>,</p>
+	<p>You have unread chats from  <b><%= @post.title %></b></p>
+	<p>Checkout <a href="<%= post_chats_url(@post) %>">here</a></p>
+	<div><p>Quick snapshot:</p></div>
+	<table style="display: inline-block; padding: 13px; border: 1px solid gray; line-height: 1.5;">
 		<% @post.chats.last(5).each do |c| %>
-			<div><b><%= c.user.name %>: </b> <span><%= c.message %></span></div>
+			<tr><td><span><b><%= c.user.name %>: </b></span></td> <td><span class="message"><%= c.message %></span></td></tr>
 		<% end %>
-	</div>
+	</table>
+	<p><a href="<%= post_chats_url(@post) %>"> Click here for full conversations</a></p>
+	<div><p>Thanks,<br>Colearn Team</p></div>
 </div>

@@ -4,7 +4,6 @@ class Chat < ActiveRecord::Base
 	validates :message, presence: true,
                     length: { minimum: 1 }
     has_one :chat_resource
-    after_create :chat_followup
 
     def self.get_by_params(params)
     	res = self.all
@@ -44,14 +43,5 @@ class Chat < ActiveRecord::Base
                 }
             }
         }
-    end
-
-    def chat_followup
-        begin
-            self.chatable.chat_followup
-        rescue => e
-            ExceptionNotifier.notify_exception(e)
-            ExceptionNotifier.notify_exception(e, data: { message: "chat followup error" })            
-        end
     end
 end

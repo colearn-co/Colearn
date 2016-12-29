@@ -7,6 +7,7 @@ class Post < ActiveRecord::Base
 		:unpublished => 1,
 		:published => 2
 	}
+	FOLLOWUP_TIME_SPAN = 30.seconds
 	belongs_to :user
 	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
@@ -99,34 +100,22 @@ class Post < ActiveRecord::Base
 		end
 	end
 
-	def chat_followup
-		self.members.each do |mem|
-			last_followup_time = last_followup_schedule_time(mem)
-			if !mem.is_online?(self) && !chat_followup_scheduled?(mem)
-				self.followup_delay(5.minutes.to_i, mem).initiate_chat_followup(mem, last_followup_time)
+	def self.chat_followup
+		Post.includes(:members).find_each(batch_size: 10) do |post|
+			post.members.each do |mem|
+				last_chat = post.chats.last
+				if last_chat && last_chat.created_at.to_i > mem.last_visited(post).to_i &&
+				 	Time.now.to_i - mem.last_visited(post).to_i > Post.min_followup_time && 
+					Time.now.to_i - post.last_followup_time(mem) > Post.min_followup_time
+					post.send_followup_mail(mem)					
+				end
 			end
 		end
 	end
 
-	def initiate_chat_followup(current_user, last_followup_time)
-		trigger_time = self.chats.reorder(:id).last.created_at.to_i
-	    last_visited = current_user.last_visited(self).to_i
-       	if last_visited < trigger_time
-       		next_schedule = [wait_time_from(current_user, last_followup_time), wait_time_from_last_visit(current_user)].max
-
-       		if next_schedule > 0
-       			followup_delay(next_schedule, current_user).initiate_chat_followup(current_user, last_followup_time)
-    		else
-    			send_followup_mail(current_user)
-    		end
-    	else
-    		reset_followup_time(current_user)
-        end
-    end
-
-
     def send_followup_mail(current_user)
     	UserMailer.post_chat_followup(current_user, self).deliver
+    	update_last_followup_time(current_user)
     end
 
     def user_followup_key(usr)
@@ -137,37 +126,12 @@ class Post < ActiveRecord::Base
         RedisKeys::LAST_MAIL_FOLLOWUP_TIME
     end
 
-
-    def followup_delay(time, user)
-    	set_followup_schedule_time(user, time)
-    	delay_for(time)
-    end
-
-    
-
-
-    def reset_followup_time(current_user)
-    	$redis.hset(self.last_followup_time_key, user_followup_key(current_user), current_user.last_visited(self).to_i)
-    end
-
-    def chat_followup_scheduled?(current_user)
-    	last_followup_schedule_time(current_user) >= Time.now.to_i
-    end
-
-    def last_followup_schedule_time(current_user)
+    def last_followup_time(current_user)
     	$redis.hget(self.last_followup_time_key, user_followup_key(current_user)).to_i
     end
 
-    def set_followup_schedule_time(current_user, time_span)
-    	$redis.hset(self.last_followup_time_key, user_followup_key(current_user), Time.now.to_i + time_span)
-    end
-
-    def wait_time_from(current_user, last_followup_time)    
-    	[0, Post.min_followup_time - (Time.now.to_i - last_followup_time)].max
-    end
-
-    def wait_time_from_last_visit(current_user)
-    	[0, Post.min_followup_time - (Time.now.to_i - current_user.last_visited(self).to_i)].max
+    def update_last_followup_time(current_user)
+    	$redis.hset(self.last_followup_time_key, user_followup_key(current_user), Time.now.to_i)
     end
 
 end
