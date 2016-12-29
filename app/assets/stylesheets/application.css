@@ -272,6 +272,7 @@ display : none;
 .show-page.notify_count {
     font-size: 10px;
     top: -3px;
+    text-align: center;
 }
 .external-label {
     font-weight: bold;

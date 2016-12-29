@@ -47,6 +47,20 @@ class Post < ActiveRecord::Base
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end
 
+	def create_user_chat(usr, params)
+		chat = Chat.new(params)
+  		chat.user = usr
+
+  		self.chats.push(chat)# @chatable.chats << @chat= Chat.new(chat_params)
+  		chat.save!
+
+  		if !params[:avatar].blank?
+  			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => chat)
+  			chat_resource.save!
+  		end
+        chat
+    end
+
 	def unread_messages_count(usr)
 		begin
 			last_visited = self.user_chat_infos.where(:user => usr).first.last_visited

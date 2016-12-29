@@ -37,6 +37,7 @@ gem "paperclip", "~> 4.3"
 gem 'aws-sdk', '1.66.0'
 gem 'remotipart', '~> 1.2'
 gem "font-awesome-rails"
+gem 'rails-observers', '0.1.2'
 gem 'sidekiq', '4.1.1'
 gem 'redis', '3.2.2'
 gem 'gemoji', '3.0.0'

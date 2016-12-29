@@ -23,5 +23,6 @@ module Colearn
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.autoload_paths << Rails.root.join('app/modules')
     config.active_record.raise_in_transactional_callbacks = true
+    config.active_record.observers = :bot_observation
   end
 end

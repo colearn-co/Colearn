@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
 	def create
 		current_user.posts << @post = Post.new(post_params)
-		redirect_to root_path
+		redirect_to post_chats_path(@post)
 	end
 
 	def suggestion

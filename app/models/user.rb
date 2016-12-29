@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+	BOT = {
+		:email => "bot@colearn.xyz"
+	}
+	@@colearn_bot = User.find_by(:email => BOT[:email])
+  	cattr_reader :colearn_bot
 	ONLINE_STATUS = {
 		:online => 'online',
 		:offline => 'offline'
@@ -21,7 +26,11 @@ class User < ActiveRecord::Base
 	 	:recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
 
 	include Gravatarify::Base
-	after_create :send_welcome_notification
+	after_create :send_welcome_notification, :unless => :welcome_mail_discard
+
+	def is_bot?
+		self.email == BOT[:email]
+	end
 
 	def send_welcome_notification
 		if (!self.email.blank?) 
@@ -63,6 +72,7 @@ class User < ActiveRecord::Base
 	end
 
 	def online_status(post)
+		return 'online' if self.is_bot?
 		time = self.user_chat_infos.where(:post => post).first.last_visited rescue nil
 		Time.now.to_i - time.to_i <= 30 ? ONLINE_STATUS[:online] : ONLINE_STATUS[:offline]
 	end
@@ -90,6 +100,10 @@ class User < ActiveRecord::Base
 		registered_user
 	end
 
+	def welcome_mail_discard
+		self.email == BOT[:email]
+	end
+	
 	def is_admin?
 		!self.roles.admin.blank?
 	end

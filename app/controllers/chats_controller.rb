@@ -26,19 +26,12 @@ class ChatsController < ApplicationController
 
 	def create
 		@chatable = find_chatable
+
 		if @chatable.chatting_allowed?(current_user)
-			@chat= Chat.new(chat_params)
-	  		@chat.user = current_user
-
-	  		@chatable.chats.push(@chat)# @chatable.chats << @chat= Chat.new(chat_params)
-	  		@chat.save!
-
-	  		if !params[:avatar].blank?
-	  			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => @chat)
-	  			chat_resource.save!
-	  		end
+			@chat = @chatable.create_user_chat(current_user, chat_params)
 	  		render :json => {:chat => @chat.as_json(Chat.json_info)}
 	  	end
+
 	end
 private
 	def find_chatable
