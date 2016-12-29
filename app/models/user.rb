@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
 		self.user_chat_infos.where(:post => post).first
 	end
 
+	def is_unsubscribed?
+		Unsubscribe.where(:email => self.email).count > 0
+	end
+
 
 	def self.find_for_auth2(access_token, referrer = nil)
 		data = access_token.info

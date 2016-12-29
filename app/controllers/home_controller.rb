@@ -9,4 +9,12 @@ class HomeController < ApplicationController
 		end
 	end
 
+	def unsubscribe
+		auth_key = Unsubscribe.unsunscribe_key(params[:email])
+		if params[:auth_key] == auth_key
+			Unsubscribe.find_or_create_by(:email => params[:email])			
+		end
+		render :layout => false
+	end
+
 end

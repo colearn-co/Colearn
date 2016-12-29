@@ -106,10 +106,15 @@ class Post < ActiveRecord::Base
 	def self.chat_followup
 		Post.includes(:members).find_each(batch_size: 10) do |post|
 			post.members.each do |mem|
+
+				next if mem.is_unsubscribed?
+
 				last_chat = post.chats.last
 				if last_chat && last_chat.created_at.to_i > mem.last_visited(post).to_i &&
+					last_chat.user_id != mem.id &&
 				 	Time.now.to_i - mem.last_visited(post).to_i > Post.min_followup_time && 
 					Time.now.to_i - post.last_followup_time(mem) > Post.min_followup_time
+					puts "sending mail to #{mem.email}"
 					post.send_followup_mail(mem)					
 				end
 			end
