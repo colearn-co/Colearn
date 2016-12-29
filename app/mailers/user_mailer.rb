@@ -29,7 +29,7 @@ class UserMailer < ApplicationMailer
     def post_chat_followup(user, post)
     	@user = user
     	@post = post
-    	mail(to: @user.email, subject: "Colearn followup")
+    	mail(to: @user.email, subject: "[Colearn] New chat messages from learning post " + post.title)
     end
     
 end
