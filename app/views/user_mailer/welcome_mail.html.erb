@@ -1,9 +1,4 @@
-<div style="background-color: rgb(21, 11, 48);height: 56px;display: flex;margin-bottom: 8px;position: relative;top: 0;left: 0;width: 100%;z-index:1000;border-bottom: 1px solid #ddd;box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);">
-    <a style="height: 44px; padding: 0px;text-decoration: none;" href="http://colearn.xyz">
-        <img alt="CoLearn" style="max-width: 152px;border-radius: 17px;height: 44px;float: left;margin-top: 6px;margin-left: 6px;" src="<%= asset_url_h('colearn-logo.png') %>" >
-    	<span style="color: white; padding: 12px 12px; font-size: 19px;float: left;">Find people to learn with</span>
-    </a>	
-</div>
+<%= render :partial => 'mail_header'%>
 <div style="min-height: 150px;width: 100%">
 	<h2 style="">Welcome <%= @to.name %></h2>
 	<p>Thank you for signing up, We are really excited to have you on Colearn. Here is how you can start</p>
@@ -13,9 +8,7 @@
 	</ul>
 	<p style="opacity: .5">Replies on this mail are monitered so please feel free to reply for any comment, suggestions and feedback.</p>	
 </div>
-<div style="background-color: rgb(21, 11, 48);height: 56px;display: flex;margin-bottom: 8px;width: 100%;z-index:1000;border-bottom: 1px solid #ddd;box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);">
-    	
-</div>  
+<%= render :partial => 'mail_footer'%>
 
 	
 
