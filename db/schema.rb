@@ -16,6 +16,21 @@ ActiveRecord::Schema.define(version: 20161225140020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "ahoy_messages", force: :cascade do |t|
+    t.string   "token"
+    t.text     "to"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "mailer"
+    t.text     "subject"
+    t.datetime "sent_at"
+    t.datetime "opened_at"
+    t.datetime "clicked_at"
+  end
+
+  add_index "ahoy_messages", ["token"], name: "index_ahoy_messages_on_token", using: :btree
+  add_index "ahoy_messages", ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
+
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -83,20 +98,6 @@ ActiveRecord::Schema.define(version: 20161225140020) do
     t.integer  "status"
     t.integer  "publish_status"
   end
-
-  create_table "roles", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-  end
-
-  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
-  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.string   "title"
