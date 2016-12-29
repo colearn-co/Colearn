@@ -2,6 +2,7 @@ class ChatsController < ApplicationController
 	# TODO: check why this is needed?
 	before_filter :authenticate_user!, :only => [:new, :create, :resource_download_url]
 	skip_before_filter  :verify_authenticity_token
+	load_and_authorize_resource :only => [:resource_download_url]
 	layout "chat_layout"
 
 	def index
@@ -25,17 +26,19 @@ class ChatsController < ApplicationController
 
 	def create
 		@chatable = find_chatable
-		@chat= Chat.new(chat_params)
-  		@chat.user = current_user
+		if @chatable.chatting_allowed?(current_user)
+			@chat= Chat.new(chat_params)
+	  		@chat.user = current_user
 
-  		@chatable.chats.push(@chat)# @chatable.chats << @chat= Chat.new(chat_params)
-  		@chat.save!
+	  		@chatable.chats.push(@chat)# @chatable.chats << @chat= Chat.new(chat_params)
+	  		@chat.save!
 
-  		if !params[:avatar].blank?
-  			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => @chat)
-  			chat_resource.save!
-  		end
-  		render :json => {:chat => @chat.as_json(Chat.json_info)}
+	  		if !params[:avatar].blank?
+	  			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => @chat)
+	  			chat_resource.save!
+	  		end
+	  		render :json => {:chat => @chat.as_json(Chat.json_info)}
+	  	end
 	end
 private
 	def find_chatable
