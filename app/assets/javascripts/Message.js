@@ -31,7 +31,8 @@ Message.prototype.getTextMsgHtml = function() {
 	texts.forEach(function(text) {
 		if (text.length > 0) {
 			ret.push("<div class='text-msg'>" + 
-					emojione.toImage(linkifyHtml(text, {defaultProtocal: 'http'})) + //TODO: html encode text
+					emojione.toImage(linkifyHtml(util.escapeHtml(text), 
+						{defaultProtocal: 'http'})) + 
 				"</div>");	
 		}
 		
