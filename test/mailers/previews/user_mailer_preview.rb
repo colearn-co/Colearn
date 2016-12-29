@@ -15,4 +15,10 @@ class UserMailerPreview < ActionMailer::Preview
 		UserMailer.join_rejection_mail(invite);
 	end
 
+	def post_chat_followup
+		user = User.last;
+		post = Post.last;
+		UserMailer.post_chat_followup(user, post);
+	end
+
 end
