@@ -39,6 +39,8 @@ gem 'remotipart', '~> 1.2'
 gem "font-awesome-rails"
 gem 'sidekiq', '4.1.1'
 gem 'redis', '3.2.2'
+gem 'gemoji', '3.0.0'
+gem 'gemoji-parser', '1.3.1'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -29,7 +29,7 @@
 					</div>
 					<div style="display: inline;">
 						<b><%= c.user.name %></b> 
-						<div class="message"><%= c.message %></div>
+						<div class="message"><%= EmojiParser.detokenize c.message %></div>
 					</div>
 				</div>
 			<% end %>
