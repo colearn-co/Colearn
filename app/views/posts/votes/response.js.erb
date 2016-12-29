@@ -1,20 +1,20 @@
 var voteCount = parseInt($("#post-vote .vote-count")[0].innerHTML);
 <% if @vote.vote_type == Vote::TYPE[:upvote] %>
-	$("#post-vote .upvote").addClass("upvoted");
+	$("#post-vote .upvote").addClass("upvoted", 500);
 	$("#post-vote .downvote").removeClass("downvoted");
 	$("#post-vote .vote-count")[0].innerHTML = voteCount + 1;
 
 <% elsif @vote.vote_type == Vote::TYPE[:downvote] %>
 	$("#post-vote .downvote").addClass("downvoted");
-	$("#post-vote .upvote").removeClass("upvoted");
+	$("#post-vote .upvote").removeClass("upvoted", 500);
 	$("#post-vote .vote-count")[0].innerHTML = voteCount - 1;
 <% else %> 
 	if ($("#post-vote .downvote").hasClass('downvoted')) {
 		$("#post-vote .vote-count")[0].innerHTML = voteCount + 1;	
-		$("#post-vote .downvote").removeClass("downvoted");
+		$("#post-vote .downvote").removeClass("downvoted", 500);
 	} else {
 		$("#post-vote .vote-count")[0].innerHTML = voteCount - 1;	
-		$("#post-vote .upvote").removeClass("upvoted");
+		$("#post-vote .upvote").removeClass("upvoted", 500);
 	}
 
 <% end %>

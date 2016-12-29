@@ -1,7 +1,9 @@
+
 <div>
 	<p>Hi <%= @to.name %>,</p>
-	<p>You are now joined to <b><%= @post.title %>.</b>
-	Click <a href="<%= post_url(@post) %>">here</a>.
+	<p>You are now joined to <a href="<%= post_url(@post) %>"><b><%= @post.title %></b>
+		</a>. 
 	</p>
+	<p> You can now chat with existing members of the learning post <a href="<%= post_chats_url(@post) %>">here</a><p>
 
 </div>
