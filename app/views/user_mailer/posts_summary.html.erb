@@ -1,0 +1,13 @@
+<p>Hi <%= @user.name %>,</p>
+<h3>Here are some of top learning posts on colearn we thought you might be intested in. </h3>
+<% @posts.each do |post| %>
+	<%= render :partial => 'post_card', :locals=> {:post => post} %>
+<% end %>
+
+<div style="margin-top: 8px; margin-bottom: 8px;"><a href="https://colearn.xyz">See all learning posts </a></div>
+
+<div style="margin-top: 12px;">
+		<font color="#333333" size="-1" face="Arial, sans-serif">
+												We hope you enjoy receiving new learning posts update mails from Colearn. If you would prefer not receiving our emails, please <a target="_blank" href="<%= unsubscribe_url(:email => @user.email, :auth_key => Unsubscribe.unsunscribe_key(@user.email)) %>">click here</a> to unsubscribe. <font style="font-size:12px;font-family:Arial,Helvetica,sans-serif;color:#aaaaaa">
+											</font>
+	</div>

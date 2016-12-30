@@ -1,0 +1,96 @@
+<div style="    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    margin: 9px 0;
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 3px;
+    padding: 16px;">
+	<div>
+		<div style="display: inline-block;">
+			<span style="float: left;">
+				<img style= "height: 30px; width: 30px; border-radius: 20px;" src="<%=post.user.picture%>">						
+			</span>
+			<span style="display: inline-block;
+    				line-height: 19px;
+    				margin-left: 6px;">
+				<span style="color: rgb(88, 88, 88);
+    						font-size: 14px;">
+    						<%= post.user.name %></span>
+				<span style="line-height: 10px;
+    						display: block;
+    						color: rgb(134, 134, 134);
+    						font-size: 10px;">
+    				<%= distance_of_time_in_words_to_now(post.created_at) %>
+    							
+    			</span>
+
+			</span>
+		</div>
+		<a style="float: right;
+		    color: white;
+		    background-color: #5cb85c;
+		    border-color: #4cae4c; 
+		    display: inline-block;
+		    padding: 6px 12px;
+		    margin-bottom: 0;
+		    font-size: 14px;
+		    font-weight: 400;
+		    line-height: 1.42857143;
+		    text-align: center;
+		    white-space: nowrap;
+		    vertical-align: middle;
+		    touch-action: manipulation;
+		    cursor: pointer;
+		    user-select: none;
+		    background-image: none;
+		    border: 1px solid transparent;
+		    text-decoration: none;
+		    border-radius: 4px;" href="<%= post_path(post) %>">
+	    	<div style=""><b>Interested? join now!</b></div>
+    	</a>
+		
+	</div>
+	<h3 style="display: block;
+			   font-weight: bold;
+			   font-size: 20px;
+			   margin-bottom: 6px;">
+	    <a href="<%= post_path(post) %>" style="color: #000; text-decoration: none;"><%= post.title %>
+	    </a>
+	</h3>
+	<a style="color: #333; text-decoration: none;     display: block;
+    	margin-top: 12px;
+    	font-size: 15px;">
+    	<%= markdown post.message.truncate(205) %>
+    	<a href="<%= post_path(post) %>" style="text-decoration: underline;color: #337ab7;" > more</a>
+    </a>
+
+
+	<span style="display: block; margin-top: 28px;">
+		<span style="border-top: 1px solid #f1f1f1;
+    				color: rgb(137, 137, 137);
+    				display: block;
+    				margin-top: 10px;"></span>
+			<span style="display: block;
+    					margin: 8px 0px;
+    					text-align: center;">
+				<span style="text-align: center;
+						    font-style: normal;
+						    font-size: 11px;
+						    margin-top: -16px;
+						    display: block;
+						    color: rgb(207, 207, 207);"	>
+					<span style="font-size: 14px;
+							    display: inline-block;
+							    background-color: #fff;
+							    margin-top: -3px;">
+							    Background
+					</span>
+				</span>
+				<span style="font-size: 13px;
+    						color: #8d8d8d;">
+					<%= post.skills.first.title rescue "NA" %>
+				</span>
+			</span>			
+			
+	</span>
+
+</div>

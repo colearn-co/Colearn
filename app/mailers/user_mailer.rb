@@ -31,5 +31,11 @@ class UserMailer < ApplicationMailer
     	@post = post
     	mail(to: @user.email, subject: "[Colearn] New chat messages from learning post " + post.title)
     end
+
+    def posts_summary(user, posts) 
+    	@user = user
+    	@posts = posts
+    	mail(to: @user.email, subject: "[Colearn] New learning requests")
+    end
     
 end
