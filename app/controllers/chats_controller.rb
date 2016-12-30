@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
 	# TODO: check why this is needed?
-	before_filter :authenticate_user!, :only => [:new, :create, :resource_download_url]
+	before_filter :authenticate_user!, :only => [:new, :create, :resource_download_url, :index]
 	skip_before_filter  :verify_authenticity_token
 	load_and_authorize_resource :only => [:resource_download_url]
 	layout "chat_layout"
