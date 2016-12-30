@@ -129,6 +129,7 @@ class Post < ActiveRecord::Base
 
 				last_chat = post.chats.last
 				if last_chat && last_chat.created_at.to_i > mem.last_visited(post).to_i &&
+					last_chat.created_at.to_i > post.last_followup_time(mem) &&
 					last_chat.user_id != mem.id &&
 				 	Time.now.to_i - mem.last_visited(post).to_i > Post.min_followup_time && 
 					Time.now.to_i - post.last_followup_time(mem) > Post.min_followup_time
