@@ -20,5 +20,10 @@ class UserMailerPreview < ActionMailer::Preview
 		post = Post.last;
 		UserMailer.post_chat_followup(user, post);
 	end
+	def posts_summary
+		user = User.last;
+		posts = Post.last(3);
+		UserMailer.posts_summary(user, posts);
+	end
 
 end
