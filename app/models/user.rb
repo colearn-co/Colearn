@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of :email
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
+ 	has_many :suggestions
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable, :confirmable,
@@ -106,5 +107,9 @@ class User < ActiveRecord::Base
 	
 	def is_admin?
 		!self.roles.admin.blank?
+	end
+
+	def is_inactive?
+		self.posts.count + self.votes.count + self.comments.count + self.suggestions.count + self.invites.count == 0
 	end
 end
