@@ -44,7 +44,7 @@
 		    background-image: none;
 		    border: 1px solid transparent;
 		    text-decoration: none;
-		    border-radius: 4px;" href="<%= post_path(post) %>">
+		    border-radius: 4px;" href="<%= post_url(post) %>">
 	    	<div style=""><b>Interested? join now!</b></div>
     	</a>
 		
@@ -53,14 +53,14 @@
 			   font-weight: bold;
 			   font-size: 20px;
 			   margin-bottom: 6px;">
-	    <a href="<%= post_path(post) %>" style="color: #000; text-decoration: none;"><%= post.title %>
+	    <a href="<%= post_url(post) %>" style="color: #000; text-decoration: none;"><%= post.title %>
 	    </a>
 	</h3>
 	<a style="color: #333; text-decoration: none;     display: block;
     	margin-top: 12px;
     	font-size: 15px;">
     	<%= markdown post.message.truncate(205) %>
-    	<a href="<%= post_path(post) %>" style="text-decoration: underline;color: #337ab7;" > more</a>
+    	<a href="<%= post_url(post) %>" style="text-decoration: underline;color: #337ab7;" > more</a>
     </a>
 
 
