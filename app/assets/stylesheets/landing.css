@@ -134,12 +134,18 @@
 	position: fixed;
     top: 47px;
     width: 57%;
+    z-index: 50;
 }
 .margin-fix {
 	margin-top: 47px;
 }
 .ui-widget {
 	width: 57%;
+}
+.top-info {
+	margin-top: 15px;
+    margin-left: 120px;
+    width: 57%;
 }
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
@@ -158,5 +164,24 @@
 	.margin-div {
 		margin-left: 5px !important;
 		margin-right: 5px !important;
+	}
+	.top-info {
+		margin-top: 0;
+	    margin-left: 0;
+	    width: 100%;
+	}
+	.mot-text {
+		text-align: initial;
+	    display: inline-block;
+	    width: 66%;
+	    vertical-align: middle;
+	    font-size: 14px;
+	    margin-left: 10px;
+	}
+	.fix-head {
+		width: 94%;
+	}
+	.participated-fix {
+		display: none;
 	}
 }

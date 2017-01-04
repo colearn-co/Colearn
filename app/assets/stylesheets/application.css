@@ -434,6 +434,9 @@ a.login-anchor:hover {
     .account-action {
         padding-right: 0px !important;
     }
+    body {
+            margin: 0 12px;
+    }
 
     
 

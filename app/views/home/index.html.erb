@@ -3,7 +3,7 @@
 	
 <% end %>
 <div>
-		<div style="margin-top: 15px; margin-left: 120px; width: 57%;" class="top-info" id="top-info">
+		<div class="top-info" id="top-info">
 			<div>
 				<img src="<%= asset_path('profile.png') %>" style="width: 30%;"/>
 				<div class="mot-text">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
@@ -145,6 +145,14 @@
 		$(window).scroll(function (event) {
 		    make_create_cta_fix();
 		});
+		<% if mobile_device? %>
+			$('#search-post').click(function() {
+				var dist = $('#search-post').offset().top - $('#search-post').outerHeight() - $('#search-post').outerHeight()/2;
+				$('html, body').animate({scrollTop: dist}, 'slow');
+				
+			})
+
+		<% end %>
 
 
 		$('#search-post').autocomplete({
