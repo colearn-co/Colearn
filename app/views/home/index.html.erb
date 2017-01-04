@@ -66,50 +66,125 @@
 		
 	<div class="all-posts" id="all-post" style="float: left; width: 69%;">
 
-
-		<div style="padding: 16px 0; font-size: 25px;"><b>Recent learning posts</b></div>
-		<div>
-			<% Post.all.published.order_by_recency.each do |post| %>
-
-
-				<div class="single-post-card">
-					<div>
-						<div style="display: inline-block;">
-							<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
-							</span>
-							<span class="user-info">
-								<span class="user-name"><%= post.user.name %></span>
-								<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
-
-							</span>
-						</div>
-						<div class="post-extra-info">
-							<span class="post-info" title="<%= post.upvotes.count %> Upvotes"><i class="fa fa-arrow-up post-action-icon" aria-hidden="true"></i><span><%= post.upvotes.count %></span></span>
-							<span class="post-info" title="<%= post.members.count %> Participating members"><i class="fa fa-user post-action-icon" aria-hidden="true"></i> <span><%= post.members.count %></span></span>
-						</div>
-					</div>
-					<h3 class="post-title"><a href="<%= post_path(post) %>" style="color: #000;"><%= post.title %></a></h3>
-					<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
-
-					<span style="display: block; margin-top: 28px;">
-						<span class="post-skills"></span>
-							<span class="skill-wrap">
-								<span class="background">
-									<span class="back-text">Background</span>
-								</span>
-								<span class="main-skills">
-									<%= post.skills.first.title rescue "NA" %>
-								</span>
-							</span>			
-							
-					</span>
-
-				</div>
-
-
+			<div style="padding: 16px 0; font-size: 20px;">
+				<ul class="nav nav-tabs" role="tablist">
+				  <li class="active"><a data-toggle="tab" href="#popular-post">Popular learning posts</a></li>
+				  <li><a data-toggle="tab" href="#recent-post">Recent learning posts</a></li>
+				</ul>
 				
-			<% end %>
+			</div>
+
+		<div class="tab-content">
+			<div id="popular-post" class="tab-pane fade in active">
+
+				<div>
+					<% Post.all.published.order_by_popularity.each do |post| %>
+
+
+						<div class="single-post-card">
+							<div>
+								<div style="display: inline-block;">
+									<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
+									</span>
+									<span class="user-info">
+										<span class="user-name"><%= post.user.name %></span>
+										<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+
+									</span>
+								</div>
+								<div class="post-extra-info">
+									<span class="post-info" title="<%= post.upvotes.count %> Upvotes"><i class="fa fa-arrow-up post-action-icon" aria-hidden="true"></i><span><%= post.upvotes.count %></span></span>
+									<span class="post-info" title="<%= post.members.count %> Participating members"><i class="fa fa-user post-action-icon" aria-hidden="true"></i> <span><%= post.members.count %></span></span>
+								</div>
+							</div>
+							<h3 class="post-title"><a href="<%= post_path(post) %>" style="color: #000;"><%= post.title %></a></h3>
+							<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
+
+							<span style="display: block; margin-top: 28px;">
+								<span class="post-skills"></span>
+									<span class="skill-wrap">
+										<span class="background">
+											<span class="back-text">Background</span>
+										</span>
+										<span class="main-skills">
+											<%= post.skills.first.title rescue "NA" %>
+										</span>
+									</span>			
+									
+							</span>
+
+						</div>
+
+
+						
+					<% end %>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+			<div id="recent-post" class="tab-pane fade">
+		
+				<div>
+					<% Post.all.published.order_by_recency.each do |post| %>
+
+
+						<div class="single-post-card">
+							<div>
+								<div style="display: inline-block;">
+									<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
+									</span>
+									<span class="user-info">
+										<span class="user-name"><%= post.user.name %></span>
+										<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+
+									</span>
+								</div>
+								<div class="post-extra-info">
+									<span class="post-info" title="<%= post.upvotes.count %> Upvotes"><i class="fa fa-arrow-up post-action-icon" aria-hidden="true"></i><span><%= post.upvotes.count %></span></span>
+									<span class="post-info" title="<%= post.members.count %> Participating members"><i class="fa fa-user post-action-icon" aria-hidden="true"></i> <span><%= post.members.count %></span></span>
+								</div>
+							</div>
+							<h3 class="post-title"><a href="<%= post_path(post) %>" style="color: #000;"><%= post.title %></a></h3>
+							<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
+
+							<span style="display: block; margin-top: 28px;">
+								<span class="post-skills"></span>
+									<span class="skill-wrap">
+										<span class="background">
+											<span class="back-text">Background</span>
+										</span>
+										<span class="main-skills">
+											<%= post.skills.first.title rescue "NA" %>
+										</span>
+									</span>			
+									
+							</span>
+
+						</div>
+
+
+						
+					<% end %>
+				</div>
+			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
 	</div>
 		
 	<div style="clear: both;"></div>

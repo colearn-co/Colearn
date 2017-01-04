@@ -147,6 +147,23 @@
     margin-left: 120px;
     width: 57%;
 }
+
+.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+	border: none !important;
+    background: transparent;
+    color: #428bca;
+}
+
+.nav-tabs>li {
+	border: none;
+    background: transparent;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border-bottom: 3px solid #428bca !important;
+    color: #555;
+    background-color: transparent;
+}
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
 	.participated {

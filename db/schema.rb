@@ -11,25 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161229091229) do
+ActiveRecord::Schema.define(version: 20170104163716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "ahoy_messages", force: :cascade do |t|
-    t.string   "token"
-    t.text     "to"
-    t.integer  "user_id"
-    t.string   "user_type"
-    t.string   "mailer"
-    t.text     "subject"
-    t.datetime "sent_at"
-    t.datetime "opened_at"
-    t.datetime "clicked_at"
-  end
-
-  add_index "ahoy_messages", ["token"], name: "index_ahoy_messages_on_token", using: :btree
-  add_index "ahoy_messages", ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
@@ -97,6 +82,7 @@ ActiveRecord::Schema.define(version: 20161229091229) do
     t.string   "title"
     t.integer  "status"
     t.integer  "publish_status"
+    t.integer  "popularity"
   end
 
   create_table "roles", force: :cascade do |t|

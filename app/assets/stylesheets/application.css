@@ -13,7 +13,6 @@
  *= require bootstrap.min3-3-6.css
  *= require bootstrap-markdown.min-2-10-0.css
  *= require font-awesome
- *= require_tree .
  *= require_self
  */
 
