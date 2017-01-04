@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<% if ENV["RAILS_ENV"] != "development" %>
+ <% if ENV["RAILS_ENV"] != "development" && (!current_user || (!current_user.is_admin? && current_user.id > 2)) %>
 
   <script type="text/javascript">
       window.smartlook||(function(d) {
