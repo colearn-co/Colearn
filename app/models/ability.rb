@@ -13,7 +13,7 @@ class Ability
     can [:close], Post do |p|
         p.user == user
     end
-    can [:read, :create, :suggestion], Post
+    can [:read, :create, :suggestion, :search], Post
     can [:fetch_chat_info], Post do |p|
         p.members.include?(user)
     end

@@ -1,0 +1,162 @@
+
+.participated {
+	display: inline-block;
+    float: right;
+    width: 27%;
+    max-height: 71vh;
+    top: 138px;
+}
+.participated-fix {
+	right: 47px;
+	display: inline-block;
+	margin-top: 77px;
+	width: 27%; position: fixed; overflow: auto; max-height: 71vh;
+	top: 138px;
+}
+.anchor-button {
+	background: #4e9caf none repeat scroll 0 0;
+	border-radius: 5px;
+	color: white;
+	display: inline-block;
+	font-weight: bold;
+	height: 22px;
+	padding: 1px;
+	text-align: center;
+	width: 84px;
+}
+.anchor-button:hover {
+	text-decoration: none;
+	color: white;
+}
+.post-title {
+	display: block; font-weight: bold; font-size: 20px; margin-bottom: 6px;
+}
+.user-post-ic {
+	float: left;
+}
+
+.user-info {
+	display: inline-block;
+	line-height: 19px;
+	margin-left: 6px;
+}
+.user-name {
+	color: rgb(88, 88, 88); font-size: 14px;
+
+}
+.time-dist {
+	line-height: 10px; display: block; color: rgb(134, 134, 134); font-size: 10px;
+
+}
+.post-message {
+	display: block; 
+	margin-top: 12px;
+	font-size: 15px;
+
+}
+.post-message:hover {
+	text-decoration: none;
+}
+.post-skills {
+	border-top: 1px solid #f1f1f1;
+    color: rgb(137, 137, 137);
+    display: block;
+    margin-top: 10px;
+
+}
+.background {
+	text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: rgb(207, 207, 207);
+}
+.skill-wrap {
+	display: block; margin: 8px 0px;
+	text-align: center;
+} 
+.main-skills {
+	font-size: 13px;
+	color: #8d8d8d;
+}
+.user-info-tag {
+	display: inline-block; border: 1px solid rgb(229, 229, 229); border-radius: 14px; background-color: white; padding: 4px 8px 2px 10px;
+}
+.back-text {
+	font-size: 14px;
+	    font-size: 14px;
+	    display: inline-block;
+	    background-color: #fff;
+	    margin-top: -3px;
+}
+.mot-text {
+    text-align: initial;
+    display: inline-block;
+    width: 68%;
+    vertical-align: middle;    
+    font-size: 24px;
+    margin-left: 10px;
+}
+.side-text {
+	text-align: center;
+    border: 1px solid gray;
+    padding: 26px;
+    width: 100%;
+    font-size: 26px;
+}
+.create-post-btn {
+	font-size: 20px;
+	margin-top: 11px;
+	width: 100%;
+}
+.search-bar {
+	font-size: 20px;
+    padding: 6px 12px;
+    width: 100%;
+}
+.post-extra-info {
+	display: inline-block;
+    float: right;
+    color: rgba(0,0,0,.6);
+    font-size: 18px;
+}
+.post-extra-info .post-info {
+	padding-left: 66px;
+}
+.post-action-icon {
+	color: #0ab575;
+	font-size: 20px;
+	padding-right: 11px;
+}
+.margin-div {
+	margin-left: 120px;margin-right: 100px;
+}
+.post-title a:hover {
+	text-decoration: none;
+}
+.fix-head {
+	position: fixed;
+    top: 47px;
+    width: 57%;
+}
+.margin-fix {
+	margin-top: 47px;
+}
+.ui-widget {
+	width: 57%;
+}
+@media only screen and (max-width: 768px) {
+	/* For mobile phones: */
+	.participated {
+		width: 100% !important; 
+		position: unset !important;
+		float: unset !important;
+
+	}
+	.all-posts {
+		width: 100% !important; margin-top: 12px !important;
+	}
+	.ui-widget.ui-corner-top.ui-chatbox {
+		display: none !important;
+	}
+	.margin-div {
+		margin-left: 5px !important;
+		margin-right: 5px !important;
+	}
+}

@@ -6,8 +6,13 @@ class PostsController < ApplicationController
 		@posts = Post.all
 	end
 
+	def search
+		@posts = Post.search(params)
+		render :json => @posts.as_json(:only => [:title], :methods => [:to_param])
+	end
+
 	def new
-		@post = Post.new
+		@post = Post.new(:title => params[:title])
 		@post.skills.build
 	end
 

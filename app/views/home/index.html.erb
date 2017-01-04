@@ -1,135 +1,26 @@
 <% content_for :head do %>
-	<style type="text/css">
-		.participated {
-			right: 47px;
-			display: inline-block;
-			margin-top: 77px;
-			width: 27%; position: fixed; overflow: auto; max-height: 71vh;
-		}
-		.anchor-button {
-			background: #4e9caf none repeat scroll 0 0;
-			border-radius: 5px;
-			color: white;
-			display: inline-block;
-			font-weight: bold;
-			height: 22px;
-			padding: 1px;
-			text-align: center;
-			width: 84px;
-		}
-		.anchor-button:hover {
-			text-decoration: none;
-			color: white;
-		}
-		.post-title {
-			display: block; font-weight: bold; font-size: 20px; margin-bottom: 6px;
-		}
-		.user-post-ic {
-			float: left;
-		}
-
-		.user-info {
-			display: inline-block;
-			line-height: 19px;
-			margin-left: 6px;
-		}
-		.user-name {
-			color: rgb(88, 88, 88); font-size: 14px;
-
-		}
-		.time-dist {
-			line-height: 10px; display: block; color: rgb(134, 134, 134); font-size: 10px;
-
-		}
-		.post-message {
-			display: block; 
-			margin-top: 12px;
-			font-size: 15px;
-
-		}
-		.post-message:hover {
-			text-decoration: none;
-		}
-		.post-skills {
-			border-top: 1px solid #f1f1f1;
-		    color: rgb(137, 137, 137);
-		    display: block;
-		    margin-top: 10px;
-
-		}
-		.background {
-			text-align: center; font-style: normal; font-size: 11px; margin-top: -16px; display: block; color: rgb(207, 207, 207);
-		}
-		.skill-wrap {
-			display: block; margin: 8px 0px;
-			text-align: center;
-		} 
-		.main-skills {
-			font-size: 13px;
-			color: #8d8d8d;
-		}
-		.user-info-tag {
-			display: inline-block; border: 1px solid rgb(229, 229, 229); border-radius: 14px; background-color: white; padding: 4px 8px 2px 10px;
-		}
-		.back-text {
-			font-size: 14px;
-			    font-size: 14px;
-			    display: inline-block;
-			    background-color: #fff;
-			    margin-top: -3px;
-		}
-		.mot-text {
-			padding: 16px 0;
-		    text-align: center;
-		    font-size: 26px;
-		    font-family: initial;
-		}
-		.post-extra-info {
-			display: inline-block;
-		    float: right;
-		    color: rgba(0,0,0,.6);
-		    font-size: 18px;
-		}
-		.post-extra-info .post-info {
-			padding-left: 66px;
-		}
-		.post-action-icon {
-			color: #0ab575;
-			font-size: 20px;
-			padding-right: 11px;
-		}
-		.margin-div {
-			margin-left: 120px;margin-right: 100px;
-		}
-		.post-title a:hover {
-			text-decoration: none;
-		}
-		@media only screen and (max-width: 768px) {
-			/* For mobile phones: */
-			.participated {
-				width: 100% !important; 
-				position: unset !important;
-				float: unset !important;
-
-			}
-			.all-posts {
-				width: 100% !important; margin-top: 12px !important;
-			}
-			.ui-widget.ui-corner-top.ui-chatbox {
-				display: none !important;
-			}
-			.margin-div {
-				margin-left: 5px !important;
-				margin-right: 5px !important;
-			}
-		}
-	</style>
+		<%= stylesheet_link_tag    'landing', media: 'all', 'data-turbolinks-track' => true %>
+	
 <% end %>
 <div>
+		<div style="margin-top: 15px; margin-left: 120px; width: 57%;" class="top-info" id="top-info">
+			<div>
+				<img src="<%= asset_path('profile.png') %>" style="width: 30%;"/>
+				<div class="mot-text">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
+			</div>
+			<div id="search-wrap">
+				<form action="<%= new_post_path %>" method="GET" style="margin-top: 44px;">
+					<input class="search-bar" id="search-post" type="text" name="title" placeholder="Start searching..." style="font-size: 20px; width: 100%">
+					<div id="no-result"></div>
+					<input type="submit" id="create-post" class="create-post-btn btn btn-primary <%= current_user ? '' : 'ga_post_create' %>" value="Add new learning post">
+				</form>
+			</div>
+		</div>
 	<div class="margin-div">
 
-	<div class="participated">
+
 		<% if current_user && !current_user.participated_posts.blank? %>
+			<div class="participated">
 
 					<div style="background-color: rgb(255, 255, 255); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 16px; text-align: center;"><b>Participated Learnings</b></div>
 					<% current_user.participated_posts.each do |p| %>
@@ -164,15 +55,18 @@
 
 
 					<% end %>
+
+
+				</div>
 		<% else %>
-		<div class="mot-text">Start collaborative learning!<br>Find or create your learning post and participate actively!</div>
-
+			<div class="participated-fix">
+				<div class="side-text">You are not yet joined to any learning post<br>Find or create learning post of your interest!</div>
+			</div>
 		<% end %>
-		<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
-		<div class="create-post-btn btn btn-primary">Create new learning post</div></a>
+		
+	<div class="all-posts" id="all-post" style="float: left; width: 69%;">
 
-	</div>
-	<div class="all-posts" style="float: left; width: 69%;">
+
 		<div style="padding: 16px 0; font-size: 25px;"><b>Recent learning posts</b></div>
 		<div>
 			<% Post.all.published.order_by_recency.each do |post| %>
@@ -233,6 +127,7 @@
 	$('.ga_post_create').click(function() {
 		_gaq.push(['_trackEvent', 'Post', 'create', 'click']);	
 	})
+	var fix_head_height = $('#create-post').offset().top - $('#create-post').outerHeight() - $('#create-post').height()/2;
 
 	function popup_toggle_callback(sel) {
 		if ($(sel).data("hidden") == true) {
@@ -241,11 +136,70 @@
 			iframe.attr('src', iframe.data('src'));
 		}
 	}
+	make_create_cta_fix();
 	$(document).ready(function() {
 		$('.show_chat').first().click();
 		$('.ga_show_chat').click(function() {
 			ga("send", "event", "Home", "Open chat", "click");
 		})
+		$(window).scroll(function (event) {
+		    make_create_cta_fix();
+		});
+
+
+		$('#search-post').autocomplete({
+			source: function(request, response) {
+				$.ajax({
+				    url: "<%= search_posts_path() %>",
+				    data: { keyword: $('#search-post').val()},
+				    dataType: "json",
+				    type: "GET",
+				    success: function(data) { 
+						if(!data.length){
+							$('#no-result').text("No results");
+						}
+						else{
+							$('#no-result').text("No results");
+						}
+				        response($.map(data, function(obj) {
+				            return {
+				                label: obj.title,
+				                value: obj.to_param
+				            };
+				        }));
+				    }
+
+				});    
+			},
+			select: function( event, ui ) {
+			    window.location.href = '/posts' + '/' + ui.item.value
+			    
+			},
+			minLength: 2
+		  });
+
+
+
+		
+
 	})
+
+	function make_create_cta_fix() {
+		var scroll = $(window).scrollTop();
+		    if (scroll > fix_head_height) {
+		    	$('#create-post').addClass('fix-head');
+		    	$('.margin-div').addClass('margin-fix')
+
+
+
+		    }
+		    else {
+		    	$('#create-post').removeClass('fix-head');
+		    	$('.margin-div').removeClass('margin-fix')
+
+
+
+		    }
+	}
 	
 </script>

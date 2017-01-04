@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       end
     end
     resources :invites
+    collection do
+      get 'search'
+    end
   end
 
   resources :suggestion do

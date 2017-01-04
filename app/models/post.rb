@@ -35,6 +35,12 @@ class Post < ActiveRecord::Base
 
 	accepts_nested_attributes_for :skills
 
+
+	def self.search(params)
+		self.where("title like '%#{params[:keyword]}%' or message like '%#{params[:keyword]}%'").limit(params[:limit] || 10)
+	end
+
+
 	def getUserInvite(user) 
 		self.invites.find_by(:user => user)
 	end
