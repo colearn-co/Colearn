@@ -14,6 +14,11 @@
  *= require bootstrap-markdown.min-2-10-0.css
  *= require font-awesome
  *= require_self
+ *= require feedback.me.css
+ *= require chat-screen.css
+ *= require chat.css
+ *= require comments.css
+ *= require jquery.ui.chatbox.css
  */
 
 .header {
@@ -434,7 +439,7 @@ a.login-anchor:hover {
         padding-right: 0px !important;
     }
     body {
-            margin: 0 12px;
+            margin: 0 7px;
     }
 
     

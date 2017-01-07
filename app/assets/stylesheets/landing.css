@@ -12,6 +12,8 @@
 	margin-top: 77px;
 	width: 27%; position: fixed; overflow: auto; max-height: 71vh;
 	top: 138px;
+    background: #fff;
+	
 }
 .anchor-button {
 	background: #4e9caf none repeat scroll 0 0;
@@ -133,7 +135,6 @@
 .fix-head {
 	position: fixed;
     top: 47px;
-    width: 57%;
     z-index: 50;
 }
 .margin-fix {
@@ -190,15 +191,16 @@
 	.mot-text {
 		text-align: initial;
 	    display: inline-block;
-	    width: 66%;
+	    width: 65%;
 	    vertical-align: middle;
 	    font-size: 14px;
 	    margin-left: 10px;
 	}
-	.fix-head {
-		width: 94%;
-	}
 	.participated-fix {
 		display: none;
+	}
+	.all-posts .nav.nav-tabs .post-list-head {
+		font-size: 14px;
+		padding: 10px 5px;
 	}
 }

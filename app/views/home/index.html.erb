@@ -10,7 +10,7 @@
 			</div>
 			<div id="search-wrap">
 				<form action="<%= new_post_path %>" method="GET" style="margin-top: 44px;">
-					<input class="search-bar" id="search-post" type="text" name="title" placeholder="Start searching..." style="font-size: 20px; width: 100%">
+					<input class="search-bar form-control" id="search-post" type="text" name="title" placeholder="Start searching..." style="font-size: 20px; width: 100%">
 					<div id="no-result"></div>
 					<input type="submit" id="create-post" class="create-post-btn btn btn-primary <%= current_user ? '' : 'ga_post_create' %>" value="Add new learning post">
 				</form>
@@ -68,8 +68,8 @@
 
 			<div style="padding: 16px 0; font-size: 20px;">
 				<ul class="nav nav-tabs" role="tablist">
-				  <li class="active"><a data-toggle="tab" href="#popular-post">Popular learning posts</a></li>
-				  <li><a data-toggle="tab" href="#recent-post">Recent learning posts</a></li>
+				  <li class="active"><a data-toggle="tab" class="post-list-head" href="#popular-post">Popular learning posts</a></li>
+				  <li><a data-toggle="tab" class="post-list-head" href="#recent-post">Recent learning posts</a></li>
 				</ul>
 				
 			</div>
@@ -271,10 +271,8 @@
 		var scroll = $(window).scrollTop();
 		    if (scroll > fix_head_height) {
 		    	$('#create-post').addClass('fix-head');
-		    	$('.margin-div').addClass('margin-fix')
-
-
-
+		    	$('.margin-div').addClass('margin-fix');
+		    	$('#create-post').css('width',$('#search-wrap').width() + 'px');
 		    }
 		    else {
 		    	$('#create-post').removeClass('fix-head');
