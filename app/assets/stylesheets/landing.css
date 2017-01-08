@@ -102,13 +102,18 @@
 }
 .create-post-btn {
 	font-size: 20px;
-	margin-top: 11px;
-	width: 100%;
+	
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
 .search-bar {
 	font-size: 20px;
     padding: 6px 12px;
-    width: 100%;
+   
+}
+.search-form {
 }
 .post-extra-info {
 	display: inline-block;
@@ -192,7 +197,6 @@
 	    width: 65%;
 	    vertical-align: middle;
 	    font-size: 14px;
-	    margin-left: 10px;
 	}
 	.participated-fix {
 		display: none;

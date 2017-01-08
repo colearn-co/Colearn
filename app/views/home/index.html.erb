@@ -12,7 +12,7 @@
 					   top: 0px;
 					   color: white;
 					   text-align: center;
-					   background: rgba(0, 0, 0, 0.5); 
+					   background: rgba(0, 0, 0, 0.3); 
 					   left: 0; 
 					   width: 100%; " class="mot-text"> We at Colearn believe learning should be open and social. Join the community of learners. Learn with others and contribute to learning of others.
 					</div>
@@ -21,10 +21,15 @@
 				</div>
 			<% end %>
 			<div id="search-wrap">
-				<form action="<%= new_post_path %>" method="GET" style="margin-top: 44px;">
-					<input class="search-bar form-control" id="search-post" type="text" name="title" placeholder="Start searching..." style="font-size: 20px; width: 100%">
+
+				<form class="search-form" action="<%= new_post_path %>" method="GET" style="margin-top: 60px;">
+					<input id="create-post" class="create-post-btn btn <%= current_user ? '' : 'ga_post_create' %>" value="Create learning post" type="submit" value="Find" style="float: right" />
+					<div style="overflow: hidden; padding-right: .5em;">
+					   <input class="search-bar form-control" name="title" placeholder="Start searching..." id="search-post" type="text" style="width: 100%;" />
+					</div>
+					
 					<div id="no-result"></div>
-					<input type="submit" id="create-post" class="create-post-btn btn btn-primary <%= current_user ? '' : 'ga_post_create' %>" value="Add new learning post">
+					
 				</form>
 			</div>
 		</div>
