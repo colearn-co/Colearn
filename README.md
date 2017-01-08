@@ -38,6 +38,11 @@ IMPORTANT NOTES:
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
    Donating to EFF:                    https://eff.org/donate-le
 
+
+### Images ###
+	* https://pixabay.com/en/learn-word-scrabble-letters-wooden-1820039/
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

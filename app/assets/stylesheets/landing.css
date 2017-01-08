@@ -90,10 +90,8 @@
 .mot-text {
     text-align: initial;
     display: inline-block;
-    width: 68%;
     vertical-align: middle;    
     font-size: 24px;
-    margin-left: 10px;
 }
 .side-text {
 	text-align: center;
