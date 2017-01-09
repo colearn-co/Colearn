@@ -192,14 +192,6 @@
 		</div>
 
 
-
-
-
-
-
-
-
-
 	</div>
 		
 	<div style="clear: both;"></div>
@@ -213,6 +205,25 @@
 		<% end %>
 	</div>
 </div>
+
+<% if mobile_device? %>
+	<div class="btn-group btn-group-lg dropup floating-action-button" id="float-btn">
+	  <button type="button" class="kc_fab_main_btn cta-button dropdown-toggle js_float_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
+	  </button>
+	  <ul class="dropdown-menu dropdown-menu-right float-list">
+
+	    <li><a href="<%= new_post_path %>" class="menu-list-items">
+	    	<button class="kc_fab_main_btn menu list-cta"><i class="fa fa-file-text-o" aria-hidden="true"></i></button>
+	    	<span class="menu-item-text">Add new learning post</span>
+	    	<div style="clear: both;"></div>
+	    </a>
+	    </li>
+	  </ul>
+	</div>
+
+	    	
+	<div class="modal-backdrop fade in" id="overlay-div" style="display: none;"></div>
+<% end %>
 <script type="text/javascript">
 	$('.ga_post_create').click(function() {
 		_gaq.push(['_trackEvent', 'Post', 'create', 'click']);	
@@ -243,6 +254,29 @@
 			})
 
 		<% end %>
+
+		$('#float-btn').on('show.bs.dropdown', function(){
+	        $('#overlay-div').show();
+	        $(this).find('.js_float_btn').addClass('menu-launch');
+	        $('body').addClass('modal-open');
+	    });
+		$('#float-btn').on('hide.bs.dropdown', function(){
+	        $('#overlay-div').hide();
+	        $(this).find('.js_float_btn').removeClass('menu-launch');
+	        $('body').removeClass('modal-open');
+
+	    });
+	    var lastScrollPos = 0;
+		$( window ).scroll(function() {
+			currScrollPos = $(window).scrollTop();
+			if (currScrollPos > lastScrollPos) {
+				$('#float-btn').hide('slide', {direction: 'down'}, 500);
+			}
+			else {
+				$('#float-btn').show('slide', {direction: 'up'}, 500);
+			}
+			lastScrollPos = currScrollPos
+		});
 
 
 		$('#search-post').autocomplete({
