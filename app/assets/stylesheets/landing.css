@@ -151,7 +151,15 @@
     margin-left: 120px;
     width: 57%;
 }
+#search-wrap {	
+    position: fixed;
+    top: 0px;
+    margin: 9px;
+    left: 375px;
+    z-index: 1000;
+    
 
+}
 .nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
 	border: none !important;
     background: transparent;
@@ -204,5 +212,18 @@
 	.all-posts .nav.nav-tabs .post-list-head {
 		font-size: 14px;
 		padding: 10px 5px;
+	}
+	#search-wrap {
+		margin: 9px;
+		
+	    z-index: 1000;
+	    position: static;
+	}
+	.create-post-btn {
+		height: 34px;
+		font-size: 12px;
+	}
+	.search-bar {
+		font-size: 10px;
 	}
 }

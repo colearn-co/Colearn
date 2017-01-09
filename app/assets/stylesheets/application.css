@@ -415,7 +415,7 @@ a.login-anchor:hover {
         height: 18px !important;
     }
     .logo span {
-        color: white !important; font-size: 13px !important;
+        color: black !important; font-size: 13px !important;
         padding-left: 0px !important;
     }
     .login.btn {

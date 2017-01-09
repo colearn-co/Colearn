@@ -20,19 +20,21 @@
 
 				</div>
 			<% end %>
-			<div id="search-wrap">
+			
+		</div>
+		<div style="clear: both;"></div>
+		<div id="search-wrap">
 
-				<form class="search-form" action="<%= new_post_path %>" method="GET" style="margin-top: 60px;">
+				<form class="search-form" action="<%= new_post_path %>" method="GET" style="/*margin-top: 60px; */">
 					<input id="create-post" class="create-post-btn btn <%= current_user ? '' : 'ga_post_create' %>" value="Create learning post" type="submit" value="Find" style="float: right" />
 					<div style="overflow: hidden; padding-right: .5em;">
-					   <input class="search-bar form-control" name="title" placeholder="Start searching..." id="search-post" type="text" style="width: 100%;" />
+					   <input class="search-bar form-control" name="title" placeholder="what do you want to learn?" id="search-post" type="text" style="width: 100%;" />
 					</div>
 					
 					<div id="no-result"></div>
 					
 				</form>
 			</div>
-		</div>
 	<div class="margin-div">
 
 
@@ -83,8 +85,8 @@
 
 			<div style="padding: 16px 0; font-size: 20px;">
 				<ul class="nav nav-tabs" role="tablist">
-				  <li class="active"><a data-toggle="tab" class="post-list-head" href="#popular-post">Popular learning posts</a></li>
-				  <li><a data-toggle="tab" class="post-list-head" href="#recent-post">Recent learning posts</a></li>
+				  <li class="active"><a data-toggle="tab" class="post-list-head" href="#popular-post">Popular</a></li>
+				  <li><a data-toggle="tab" class="post-list-head" href="#recent-post">Recent</a></li>
 				</ul>
 				
 			</div>
@@ -226,14 +228,14 @@
 			iframe.attr('src', iframe.data('src'));
 		}
 	}
-	make_create_cta_fix();
+	//make_create_cta_fix();
 	$(document).ready(function() {
 		$('.show_chat').first().click();
 		$('.ga_show_chat').click(function() {
 			ga("send", "event", "Home", "Open chat", "click");
 		})
 		$(window).scroll(function (event) {
-		    make_create_cta_fix();
+		    //make_create_cta_fix();
 		});
 		<% if mobile_device? %>
 			$('#search-post').click(function() {
