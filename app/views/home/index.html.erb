@@ -245,9 +245,7 @@
 		$('.ga_show_chat').click(function() {
 			ga("send", "event", "Home", "Open chat", "click");
 		})
-		$(window).scroll(function (event) {
-		    //make_create_cta_fix();
-		});
+		
 		<% if mobile_device? %>
 			$('#search-post').click(function() {
 				var dist = $('#search-post').offset().top - $('#search-post').outerHeight() - $('#search-post').outerHeight()/2;
@@ -311,13 +309,5 @@
 			},
 			minLength: 2
 		  });
-
-
-
-		
-
-	})
-
-	
-	
+	});
 </script>
