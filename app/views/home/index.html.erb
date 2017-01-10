@@ -296,7 +296,8 @@
 				        response($.map(data, function(obj) {
 				            return {
 				                label: obj.title,
-				                value: obj.to_param
+				                value: obj.title,
+				                description: obj.to_param
 				            };
 				        }));
 				    }
@@ -304,10 +305,20 @@
 				});    
 			},
 			select: function( event, ui ) {
-			    window.location.href = '/posts' + '/' + ui.item.value
+			    window.location.href = '/posts' + '/' + ui.item.description
 			    
 			},
 			minLength: 2
 		  });
+		$(".search-bar").focus(function() {
+			$("#search-wrap").addClass("search-bar-active");
+			$(".header").hide();
+			util.showFullPageOverlay();
+		});
+		$(".search-bar").focusout(function() {
+			$("#search-wrap").removeClass("search-bar-active");
+			$(".header").show();
+			util.hideFullPageOverlay();
+		});
 	});
 </script>

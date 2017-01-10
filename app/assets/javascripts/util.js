@@ -21,5 +21,15 @@ util.escapeHtml = function(unsafe) {
          .replace(/>/g, "&gt;")
          .replace(/"/g, "&quot;")
          .replace(/'/g, "&#039;");
- }
+}
+util.showFullPageOverlay =  function() {
+	$("#overlay-full-page-div").addClass("overlay-full-page");
+}
+util.hideFullPageOverlay = function() {
+	$("#overlay-full-page-div").removeClass("overlay-full-page");
+}
+
+
+
+
 

@@ -156,7 +156,7 @@
     top: 0px;
     margin: 9px;
     left: 375px;
-    z-index: 1000;
+    z-index: 10000;
     
 
 }
@@ -213,12 +213,7 @@
 		font-size: 14px;
 		padding: 10px 5px;
 	}
-	#search-wrap {
-		margin: 9px;
-		
-	    z-index: 1000;
-	    position: static;
-	}
+	
 	.create-post-btn {
 		height: 34px;
 		font-size: 12px;
@@ -226,4 +221,14 @@
 	.search-bar {
 		font-size: 10px;
 	}
+	#search-wrap {
+		margin: 9px;
+	    position: static;
+	}
 }
+/*@media only screen and (max-width: 1075px) {
+	#search-wrap {
+		margin: 9px;
+	    position: static;
+	}
+}*/

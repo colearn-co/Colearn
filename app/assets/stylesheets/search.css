@@ -1,3 +1,14 @@
 .ui-autocomplete {
 	z-index: 100000;
 }
+.search-bar-active {
+	left: 0 !important;
+	right: 0 !important;
+
+}
+@media only screen and (max-width: 768px) {
+	.search-bar-active {
+		position: fixed !important; 
+		top: 0!important;
+	}
+}
