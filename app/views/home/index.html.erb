@@ -34,6 +34,7 @@
 					<div id="no-result"></div>
 					
 				</form>
+
 			</div>
 	<div class="margin-div">
 
@@ -278,7 +279,11 @@
 			lastScrollPos = currScrollPos
 		});
 
-
+		$("#search-post").keyup(function() {
+		    if (!this.value) {
+		        $("#no-result").html("");
+		    }
+		});
 		$('#search-post').autocomplete({
 			source: function(request, response) {
 				$.ajax({
@@ -288,10 +293,9 @@
 				    type: "GET",
 				    success: function(data) { 
 						if(!data.length){
-							$('#no-result').text("No results");
-						}
-						else{
-							$('#no-result').text("No results");
+							$('#no-result').html("<div class=\"search-no-results\">No results. Create your own learning post? <a style=\"text-decoration: none;z-index: 100000; color: inherit;\" href=\"<%= new_post_path() %>" + "?title=" + $("#search-post").val() +"\"class=\"login ga_post_create\"><div class=\"btn  btn-primary side-float-btn\">Create </div></a></div>");
+						} else {
+							$("#no-result").html("");
 						}
 				        response($.map(data, function(obj) {
 				            return {
@@ -310,6 +314,7 @@
 			},
 			minLength: 2
 		  });
+
 		$(".search-bar").focus(function() {
 			$("#search-wrap").addClass("search-bar-active");
 			$(".header").hide();
