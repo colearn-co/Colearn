@@ -1,0 +1,3 @@
+module Constants
+	FB_APP_TOKEN = "1214450751979973%7Cbbd75597b07d53e3b06d40bbb95e3110"
+end

@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+
+
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+
+      resources :push_notifications do
+        collection do
+          post :register_device
+        end
+      end
+
+    end
+  end
+
+
+  post 'auth/verify_by_token' => 'omniauth_verifications#verify_token_token'
+  
+
+  devise_for :users, :controllers => { sessions: 'sessions', :omniauth_callbacks => "omniauth_callbacks" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -23,7 +41,7 @@ Rails.application.routes.draw do
     end
     resources :invites
   end
-
+      
   resources :suggestion do
     resources :votes
   end
