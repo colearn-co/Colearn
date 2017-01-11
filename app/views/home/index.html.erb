@@ -288,11 +288,12 @@
 			source: function(request, response) {
 				$.ajax({
 				    url: "<%= search_posts_path() %>",
-				    data: { keyword: $('#search-post').val()},
+				    data: { keyword: $.trim($('#search-post').val())},
 				    dataType: "json",
 				    type: "GET",
 				    success: function(data) { 
 						if(!data.length){
+							//TODO: create a div and hide, show here.
 							$('#no-result').html("<div class=\"search-no-results\">No results. Create your own learning post? <a style=\"text-decoration: none;z-index: 100000; color: inherit;\" href=\"<%= new_post_path() %>" + "?title=" + $("#search-post").val() +"\"class=\"login ga_post_create\"><div class=\"btn  btn-primary side-float-btn\">Create </div></a></div>");
 						} else {
 							$("#no-result").html("");
@@ -318,12 +319,15 @@
 		$(".search-bar").focus(function() {
 			$("#search-wrap").addClass("search-bar-active");
 			$(".header").hide();
+			$("#search-wrap .create-post-btn").addClass("search-bar-active-btn");
 			util.showFullPageOverlay();
 		});
-		$(".search-bar").focusout(function() {
+		$("#overlay-full-page-div").click(function() {	
 			$("#search-wrap").removeClass("search-bar-active");
+			$("#search-wrap .create-post-btn").removeClass("search-bar-active-btn");
 			$(".header").show();
-			util.hideFullPageOverlay();
+			util.hideFullPageOverlay();	
+			$("#no-result").html("");
 		});
 	});
 </script>
