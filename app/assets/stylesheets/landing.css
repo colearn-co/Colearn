@@ -157,7 +157,7 @@
     margin: 9px;
     left: 375px;
     z-index: 1001;
-    
+    right: 400px;  
 
 }
 .nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
