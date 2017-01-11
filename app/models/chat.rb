@@ -4,6 +4,7 @@ class Chat < ActiveRecord::Base
 	validates :message, presence: true,
                     length: { minimum: 1 }
     has_one :chat_resource
+    after_create :send_notifications
 
     def self.get_by_params(params)
     	res = self.all
@@ -43,5 +44,17 @@ class Chat < ActiveRecord::Base
                 }
             }
         }
+    end
+
+    def notify_text
+        "#{self.user.name.split(' ').first}: #{self.message}"
+    end
+
+    def send_notifications
+        begin
+            PushNotification.send_post_chat_notifications(self)
+        rescue => e
+            ExceptionNotifier.notify_exception(e)
+        end
     end
 end

@@ -81,6 +81,9 @@ GEM
       websocket-driver (>= 0.5.1)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
+    gcm (0.1.0)
+      httparty
+      json
     gemoji (3.0.0)
     gemoji-parser (1.3.1)
       gemoji (>= 2.1.0)
@@ -89,6 +92,9 @@ GEM
     gravatarify (3.0.0)
     hashie (3.4.6)
     hirb (0.7.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -235,10 +241,12 @@ DEPENDENCIES
   devise (= 4.2.0)
   exception_notification (= 4.0.1)
   font-awesome-rails
+  gcm (= 0.1.0)
   gemoji (= 3.0.0)
   gemoji-parser (= 1.3.1)
   gravatarify (~> 3.0.0)
   hirb
+  httparty (= 0.13.7)
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-facebook (= 4.0.0)

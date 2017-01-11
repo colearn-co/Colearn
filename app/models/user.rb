@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
  	has_many :suggestions
+ 	has_many :device_tokens
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable, :confirmable,
@@ -45,6 +46,10 @@ class User < ActiveRecord::Base
 
 	def is_unsubscribed?
 		Unsubscribe.where(:email => self.email).count > 0
+	end
+
+	def user_auth_key
+		Digest::MD5.hexdigest(self.email + self.created_at.to_i.to_s)
 	end
 
 
@@ -84,6 +89,10 @@ class User < ActiveRecord::Base
 
 	def last_visited(post)
 		self.user_chat_infos.where(:post => post).first.last_visited rescue nil
+	end
+	def self.find_for_verfied_token_response(auth, provider, oauth_token)
+		authentication = Authentication.find_or_initialize_by(:provider => provider, :uid => auth[:id])
+		find_or_create_user_auth(authentication, auth, oauth_token, "app")
 	end
 
 	def self.find_or_create_user_auth(authentication, data, oauth_token, referrer) 

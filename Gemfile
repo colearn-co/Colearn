@@ -43,6 +43,10 @@ gem 'redis', '3.2.2'
 gem 'gemoji', '3.0.0'
 gem 'gemoji-parser', '1.3.1'
 
+gem 'httparty', '0.13.7'
+# push notification for gcm
+gem 'gcm', "0.1.0"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
