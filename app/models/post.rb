@@ -23,7 +23,7 @@ class Post < ActiveRecord::Base
 	has_many :user_chat_infos
 	has_many :suggestions
 	scope :order_by_recency, -> {order(id: :desc)}
-	scope :order_by_popularity, -> {order(:popularity)}
+	scope :order_by_popularity, -> {order(popularity: :desc)}
 	scope :published, -> { where.not(:publish_status => PUBLISH_STATUS[:unpublished]) }
 	
 	validates_presence_of :user
