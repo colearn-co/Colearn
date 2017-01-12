@@ -182,7 +182,7 @@
 										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.name %></span>
 										
 										<span style="float: right;">
-											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" class="req-action" style="margin-right: 10px; display: inline-block; text-align: center;" href="javascript:void(0)" class="js_reject_call">
+											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" class="req-action js_reject_call" style="margin-right: 10px; display: inline-block; text-align: center;" href="javascript:void(0)">
 												<i class="remove fa fa-times-circle" style="color: red; font-size: 18px;"></i><span style="display: block;">Reject</span>
 											</a>
 											<a href="<%= post_invite_path(@post, i, :status => 2) %>" class="req-action" data-method="put" data-remote="true" class="ajax-loader" style="display: inline-block; text-align: center;">

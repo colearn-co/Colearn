@@ -29,8 +29,13 @@ class Invite < ActiveRecord::Base
 	end
 
 	def send_confirm_notification
-		if self.status == STATUS[:accepted]
-			UserMailer.join_confirmation_mail(self.user, self.post).deliver	
+
+		if self.status_changed?
+			if self.status == STATUS[:accepted]
+				UserMailer.join_confirmation_mail(self.user, self.post).deliver	
+			elsif self.status == STATUS[:rejected]
+				UserMailer.join_rejection_mail(self).deliver()
+			end				
 		end
 	end
 
