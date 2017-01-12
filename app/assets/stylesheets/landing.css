@@ -113,8 +113,6 @@
     padding: 6px 12px;
    
 }
-.search-form {
-}
 .post-extra-info {
 	display: inline-block;
     float: right;
@@ -152,12 +150,14 @@
     width: 57%;
 }
 #search-wrap {	
-    position: fixed;
-    top: 0px;
+    left: 0;
     margin: 9px;
-    left: 375px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    visibility: hidden;
     z-index: 1001;
-    right: 400px;  
 
 }
 .nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
@@ -224,6 +224,7 @@
 	#search-wrap {
 		margin: 9px;
 	    position: static;
+	    text-align: ini
 	}
 }
 /*@media only screen and (max-width: 1075px) {
