@@ -89,4 +89,7 @@
     .header {
         height: 67px;
     }
+    .play-app-container {
+        margin-top: 36px;
+    }
 }

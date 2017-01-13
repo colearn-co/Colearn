@@ -176,6 +176,9 @@
     color: #555;
     background-color: transparent;
 }
+.play-app-container {
+        margin-left: 120px;
+    }
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
 	.participated {
@@ -194,6 +197,7 @@
 		margin-left: 5px !important;
 		margin-right: 5px !important;
 	}
+
 	.top-info {
 		margin-top: 0;
 	    margin-left: 0;

@@ -460,6 +460,29 @@ a.login-anchor:hover {
     font-size: 18px;
 
 }
+.play-app-container {
+    text-align: left;
+    width: 57%;
+    padding: 13px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.play-image {
+    display: inline-block;
+    width: 23%;
+    float: left;
+}
+.play-image img {
+    max-width: 100%;
+}
+.play-text {
+    display: inline-block;
+    font-size: 19px;
+    width: 73%;
+    float: left;
+    margin-left: 10px;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .external-links a {
@@ -516,7 +539,17 @@ a.login-anchor:hover {
     body {
             margin: 0 7px;
     }
-
+    .play-text {
+        font-size: 12px;
+        width: 61%;
+    }
+    .play-image {
+        width: 35%;
+    }
+    div.play-app-container {
+        margin-left: 5px;
+        width: 97%;
+    }
     
 
 }
