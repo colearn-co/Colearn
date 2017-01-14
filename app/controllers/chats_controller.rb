@@ -28,7 +28,7 @@ class ChatsController < ApplicationController
 		@chatable = find_chatable
 
 		if @chatable.chatting_allowed?(current_user)
-			@chat = @chatable.create_user_chat(current_user, chat_params)
+			@chat = @chatable.create_user_chat(current_user, params)
 	  		render :json => {:chat => @chat.as_json(Chat.json_info)}
 	  	end
 
@@ -42,7 +42,4 @@ private
 		end
 		nil
 	end
-	def chat_params
-      params.require(:chat).permit(:message)
-    end
 end

@@ -9,11 +9,11 @@ class BotObservation < ActiveRecord::Observer
 			Go ahead and share how you are going to execute your leaning plans," + 
 			"so that other members gets synced with you as soon as they join.
 			Cheers. :thumbsup: :thumbsup: :thumbsup:"
-			record.create_user_chat(User.colearn_bot, {:message => msg})
+			record.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))
 		elsif record.class == Suggestion
 			msg = "#{record.user.name} suggested: \r\n
 				#{record.message}"
-			record.post.create_user_chat(User.colearn_bot, {:message => msg})			
+			record.post.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))			
 		end
 	end
 
@@ -22,7 +22,7 @@ class BotObservation < ActiveRecord::Observer
 			if record.status_changed? && record.is_accepted?
 				msg = "Welcome #{record.user.name} :sunglasses::sunglasses::sunglasses: 
 				You can download colearn notification(Beta) app for instant chat notification from https://play.google.com/store/apps/details?id=xyz.colearn.colearnnotification"
-				record.post.create_user_chat(User.colearn_bot, {:message => msg})				
+				record.post.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))				
 			end			
 		end
 	end

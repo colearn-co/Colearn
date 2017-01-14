@@ -55,12 +55,11 @@ class Post < ActiveRecord::Base
 	end
 
 	def create_user_chat(usr, params)
-		chat = Chat.new(params)
+		chat = Chat.new(Chat.chat_params(params))
   		chat.user = usr
 
   		self.chats.push(chat)# @chatable.chats << @chat= Chat.new(chat_params)
   		chat.save!
-
   		if !params[:avatar].blank?
   			chat_resource = ChatResource.new(:avatar => params[:avatar], :chat => chat)
   			chat_resource.save!

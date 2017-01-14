@@ -57,4 +57,8 @@ class Chat < ActiveRecord::Base
             ExceptionNotifier.notify_exception(e)
         end
     end
+
+    def self.chat_params(params)
+      params.require(:chat).permit(:message)
+    end
 end
