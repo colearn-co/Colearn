@@ -4,7 +4,7 @@ class PushNotification
 	def self.send_post_chat_notifications(chat)
         gcm = GCM.new(CONFIG["api_key"])
 		chat.chatable.members.each do |mem|
-			next if mem == chat.user
+			next if mem == chat.user || mem.is_online?(chat.chatable)
 			tokens = mem.device_tokens.map{|t| t.token}
 			if !tokens.blank?
 				gcm.send(tokens, {:data => {:message => chat.notify_text, 
