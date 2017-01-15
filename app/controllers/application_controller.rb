@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dummy_post_key
-    RedisKeys::NEW_DUMMY_POST_INITIAL + cookies[:uid]
+    RedisKeys::NEW_DUMMY_POST_INITIAL + cookies[:uid].to_s
   end
 
   def configure_permitted_parameters
