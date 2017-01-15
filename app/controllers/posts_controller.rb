@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:new, :create, :close, :fetch_chat_info, :suggestion]
+	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion]
 	load_and_authorize_resource
 	
 	def index
@@ -12,8 +12,13 @@ class PostsController < ApplicationController
 	end
 
 	def new
-		@post = Post.new(:title => params[:title])
-		@post.skills.build
+		if $redis.get(dummy_post_key)
+			@post = Post.new(JSON.parse($redis.get(dummy_post_key)))
+			$redis.del(dummy_post_key)
+		else
+			@post = Post.new(:title => params[:title])
+		end
+		@post.skills.build if @post.skills.blank?
 	end
 
 	def fetch_chat_info
@@ -23,8 +28,15 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		current_user.posts << @post = Post.new(post_params)
-		redirect_to post_chats_path(@post)
+		if current_user
+			current_user.posts << @post = Post.new(post_params)
+			redirect_to post_chats_path(@post)			
+		else
+			$redis.set(dummy_post_key, post_params.to_json)
+			$redis.expire(dummy_post_key, 60 * 60)
+			store_location_for(:user, new_post_url)
+			authenticate_user!
+		end		
 	end
 
 	def suggestion
