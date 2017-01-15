@@ -4,6 +4,7 @@ function chatController(postId) {
   var lastChatId;
   var firstChatId;
   var isScrollingUp;
+  var isWindowActive = true;
   chatDAO.getChatsInfo({limit: 30}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
@@ -85,5 +86,11 @@ function chatController(postId) {
 
   });
 
+  $(window).blur(function(){
+    isWindowActive = false;
+  });
+  $(window).focus(function(){
+    isWindowActive = true;
+  });
   
 }
