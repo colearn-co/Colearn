@@ -34,6 +34,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def dummy_post_key
+    RedisKeys::NEW_DUMMY_POST_INITIAL + cookies[:uid].to_s
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :referrer, :email, :password, :password_confirmation, :remember_me])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
@@ -50,10 +54,15 @@ class ApplicationController < ActionController::Base
     # redirect to it after loggin in or out. This override makes signing in
     # and signing up work automatically.
   def store_current_location
-    store_location_for(:user, request.url) unless request.xhr?
+    if $redis.get(dummy_post_key)
+      store_location_for(:user, new_post_url)
+    else
+      store_location_for(:user, request.url) unless request.xhr?
+    end
   end
 
   def track_user
+    cookies[:uid] = Digest::SHA256.digest(session.id) unless cookies[:uid]
     if !current_user && cookies[:referrer].blank?
       cookies[:referrer] = request.referer || "/"
     end
