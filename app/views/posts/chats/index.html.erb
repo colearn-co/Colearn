@@ -12,6 +12,10 @@
       <div class="user-area ga_user_area">
         
       </div>
+
+      <% if params[:mode] != 'embed' %>
+        <div class="app-in-chat"><a href="https://play.google.com/store/apps/details?id=xyz.colearn.colearnnotification"><img src="<%= asset_path('google_play.png') %>"><span class="download-text">Colearn Notification</span></a></div>
+      <% end %>
     </div>
     <div class="messages-area <%= params[:mode] %>">
       <header class="chat-title-bar">
@@ -63,7 +67,6 @@
       });
 
   $('.js_upload_form').on("ajax:remotipartComplete", function(e, data) {
-    console.log('adsaasd', e, data)
   });
 
   $(document).ready(function() {
@@ -114,7 +117,9 @@
 
 
   function reset_frame() {
-     $('.messages').outerHeight($(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight());
+    var ht = $(window).height() - $('.chat-title-bar').outerHeight() - $('.input-container').outerHeight();
+     $('.messages').outerHeight(ht);
+     $('.user-area').outerHeight(ht - <%= params[:mode] == 'embed' ? 0 : 65 %>);
   }
 
 

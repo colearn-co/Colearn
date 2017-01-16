@@ -4,6 +4,7 @@ function User(user) {
 	this.picture = user.picture;
 	this.status = user.online_status;
 	this.last_visited = user.last_visited;
+	this.app_status = user.app_status;
 }
 
 User.prototype.getUserHTMLUserArea = function() {
@@ -18,7 +19,7 @@ User.prototype.getUserHTMLUserArea = function() {
 		html += '<div class="last-seen-time">Active: <time class="timeago" datetime="' + new Date(this.last_visited).toISOString() + '">' 
 				+ (new Date(this.last_visited).toString()) + '</time></div>'
 	}
-	html += '</div><span class="' + getStatusClass(this.status) + '"></span></div>';
+	html += '</div><i class="fa fa-mobile phone-sym ' + this.app_status + '" aria-hidden="true"></i><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);
 	return html;
 	function getStatusClass(status) {

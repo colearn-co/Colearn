@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
 	def self.json_info
 		{
 			:only => [:id, :name],
-			:methods => [:picture]
+			:methods => [:picture, :app_status]
 		}
 	end
 
@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
 
 	def is_online?(post)
 		self.online_status(post) == ONLINE_STATUS[:online]
+	end
+
+	def app_status
+		self.device_tokens.count == 0 ? 'absent' : 'present'
 	end
 
 	def last_visited(post)
