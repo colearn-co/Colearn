@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def track_user
-    cookies[:uid] = Digest::SHA256.digest(session.id) unless cookies[:uid]
+    cookies[:uid] = Digest::SHA256.digest(session.id || (Time.now.to_s + Devise.friendly_token[0,20].to_s)) unless cookies[:uid]
     if !current_user && cookies[:referrer].blank?
       cookies[:referrer] = request.referer || "/"
     end
