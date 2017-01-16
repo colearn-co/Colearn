@@ -20,6 +20,10 @@
       <div class="actions">
         <%= f.submit "Sign in", class: "register-action btn" %>
       </div>
+
+      <div style="margin-top: 5px;">
+        <a href="<%= new_password_path(resource_name) %>">Forgot password?</a>       
+      </div>
     <% end %>
   </div>
 </div>
