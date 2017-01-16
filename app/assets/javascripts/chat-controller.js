@@ -1,9 +1,24 @@
 function chatController(postId) {
-
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+  if (localStorage.getItem("desktopNotification") === null) {
+    Notification.requestPermission().then(function(permission) { // denied, granted
+       localStorage.setItem("desktopNotification", permission); //TPDO: move to sperate file(LocalStorageDAO)
+    });;
+  }
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
   var firstChatId;
   var isScrollingUp;
+  var isWindowActive = true;
+  $(window).blur(function(){
+    isWindowActive = false;
+  });
+  $(window).focus(function(){
+    isWindowActive = true;
+  });
   chatDAO.getChatsInfo({limit: 30}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
@@ -79,11 +94,29 @@ function chatController(postId) {
         var messages = getMessagesFromChatInfo(ci, true);
         chat.addMessages(messages);
         chat.addUsersToUserArea(getUsersFromChatInfo(ci));
-
+        desktopNotification(messages);
       });
     }
 
   });
 
-  
+  function desktopNotification(messages) {
+    if (!isWindowActive && localStorage.getItem("desktopNotification") === "granted") {
+      messages.forEach(function(message) {
+        var notification = new Notification('New message from ' + message.user.name, {
+          icon: message.user.picture,
+          body: message.text
+          //sound: path //TODO
+        });
+
+        notification.onclick = function () {
+          window.focus(); 
+          //window.open("http://stackoverflow.com/a/13328397/1269037");      
+        };
+      });
+    }
+  }  
+
 }
+
+
