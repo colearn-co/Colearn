@@ -1,10 +1,24 @@
 function chatController(postId) {
-
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission().then(function(permission) { 
+       
+    });;
+  }
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
   var firstChatId;
   var isScrollingUp;
   var isWindowActive = true;
+  $(window).blur(function(){
+    isWindowActive = false;
+  });
+  $(window).focus(function(){
+    isWindowActive = true;
+  });
   chatDAO.getChatsInfo({limit: 30}, function(chatsInfo) {
     var members = [];
     var membersMap = {};
@@ -80,45 +94,33 @@ function chatController(postId) {
         var messages = getMessagesFromChatInfo(ci, true);
         chat.addMessages(messages);
         chat.addUsersToUserArea(getUsersFromChatInfo(ci));
-        notifyMe(messages);
+        desktopNotification(messages);
       });
     }
 
   });
 
-  $(window).blur(function(){
-    isWindowActive = false;
-  });
-  $(window).focus(function(){
-    isWindowActive = true;
-  });
-  
-  function notifyMe(messages) {
-    var m = messages[0];
-    if (Notification.permission !== "granted")
-      Notification.requestPermission();
-    else {
-      var notification = new Notification('New chat message', {
-        icon: m.user.picture,
-        body: m.text,
-      });
+  function desktopNotification(messages) {
+    if (!isWindowActive) {
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+      } else {
+        messages.forEach(function(message) {
+          var notification = new Notification('New message from ' + message.user.name, {
+            icon: message.user.picture,
+            body: message.text
+            //sound: path //TODO
+          });
 
-      notification.onclick = function () {
-        window.focus(); this.cancel(); 
-        //window.open("http://stackoverflow.com/a/13328397/1269037");      
-      };
-
+          notification.onclick = function () {
+            window.focus(); 
+            //window.open("http://stackoverflow.com/a/13328397/1269037");      
+          };
+        });
+      }  
     }
-
   }  
-}
-document.addEventListener('DOMContentLoaded', function () {
-  if (!Notification) {
-    alert('Desktop notifications not available in your browser. Try Chromium.'); 
-    return;
-  }
 
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-});
+}
+
 
