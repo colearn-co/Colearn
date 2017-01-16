@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 
 	def send_confirmation_notification
 		if !self.confirmed_at
-			self.update_columns(:confirmation_token => Digest::MD5.base64digest(self.id.to_s + self.email.to_s + Time.now.to_s))
+			self.update_columns(:confirmation_token => SecureRandom.base64(16))
 			UserMailer.confirmation_mail(self).deliver
 		end
 	end
