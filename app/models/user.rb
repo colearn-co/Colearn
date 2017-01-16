@@ -24,11 +24,12 @@ class User < ActiveRecord::Base
  	has_many :device_tokens
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
-	devise :database_authenticatable, :registerable, :confirmable,
+	devise :database_authenticatable, :registerable,
 	 	:recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
 
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
+	after_create :send_confirmation_notification
 
 	def is_bot?
 		self.email == BOT[:email]
@@ -37,6 +38,13 @@ class User < ActiveRecord::Base
 	def send_welcome_notification
 		if (!self.email.blank?) 
 			UserMailer.welcome_mail(self).deliver
+		end
+	end
+
+	def send_confirmation_notification
+		if !self.confirmed_at
+			self.update_columns(:confirmation_token => Digest::MD5.base64digest(self.id.to_s + self.email.to_s + Time.now.to_s))
+			UserMailer.confirmation_mail(self).deliver
 		end
 	end
 
@@ -100,9 +108,9 @@ class User < ActiveRecord::Base
 		if !registered_user
 			registered_user = User.new(name: data[:name],
 			email: data[:email], password: Devise.friendly_token[0,20],
-			:referrer => referrer
+			:referrer => referrer,
+			:confirmed_at => Time.now
 			)
-			registered_user.skip_confirmation!
 			registered_user.save!
 		end
 		authentication.user = registered_user
