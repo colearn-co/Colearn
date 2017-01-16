@@ -17,4 +17,19 @@ class HomeController < ApplicationController
 		render :layout => false
 	end
 
+	def user_confirm
+		@user = User.find_by(:confirmation_token => params[:token])
+		if @user
+			@user.update_columns(:confirmed_at => Time.now)
+			flash[:notice] = "Your account is confirmed!"	
+		else
+			flash[:notice] = "No account found"
+		end		
+		if current_user
+			redirect_to root_path
+		else
+			redirect_to new_user_session_path(:type => 'login')			
+		end
+	end
+
 end

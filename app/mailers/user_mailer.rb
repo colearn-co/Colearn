@@ -26,6 +26,11 @@ class UserMailer < ApplicationMailer
     	mail(to: to.email, subject: "Welcome to Colearn #{to.name}!")
     end
 
+    def confirmation_mail(to)
+        @user = to
+        mail(to: @user.email, subject: "Confirmation instructions")
+    end
+
     def post_chat_followup(user, post)
     	@user = user
     	@post = post

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
   get '/unsubscribe' => 'home#unsubscribe'
+  get '/user_confirm' => 'home#user_confirm'
   default_url_options :host => "colearn.xyz"
 
   resources :posts do
