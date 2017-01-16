@@ -3,9 +3,9 @@ function chatController(postId) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
     return;
   }
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission().then(function(permission) { 
-       
+  if (localStorage.getItem("desktopNotification") === null) {
+    Notification.requestPermission().then(function(permission) { // denied, granted
+       localStorage.setItem("desktopNotification", permission); //TPDO: move to sperate file(LocalStorageDAO)
     });;
   }
   var chatDAO = new ChatDAO(postId);
@@ -101,23 +101,19 @@ function chatController(postId) {
   });
 
   function desktopNotification(messages) {
-    if (!isWindowActive) {
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-      } else {
-        messages.forEach(function(message) {
-          var notification = new Notification('New message from ' + message.user.name, {
-            icon: message.user.picture,
-            body: message.text
-            //sound: path //TODO
-          });
-
-          notification.onclick = function () {
-            window.focus(); 
-            //window.open("http://stackoverflow.com/a/13328397/1269037");      
-          };
+    if (!isWindowActive && localStorage.getItem("desktopNotification") === "granted") {
+      messages.forEach(function(message) {
+        var notification = new Notification('New message from ' + message.user.name, {
+          icon: message.user.picture,
+          body: message.text
+          //sound: path //TODO
         });
-      }  
+
+        notification.onclick = function () {
+          window.focus(); 
+          //window.open("http://stackoverflow.com/a/13328397/1269037");      
+        };
+      });
     }
   }  
 
