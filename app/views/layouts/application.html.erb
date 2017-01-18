@@ -24,12 +24,7 @@
 
 
 
-
-
-
-
-
- <% if ENV["RAILS_ENV"] != "development" %>
+  <% if ENV["RAILS_ENV"] != "development" && (!current_user || (!current_user.is_admin? && current_user.id > 2)) %>
     <!-- Begin Inspectlet Embed Code -->
   <script type="text/javascript" id="inspectletjs">
   window.__insp = window.__insp || [];
