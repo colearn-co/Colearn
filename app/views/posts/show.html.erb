@@ -234,7 +234,7 @@
                 <% else %>
                    	<div id="invite-req" class="btn btn-primary side-float-btn" >Interested? join this post!</div>
                    	<div style="margin: 12px; text-align: center"><div>OR</div></div>
-                   	<a style="text-decoration: none; color: inherit;" href="<%= current_user ? new_post_path : 'javascript:void(0)' %>" class="<%= current_user ? '' : 'login ga_post_create' %>">
+                   	<a style="text-decoration: none; color: inherit;" href="<%=  new_post_path  %>" class="<%= current_user ? '' : 'ga_post_create' %>">
 						<div class="btn btn-primary side-float-btn">Create new learning post</div>
 					</a>
                 <% end %>
