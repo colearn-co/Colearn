@@ -1,0 +1,68 @@
+<% content_for :head do %>
+		<%= stylesheet_link_tag    'v1/landing', media: 'all', 'data-turbolinks-track' => true %>
+	
+<% end %>
+<div class="search-back">
+	
+</div>
+<div class="v1">
+	<div id="search-wrap">
+		<form class="search-form" action="<%= new_post_path %>" method="GET" style="/*margin-top: 60px; */">
+			<input id="create-post" class="create-post-btn btn <%= current_user ? '' : 'ga_post_create' %>" value="Create learning post" type="submit" value="Find" style="float: right" />
+			<div style="overflow: hidden; padding-right: .5em;">
+			   <input class="search-bar form-control" name="title" placeholder="What do you want to learn?" id="search-post" type="text" style="width: 100%;" />
+			</div>
+			<div id="no-result"></div>
+		</form>
+		<div class="popular-cat">
+			<% Category.all.each do |cat| %>
+				<a class="cat-title" href="<%= category_path(cat) %>"><%= cat.title %></a>
+			<% end %>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('#search-post').autocomplete({
+			source: function(request, response) {
+				$.ajax({
+				    url: "<%= search_posts_path() %>",
+				    data: { keyword: $.trim($('#search-post').val())},
+				    dataType: "json",
+				    type: "GET",
+				    success: function(data) { 
+						if(!data.length){
+							//TODO: create a div and hide, show here.
+							$('#no-result').html("<div class=\"search-no-results\">No results. Create your own learning post? <a style=\"text-decoration: none;z-index: 100000; color: inherit;\" href=\"<%= new_post_path() %>" + "?title=" + $("#search-post").val() +"\"class=\"login ga_post_create\"><div class=\"btn  btn-primary side-float-btn\">Create </div></a></div>");
+						} else {
+							$("#no-result").html("");
+						}
+				        response($.map(data, function(obj) {
+				            return {
+				                label: obj.title,
+				                value: obj.title,
+				                description: obj.to_param
+				            };
+				        }));
+				    }
+
+				});    
+			},
+			select: function( event, ui ) {
+			    window.location.href = '/posts' + '/' + ui.item.description
+			    
+			},
+			minLength: 2
+		  });
+		$('form.search-form').on('keyup keypress', function(e) {
+		  var keyCode = e.keyCode || e.which;
+		  if (keyCode == 13) { 
+		    e.preventDefault();
+		    return false;
+		  }
+		});
+	});
+</script>

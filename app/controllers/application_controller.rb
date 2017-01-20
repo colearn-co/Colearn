@@ -2,11 +2,12 @@ class ApplicationController < ActionController::Base
   include Gravatarify::Helper
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-   before_filter :configure_permitted_parameters, if: :devise_controller?
-   before_filter :store_current_location, :unless => :devise_controller?
-   before_filter :track_user
-   before_filter :auto_login
-    skip_before_action :verify_authenticity_token
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :store_current_location, :unless => :devise_controller?
+  before_filter :track_user
+  before_filter :auto_login
+  before_filter :check_ui_version
+  skip_before_action :verify_authenticity_token
 
 
 
@@ -44,6 +45,27 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :password, :password_confirmation, :current_password])
   end
 
+  def check_ui_version
+    cookies[:uiv] = { value: rand(2) == 0 ? Constants::UI_VERSIONS[:v1] : Constants::UI_VERSIONS[:default], expires: 3.years.from_now } unless cookies[:uiv]
+    prepare_views_path
+  end
+
+  def prepare_views_path
+    prepend_view_path Rails.root + 'app' + "views_#{ui_version}" unless is_view_default?
+  end
+
+  def is_view_default?
+    cookies[:uiv] == Constants::UI_VERSIONS[:default]
+  end
+
+  def is_view_v1?
+    cookies[:uiv] == Constants::UI_VERSIONS[:v1]
+  end
+
+  def ui_version
+    cookies[:uiv]
+  end
+
   def mobile_device?
     ( request.user_agent =~ /Mobile|webOS/ && (request.user_agent !~ /iPad/) )
   end
@@ -62,7 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   def track_user
-    cookies[:uid] = Digest::SHA256.digest(session.id || (Time.now.to_s + Devise.friendly_token[0,20].to_s)) unless cookies[:uid]
+    cookies[:uid] = SecureRandom.base64(16) unless cookies[:uid]
     if !current_user && cookies[:referrer].blank?
       cookies[:referrer] = request.referer || "/"
     end
