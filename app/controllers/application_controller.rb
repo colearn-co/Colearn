@@ -46,8 +46,14 @@ class ApplicationController < ActionController::Base
   end
 
   def check_ui_version
-    cookies[:uiv] = Constants::UI_VERSIONS[:default] if !cookies[:uiv] && current_user
-    cookies[:uiv] = { value: rand(2) == 0 ? Constants::UI_VERSIONS[:v1] : Constants::UI_VERSIONS[:default], expires: 3.years.from_now } unless cookies[:uiv]
+    if !cookies[:uiv]
+      if current_user || mobile_device?
+        cookies[:uiv] = { value: Constants::UI_VERSIONS[:default], expires: 3.years.from_now } 
+      else        
+        cookies[:uiv] = { value: rand(2) == 0 ? Constants::UI_VERSIONS[:v1] : Constants::UI_VERSIONS[:default], 
+          expires: 3.years.from_now }
+      end
+    end
     prepare_views_path
   end
 
