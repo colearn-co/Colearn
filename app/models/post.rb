@@ -38,7 +38,7 @@ class Post < ActiveRecord::Base
 
 
 	def self.search(params)
-		self.where("title like '%#{params[:keyword]}%' or message like '%#{params[:keyword]}%'").limit(params[:limit] || 10)
+		self.where("lower(title) like '%#{params[:keyword].downcase}%' or lower(message) like '%#{params[:keyword].downcase}%'").limit(params[:limit] || 10)
 	end
 
 
