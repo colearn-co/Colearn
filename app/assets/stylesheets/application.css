@@ -55,7 +55,7 @@
     margin-bottom: 10px;
 }
 .content {
-    min-height: 1000px;
+    min-height: 30vh;
     padding: 15px;
     z-index: 500;
 }

@@ -19,7 +19,7 @@ class Post < ActiveRecord::Base
 	has_many :other_members, lambda {|v| where.not(:id => v.user_id)}, through: :accepted_invites, source: :user
 	has_many :comments, :as => :commentable
 	has_many :skills
-	has_many :tags
+	has_and_belongs_to_many :tags
 	has_many :user_chat_infos
 	has_many :suggestions
 	scope :order_by_recency, -> {order(id: :desc)}

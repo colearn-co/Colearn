@@ -149,7 +149,6 @@
 <div id="divLoading"> 
 </div>
 
-<hr>
 <footer class="footer-basic-centered">
 
       <p class="footer-company-motto">[Colearn] Find people to learn with.</p>
@@ -215,33 +214,6 @@
      });      
     </script>
 
-    <% if !mobile_device? %>
-      <script type="text/javascript">
-        $(document).ready(function () {
-      //set up some minimal options for the feedback_me plugin
-          fm_options = {
-              bootstrap: true,
-              position: "right-top",
-              name_required: false,
-              message_required: true,
-              message_placeholder: "Go ahead, type your feedback here...",
-              feedback_url: "feedback",
-              delayed_options: {
-                  success_color: "#5cb85c",
-                  fail_color: "#d2322d",
-                  delay_success_milliseconds: 3500,
-                  send_success : "Thanks for your feedback :)"
-              }
-          };
-       
-          //init feedback_me plugin
-          fm.init(fm_options);
-          $('.feedback_me_form > ul > li').first().hide();
-          
-           
-      });
-      </script>
-    <% end %>
     <%= yield(:scripts) %>
 </body>
 </html>
