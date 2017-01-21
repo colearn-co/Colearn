@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120105235) do
+ActiveRecord::Schema.define(version: 20170121082718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,22 +23,6 @@ ActiveRecord::Schema.define(version: 20170120105235) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "categories", force: :cascade do |t|
-    t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "categories", ["title"], name: "index_categories_on_title", using: :btree
-
-  create_table "categories_tags", id: false, force: :cascade do |t|
-    t.integer "category_id"
-    t.integer "tag_id"
-  end
-
-  add_index "categories_tags", ["category_id"], name: "index_categories_tags_on_category_id", using: :btree
-  add_index "categories_tags", ["tag_id"], name: "index_categories_tags_on_tag_id", using: :btree
 
   create_table "chat_resources", force: :cascade do |t|
     t.string   "avatar_file_name"
@@ -154,6 +138,22 @@ ActiveRecord::Schema.define(version: 20170120105235) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "tags_topics", id: false, force: :cascade do |t|
+    t.integer "topic_id"
+    t.integer "tag_id"
+  end
+
+  add_index "tags_topics", ["tag_id"], name: "index_tags_topics_on_tag_id", using: :btree
+  add_index "tags_topics", ["topic_id"], name: "index_tags_topics_on_topic_id", using: :btree
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "topics", ["title"], name: "index_topics_on_title", using: :btree
 
   create_table "unsubscribes", force: :cascade do |t|
     t.string   "email"

@@ -15,8 +15,8 @@
 			<div id="no-result"></div>
 		</form>
 		<div class="popular-cat">
-			<% Category.all.each do |cat| %>
-				<a class="cat-title" href="<%= category_path(cat) %>"><%= cat.title %></a>
+			<% Topic.all.each do |cat| %>
+				<a class="cat-title" href="<%= topic_path(cat) %>"><%= cat.title %></a>
 			<% end %>
 		</div>
 	</div>

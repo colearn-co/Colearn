@@ -1,12 +1,12 @@
 <% content_for :head do %>
 		<%= stylesheet_link_tag    'landing', media: 'all', 'data-turbolinks-track' => true %>
-		<%= stylesheet_link_tag    'category-show', media: 'all', 'data-turbolinks-track' => true %>
+		<%= stylesheet_link_tag    'topic-show', media: 'all', 'data-turbolinks-track' => true %>
 	
 <% end %>
 <div class="category">
 	<div class="margin-div">
 		<div class="cat-title">
-			<p>Learning post for "<%= @category.title %>"</p>
+			<p>Learning post for "<%= @topic.title %>"</p>
 			
 		</div>
 
@@ -16,7 +16,7 @@
 				<div id="popular-post" class="tab-pane fade in active">
 
 					<div>
-						<% @category.posts.each do |post| %>
+						<% @topic.posts.each do |post| %>
 
 
 							<div class="single-post-card">
