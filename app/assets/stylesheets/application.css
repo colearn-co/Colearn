@@ -487,6 +487,17 @@ a.login-anchor:hover {
     width: 362px;
     max-width: 100%;
 }
+.logo-title {
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 11px;
+}
+.head-title {
+    display: inline-block;float: right;line-height: 2.3;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .external-links a {
