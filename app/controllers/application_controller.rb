@@ -50,9 +50,11 @@ class ApplicationController < ActionController::Base
       if current_user || mobile_device?
         cookies[:uiv] = { value: Constants::UI_VERSIONS[:default], expires: 3.years.from_now } 
       else        
-        cookies[:uiv] = { value: rand(2) == 0 ? Constants::UI_VERSIONS[:v1] : Constants::UI_VERSIONS[:default], 
+        cookies[:uiv] = { value: rand(10) < 2 ? Constants::UI_VERSIONS[:v1] : Constants::UI_VERSIONS[:default], 
           expires: 3.years.from_now }
       end
+    elsif current_user
+      cookies[:uiv] = { value: Constants::UI_VERSIONS[:default], expires: 3.years.from_now } 
     end
     prepare_views_path
   end
