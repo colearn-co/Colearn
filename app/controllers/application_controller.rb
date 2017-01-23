@@ -8,10 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :auto_login
   before_filter :check_ui_version
   skip_before_action :verify_authenticity_token
-  attr_accessor :login
-
-
-
+  
   before_filter do
     # sign_in(:user, User.find(4))
     resource = controller_name.singularize.to_sym
@@ -42,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :referrer, :email, :username, :password, :password_confirmation, :remember_me])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :username, :password, :remember_me])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :username, :login, :password, :remember_me])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :username, :password, :password_confirmation, :current_password])
   end
 

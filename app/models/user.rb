@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
 	def login
 	    @login || self.username || self.email 
 	end
+
+	def email_required?
+  		false
+	end
 	
 	def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup
@@ -57,9 +61,11 @@ class User < ActiveRecord::Base
 	end
 
 	def send_confirmation_notification
-		if !self.confirmed_at
+		if !self.confirmed_at 
 			self.update_columns(:confirmation_token => SecureRandom.base64(16))
-			UserMailer.confirmation_mail(self).deliver
+			if self.email?
+				UserMailer.confirmation_mail(self).deliver
+			end
 		end
 	end
 
