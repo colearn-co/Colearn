@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email
+	validates_uniqueness_of :username
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
  	has_many :suggestions

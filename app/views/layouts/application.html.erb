@@ -86,8 +86,9 @@
     </a>
     <% if current_user %>
         <div class="account-area">
+
             <div class="username" >
-                <a href="javascript:void(0)" class="username-text"><%=current_user.username %></a>
+                <a href="/users/edit" class="username-text"><%=current_user.username %></a>
             </div>
             <div>
                <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:class => "user-img"} %>
