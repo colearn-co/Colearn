@@ -182,10 +182,10 @@
 									<div>
 										<%= gravatar_tag i.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
 											
-										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.name %></span>
+										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= i.user.username %></span>
 										
 										<span style="float: right;">
-											<a data-name="<%= i.user.name %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" class="req-action js_reject_call" style="margin-right: 10px; display: inline-block; text-align: center;" href="javascript:void(0)">
+											<a data-name="<%= i.user.username %>" data-path="<%= post_invite_path(@post, i, :status => 3) %>" class="req-action js_reject_call" style="margin-right: 10px; display: inline-block; text-align: center;" href="javascript:void(0)">
 												<i class="remove fa fa-times-circle" style="color: red; font-size: 18px;"></i><span style="display: block;">Reject</span>
 											</a>
 											<a href="<%= post_invite_path(@post, i, :status => 2) %>" class="req-action" data-method="put" data-remote="true" class="ajax-loader" style="display: inline-block; text-align: center;">
@@ -218,7 +218,7 @@
 						<% @post.members.each do |u| %>
 							<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 8px;">
 								<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
-									<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= u.name rescue "N/A" %></span>
+									<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= u.username %></span>
 								
 							</div>
 						<% end %>
@@ -339,7 +339,7 @@
 						<div style="margin-bottom: 10px;">
 							<div style="padding: 8px;">
 									<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
-										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.name rescue "N/A" %></span>
+										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.username rescue "N/A" %></span>
 										<div style="padding-left: 29px; font-size: 13px;">
 											<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
 										</div>

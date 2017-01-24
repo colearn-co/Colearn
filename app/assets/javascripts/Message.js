@@ -74,7 +74,7 @@ Message.prototype.getMessageHTML = function() {
 				+ '<img " src="' + 
 					this.user.picture +
 				'"></div><div class="username-msg-area">' + 
-				'<div class="chat-username">' + this.user.name + msg_time + '</div>'
+				'<div class="chat-username">' + this.user.username + msg_time + '</div>'
 				+ msgHtml + '</div></div>'
 		 		
 	return msgHtml;

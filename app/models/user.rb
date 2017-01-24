@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
+	after_create :add_username_if_not_present
 	before_save :fix_cases
 	attr_accessor :login
 
@@ -97,7 +98,7 @@ class User < ActiveRecord::Base
 
 	def self.json_info
 		{
-			:only => [:id, :name],
+			:only => [:id, :name, :username],
 			:methods => [:picture, :app_status]
 		}
 	end
@@ -157,5 +158,10 @@ class User < ActiveRecord::Base
 	def fix_cases
 		self.email.try(:downcase!)
 		self.username.try(:downcase!)
+	end
+	def add_username_if_not_present
+		if !self.username?
+			self.username = Haikunator.haikunate(9999, '.') #TODO: check for name conflict.
+		end
 	end
 end
