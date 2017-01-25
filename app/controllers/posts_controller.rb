@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion]
+	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion, :edit, :update]
 	load_and_authorize_resource
 	
 	def index
@@ -9,6 +9,16 @@ class PostsController < ApplicationController
 	def search
 		@posts = Post.search(params)
 		render :json => @posts.as_json(:only => [:title], :methods => [:to_param])
+	end
+
+	def edit
+		@post = Post.find(params[:id])
+	end
+
+	def update
+		@post = Post.find(params[:id])
+		@post.update_attributes(post_params)
+		redirect_to post_path(@post)
 	end
 
 	def new
