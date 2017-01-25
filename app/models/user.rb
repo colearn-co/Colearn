@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
-	after_create :add_username_if_not_present
+	before_save :add_username_if_not_present
 	before_save :fix_cases
 	attr_accessor :login
 
@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
 	end
 	def add_username_if_not_present
 		if !self.username?
-			self.username = Haikunator.haikunate(9999, '.') #TODO: check for name conflict.
+			self.username = Haikunator.haikunate(0, '.') #TODO: check for name conflict.
 		end
 	end
 end
