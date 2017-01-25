@@ -42,5 +42,10 @@ class UserMailer < ApplicationMailer
     	@posts = posts
     	mail(to: @user.email, subject: "[Colearn] New learning requests")
     end
+
+    def download_app(user)
+        @user = user
+        mail(to: @user.email, subject: "[Colearn] Never miss an important message")
+    end
     
 end
