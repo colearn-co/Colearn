@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     elsif current_user
       cookies[:uiv] = { value: Constants::UI_VERSIONS[:default], expires: 3.years.from_now } 
     end
-    # prepare_views_path
+    prepare_views_path
   end
 
   def prepare_views_path
