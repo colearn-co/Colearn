@@ -79,7 +79,19 @@
 
 				</div>
 		<% else %>
-			
+			<div class="add-post">
+				<div class="quick-links">
+					<p class="pop-topic">Popular topics</p>
+					<div>
+						<% Topic.all.each do |cat| %>
+							<a class="cat-title" href="<%= topic_path(cat) %>"><%= cat.title %></a>
+						<% end %>
+					</div>
+				</div>
+
+				<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
+				<div class="add-post-btn btn btn-primary">Create new learning post</div></a>
+			</div>			
 		<% end %>
 		
 	<div class="all-posts" id="all-post" style="float: left; width: 69%;">
@@ -96,7 +108,7 @@
 			<div id="popular-post" class="tab-pane fade in active">
 
 				<div>
-					<% Post.all.published.order_by_popularity.order(id: :desc).each do |post| %>
+					<% Post.all.published.order_by_popularity.order(id: :desc).limit(10).each do |post| %>
 
 
 						<div class="single-post-card">
