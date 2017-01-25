@@ -108,7 +108,7 @@
 			<div id="popular-post" class="tab-pane fade in active">
 
 				<div>
-					<% Post.all.published.order_by_popularity.order(id: :desc).each do |post| %>
+					<% Post.all.published.order_by_popularity.order(id: :desc).limit(10).each do |post| %>
 
 
 						<div class="single-post-card">
