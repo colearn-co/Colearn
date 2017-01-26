@@ -11,10 +11,7 @@
       <%= f.label :username %><b> (careful changing this will change your identity on the platform)</b><br />
       <%= f.text_field :username, autofocus: true %>
     </div>
-    <div class="field">
-      <%= f.label :interests %><br />
-      <%= f.check_box :interests, [:java, :javascript, :web], {multiple: true}, 1, nil%>
-    </div>
+   
     <% if !current_user.email? %>
       <div class="field">
         <%= f.label :email %><br />

@@ -18,8 +18,10 @@ class User < ActiveRecord::Base
 	has_many :interests
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :participated_posts, through: :accepted_invites, source: :post
-	validates_uniqueness_of :email
+	validates_uniqueness_of :email, :allow_nil => true, :on => :save
 	validates_uniqueness_of :username
+	validate :validate_username
+
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
  	has_many :suggestions
@@ -34,6 +36,7 @@ class User < ActiveRecord::Base
 	after_create :send_confirmation_notification
 	before_save :add_username_if_not_present
 	before_save :fix_cases
+	before_save :make_email_nil_if_blank
 	attr_accessor :login
 
 	def login
@@ -166,4 +169,19 @@ class User < ActiveRecord::Base
 			self.username = Haikunator.haikunate(0, '.') #TODO: check for name conflict.
 		end
 	end
+	def validate_username
+		if !username_valid?(self.username)
+			errors.add(:username, "Allowed chars are a-z,0-9 and `.`")
+		end
+	end
+	def username_valid? str
+	    chars = Set.new(('a'..'z').to_a + ('0'..'9').to_a + ["."])
+	    str.chars.detect {|ch| !chars.include?(ch)}.nil?
+  	end
+  	def make_email_nil_if_blank
+  		if self.email.blank?
+  			puts "email is blank"
+  			self.email = nil;
+  		end
+  	end
 end
