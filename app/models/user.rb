@@ -30,21 +30,6 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
-	before_save :fix_cases
-	attr_accessor :login
-
-	def login
-	    @login || self.username || self.email 
-	end
-	
-	def self.find_for_database_authentication(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions.to_hash).where(["username = :value OR email = :value", { :value => login.downcase }]).first
-      elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-        where(conditions.to_hash).first
-      end
-    end
 
 	def is_bot?
 		self.email == BOT[:email]
@@ -147,9 +132,5 @@ class User < ActiveRecord::Base
 
 	def is_inactive?
 		self.posts.count + self.votes.count + self.comments.count + self.suggestions.count + self.invites.count == 0
-	end
-	def fix_cases
-		self.email.try(:downcase!)
-		self.username.try(:downcase!)
 	end
 end

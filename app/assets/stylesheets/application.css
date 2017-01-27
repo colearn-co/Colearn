@@ -55,7 +55,7 @@
     margin-bottom: 10px;
 }
 .content {
-    min-height: 30vh;
+    min-height: 48vh;
     padding: 15px;
     z-index: 500;
 }
@@ -487,6 +487,51 @@ a.login-anchor:hover {
     width: 362px;
     max-width: 100%;
 }
+.logo-title {
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 11px;
+}
+.head-title {
+    display: inline-block;float: right;line-height: 2.3;
+}
+
+.quick-links {    
+    margin: 16px 0;
+    text-align: center;
+    font-size: 14px;
+    font-family: initial;
+    text-align: center;
+    border: 1px solid gray;
+    padding: 20px;
+    border-radius: 10px;
+    padding-top: 0px;
+}
+.add-post-btn {
+        height: 34px;
+        font-size: 17px;
+        display: block;
+    }
+.cat-title {
+    padding: 8px;
+    background-color: wheat;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 5px;
+
+}
+.pop-topic {
+    font-size: 22px;
+}
+.add-post {
+    right: 47px;
+    display: inline-block;
+    top: 150px;
+    width: 27%; position: fixed; overflow: auto; max-height: 71vh;
+}
 @media only screen and (max-width: 768px) {
             /* For mobile phones: */
     .external-links a {
@@ -554,6 +599,12 @@ a.login-anchor:hover {
         margin-left: 5px;
         width: 97%;
     }
-    
+    .add-post {
+        position: static;
+        width: 100%;
+    }
+    .search-form .create-post-btn {
+        display: none;
+    }
 
 }

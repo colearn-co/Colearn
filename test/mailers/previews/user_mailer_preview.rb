@@ -26,4 +26,9 @@ class UserMailerPreview < ActionMailer::Preview
 		UserMailer.posts_summary(user, posts);
 	end
 
+	def download_app
+		user = User.first;
+		UserMailer.download_app(user);
+	end
+
 end
