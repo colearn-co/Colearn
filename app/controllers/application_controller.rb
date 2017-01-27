@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_ui_version
   skip_before_action :verify_authenticity_token
 
-
+  before_action :set_paper_trail_whodunnit
 
   before_filter do
     # sign_in(:user, User.find(4))
