@@ -253,7 +253,9 @@
 		
 		<div class="post-detail-card">
 			<div class="post-info">
+			<% if current_user && @post.user == current_user %>
 				<a href="<%= edit_post_path(@post) %>" class="edit-post-title">Edit</a>
+			<% end %>
 				<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
 				<% if @post.user == current_user && !@post.is_closed? %>
 					<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>
