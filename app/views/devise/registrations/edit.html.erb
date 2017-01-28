@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'edit-user', media: 'all', 'data-turbolinks-track' => true %>
+<% end %>
 <div class="edit-user">
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
@@ -8,13 +11,13 @@
       <%= f.text_field :name %>
     </div>
      <div class="field">
-      <%= f.label :username %><b> (careful changing this will change your identity on the platform)</b><br />
+      <%= f.label :username %><b> (Something cool, Careful! changing this will change your identity on the platform)</b><br />
       <%= f.text_field :username, autofocus: true %>
     </div>
    
     <% if !current_user.email? %>
       <div class="field">
-        <%= f.label :email %><br />
+        <%= f.label :email %><b> (For important updates and account recovery)</b><br />
         <%= f.email_field :email%>
       </div>
     <% end %>
@@ -22,10 +25,8 @@
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <div class="actions">
-      <%= f.submit "Update" %>
+    <div class="actions ">
+      <%= f.submit "Update", :class => "update-btn btn btn-success" %>
     </div>
   <% end %>
-
-  <%= link_to "Back", :back %>
 </div>
