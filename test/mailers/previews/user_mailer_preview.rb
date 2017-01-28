@@ -30,5 +30,9 @@ class UserMailerPreview < ActionMailer::Preview
 		user = User.first;
 		UserMailer.download_app(user);
 	end
+	def bug_update_mail
+		user = User.first;
+		UserMailer.bug_update_mail(user);
+	end
 
 end
