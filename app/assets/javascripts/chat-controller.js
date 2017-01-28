@@ -15,7 +15,7 @@ function chatController(postId) {
         if (error instanceof TypeError) {
             Notification.requestPermission(function(permission) {                                                                                                                                                           
                 localStorage.setItem("desktopNotification", permission);
-            }
+            });
         } else {
             throw error;                                                                                                                                                                                       
         } 
