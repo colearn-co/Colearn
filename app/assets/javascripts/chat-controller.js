@@ -4,9 +4,23 @@ function chatController(postId) {
     return;
   }
   if (localStorage.getItem("desktopNotification") === null) {
-    Notification.requestPermission().then(function(permission) { // denied, granted
+    try {
+      Notification.requestPermission().then(function(permission) { // denied, granted
        localStorage.setItem("desktopNotification", permission); //TPDO: move to sperate file(LocalStorageDAO)
-    });;
+      });  
+    } catch(error) {
+       // Safari doesn't return a promise for requestPermissions and it                                                                                                                                       
+        // throws a TypeError. It takes a callback as the first argument                                                                                                                                       
+        // instead.
+        if (error instanceof TypeError) {
+            Notification.requestPermission(function(permission) {                                                                                                                                                           
+                localStorage.setItem("desktopNotification", permission);
+            }
+        } else {
+            throw error;                                                                                                                                                                                       
+        } 
+    }
+    
   }
   var chatDAO = new ChatDAO(postId);
   var lastChatId;
