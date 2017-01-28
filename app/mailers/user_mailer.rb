@@ -47,5 +47,10 @@ class UserMailer < ApplicationMailer
         @user = user
         mail(to: @user.email, subject: "[Colearn] Never miss an important message")
     end
+
+    def bug_update_mail(user)
+        @user = user
+        mail(to: @user.email, subject: "[Colearn] We have discovered a bug in our chat on safari")
+    end
     
 end

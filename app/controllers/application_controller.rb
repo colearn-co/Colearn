@@ -26,7 +26,9 @@ class ApplicationController < ActionController::Base
   end
 
   def auto_login
-    if !current_user && params[:uid] && params[:auth_key]
+    if current_user && params[:uid] && params[:auth_key]
+      redirect_to url_for(params.except(:uid, :auth_key).merge(only_path: true))
+    else !current_user && params[:uid] && params[:auth_key]
       u = User.find_by_id(params[:uid])
       if u && u.user_auth_key == params[:auth_key]      
         sign_in(:user, u)
