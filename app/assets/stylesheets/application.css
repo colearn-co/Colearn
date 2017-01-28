@@ -80,8 +80,11 @@
 }
 .username-text {
     margin-left: 5px;
-    color: #9d9d9d;
-    padding: 14px 12px;
+    color: black;
+    padding: 14px 2px;
+    text-decoration: none;
+}
+.username > a:hover, a:visited {
     text-decoration: none;
 }
 .profile-picture {
@@ -143,12 +146,9 @@
     
 }
 .signout {
-    color: #9d9d9d;
-    padding: 14px 12px;
+    color: black;
+    padding: 14px 4px;
     text-decoration: none;
-}
-.header a:hover {
-    color: white;
 }
 
 #divLoading
