@@ -35,6 +35,7 @@ class Post < ActiveRecord::Base
 	before_create :fill_publish_status
 
 	accepts_nested_attributes_for :skills
+	has_paper_trail
 
 
 	def self.search(params)
