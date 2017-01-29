@@ -19,10 +19,21 @@ class InvitesController < ApplicationController
 		@post = Post.find params[:post_id]
 		if @post.is_member?(current_user)
 			@invite = @post.invites.find(params[:id])
-			@invite.update_attributes(:status => params[:status], :accepting_user => current_user, 
-				:reject_message => params[:reject_message])
-			flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Invite request rejected"
-			render "/#{@post.class.name.underscore}s/invites/response".downcase
+			puts "Params:" + params.inspect
+			if params[:status] == Invite::STATUS[:left].to_s
+				if @post.user.id == current_user.id 
+					raise "User can not leave its own post."
+				end
+				@invite.update_attributes(:status => params[:status],
+					:leave_message => params[:invite][:leave_message])
+				flash[:notice] = "You have successfully left the learning post"
+				redirect_to post_path(@post)	
+			else	
+				@invite.update_attributes(:status => params[:status], :accepting_user => current_user, 
+					:reject_message => params[:reject_message])
+				flash[:notice] = @invite.status == Invite::STATUS[:accepted] ? "Accepted invite request. You can now start chating." : "Invite request rejected"
+				render "/#{@post.class.name.underscore}s/invites/response".downcase
+			end
 		else
 			render :json => {:error => "invalid request"}
 		end	

@@ -33,8 +33,11 @@
                 </div>
               </a>
               <ul class="dropdown-menu pull-right">
-                <li ><a href="<%= edit_user_registration_path %>">Edit Profile</a></li>
-                <li class="leave-post" ><a  href="#">Leave</a></li>
+                <li ><a target="_blank" href="<%= edit_user_registration_path %>">Edit Profile</a></li>
+                <% if @chatable.user.id != current_user.id %>
+                  <li class="leave-post js-leave-post" ><a href="javascript:void(0);">Leave</a></li>
+                <% end %>
+                <hr>
                 <li ><a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout">Signout</a></li>
               </ul>
             </div>
@@ -64,6 +67,33 @@
      
     </div>   
    </div>
+  </div>
+</div>
+
+<div id="leave-request" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Leave the learning post</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+
+          <%= form_for @chatable.getUserInvite(current_user), :url => post_invite_path(@chatable, @chatable.getUserInvite(current_user), :status => Invite::STATUS[:left]), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
+            <p>Why are you leaving?</p>
+        <p><%= f.text_area :leave_message, :style => "width: 100%;", required: true  %></p>
+        <%= f.submit "Leave", :class => "btn btn-success js_join_req" %>
+      <% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -137,7 +167,10 @@
     $('.js_users').hide('slide', {direction: 'left'}, 500);
     return false;
   });
-
+  $(".js-leave-post").click(function() {
+    // return confirm("You are leaving the learning post. You will not be able to chat with the members.");
+    $('#leave-request').modal('show');
+  });
 </script>
 
 <% end %>
