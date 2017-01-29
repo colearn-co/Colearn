@@ -33,7 +33,7 @@
     </div>
    
     <% if !current_user.email? %>
-      <div class="field">
+      <div class="field ">
         <%= f.label :email %><b> (For important updates and account recovery)</b><br />
         <%= f.email_field :email%>
       </div>
@@ -41,14 +41,12 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
-    <div class="field">
-    <label>Interests</label>
-    <select name="interests[]" id="interest-field">
-      
+    <div class="field interests-field-area" >
+      <label>Interests</label>
+      <select name="interests[]" id="interest-field"></select>
     </div>
 
-
-    <div class="actions ">
+    <div class="actions update-btn-div">
       <%= f.submit "Update", :class => "update-btn btn btn-success" %>
     </div>
   <% end %>
