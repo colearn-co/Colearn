@@ -1,7 +1,25 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'select2', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'select2', media: 'all', 'data-turbolinks-track' => true %>
+
+<style type="text/css">
+  .abc {
+
+  }
+  #interest-field {
+    width: 200px;
+  }
+</style>
+<% end %>
+
 <div class="edit-user">
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "register-form" }) do |f| %>
+  <select name="interests[]" id="interest-field" value='[{"id":"IN","title":"India"}]'>
+    
+    
+  </select>
     <%= devise_error_messages! %>
      <div class="field">
       <%= f.label :name %><br />
@@ -21,7 +39,7 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
-
+    
     <div class="actions">
       <%= f.submit "Update" %>
     </div>
@@ -29,3 +47,117 @@
 
   <%= link_to "Back", :back %>
 </div>
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+
+
+
+      $('#interest-field').select2({
+        ajax: {
+          url: "<%= search_interests_path() %>",
+          dataType: 'json',
+          data: function (params) {
+            return {
+              keyword: params.term
+            };
+          },
+          processResults: function (data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            params.page = params.page || 1;
+            return {
+              results: data
+            };
+          }
+        },
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 2,
+        multiple: true,
+        tags: true,
+        templateResult: createMarkup, 
+        templateSelection: function(obj) {return obj.title || obj.text;},
+
+        initSelection: function (element, callback) {
+            callback(<%= raw current_user.interests.map{|v| {id: v.id, title: v.title} }.to_json %>);
+        }
+      });
+
+
+
+
+
+
+      function createMarkup(obj) {
+        return '<div class="abc">' + (obj.title || obj.text) + "</div>"
+      }
+
+
+
+
+
+
+
+
+
+
+
+// $("#interest-field").select2({
+//   ajax: {
+//     url: "https://api.github.com/search/repositories",
+//     dataType: 'json',
+//     delay: 250,
+//     data: function (params) {
+//       return {
+//         q: params.term, // search term
+//         page: params.page
+//       };
+//     },
+//     processResults: function (data, params) {
+//       // parse the results into the format expected by Select2
+//       // since we are using custom formatting functions we do not need to
+//       // alter the remote JSON data, except to indicate that infinite
+//       // scrolling can be used
+//       params.page = params.page || 1;
+
+//       return {
+//         results: data.items,
+//         pagination: {
+//           more: (params.page * 30) < data.total_count
+//         }
+//       };
+//     },
+//     cache: true
+//   },
+//   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+//   minimumInputLength: 1,
+//   templateResult: function(obj) {return obj.name;}, // omitted for brevity, see the source of this page
+//   templateSelection: function(obj) {return obj.name;} // omitted for brevity, see the source of this page
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    })
+  </script>
+<% end %>

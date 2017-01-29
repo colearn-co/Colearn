@@ -46,6 +46,12 @@ Rails.application.routes.draw do
     end
   end
   resources :topics
+
+  resources :interests do
+    collection do
+      get 'search'
+    end
+  end
       
   resources :suggestion do
     resources :votes
