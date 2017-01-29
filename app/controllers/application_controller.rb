@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :auto_login
   before_filter :check_ui_version
   skip_before_action :verify_authenticity_token
+  before_action :set_paper_trail_whodunnit
   
   before_filter do
     # sign_in(:user, User.find(4))
@@ -24,7 +25,9 @@ class ApplicationController < ActionController::Base
   end
 
   def auto_login
-    if !current_user && params[:uid] && params[:auth_key]
+    if current_user && params[:uid] && params[:auth_key]
+      redirect_to url_for(params.except(:uid, :auth_key).merge(only_path: true))
+    else !current_user && params[:uid] && params[:auth_key]
       u = User.find_by_id(params[:uid])
       if u && u.user_auth_key == params[:auth_key]      
         sign_in(:user, u)

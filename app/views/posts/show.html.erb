@@ -13,6 +13,9 @@
 		a.req-action {
 			text-decoration: none;
 		}
+		.edit-post-title {
+			float: right;
+		}
 		.suggest-block {
 			background-color: #fff;
 			box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -63,8 +66,8 @@
 		.participated {
 			display: inline-block; 
 			width: 28%;
-			position: fixed;
-			right: 56px;
+			float: right;
+			margin-right: 56px;
 			margin-top: 40px;
 		}
 		.anchor-button {
@@ -250,6 +253,9 @@
 		
 		<div class="post-detail-card">
 			<div class="post-info">
+			<% if current_user && @post.user == current_user %>
+				<a href="<%= edit_post_path(@post) %>" class="edit-post-title">Edit</a>
+			<% end %>
 				<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
 				<% if @post.user == current_user && !@post.is_closed? %>
 					<%= link_to close_post_path(@post), :"data-confirm" => "Are you sure?\nAfter closing this post no new member can send join request", :title => "This will not allow any new member to join the post", :method => "post", :class => "btn btn-danger", :style => "font-size: 12px; padding: 2px;" do %>

@@ -42,6 +42,7 @@ gem 'sidekiq', '4.1.1'
 gem 'redis', '3.2.2'
 gem 'gemoji', '3.0.0'
 gem 'gemoji-parser', '1.3.1'
+gem 'paper_trail', '6.0.2'
 
 gem 'httparty', '0.13.7'
 # push notification for gcm

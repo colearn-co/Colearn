@@ -16,6 +16,10 @@ class Ability
     can [:read, :create, :suggestion, :search], Post
     can [:fetch_chat_info], Post do |p|
         p.members.include?(user)
+    end    
+
+    can [:update], Post do |p|
+        p.user == user
     end
 
     can [:resource_download_url], Chat do |c|
