@@ -1,0 +1,16 @@
+ /*
+ *= require select2.css
+ */
+.edit-user {
+	max-width:800px; 
+	margin:0 auto;
+}
+.field {
+	margin-top: 12px;
+}
+.actions {
+	margin-top: 12px;
+}
+.update-btn {
+	width: 100px !important;
+}

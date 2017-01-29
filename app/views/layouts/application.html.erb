@@ -44,7 +44,7 @@
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	<!-- <script src="https://use.fontawesome.com/f9b4728164.js"></script> -->
 <script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css"/> <!--TODO move these files to chat only layout. -->
  
 	<script type="text/javascript">
 		<% if (current_user) %>
@@ -91,8 +91,8 @@
                 <a href="<%= edit_user_registration_path %>" class="username-text"><%=current_user.username %></a>
             </div>
             <div>
-            <a href="<%= edit_user_registration_path %>" class="username-text"><img src="<%= current_user.picture %>" class="user-img"></a>
-              
+              <a href="<%= edit_user_registration_path %>" class="username-text"><img src="<%= current_user.picture %>" class="user-img"></a>
+                
               <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
             </div>
         </div>

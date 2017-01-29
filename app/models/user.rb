@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
 	end
 	def validate_username
 		if !username_valid?(self.username)
-			errors.add(:username, "Allowed chars are a-z,0-9 and `.`")
+			errors.add(:username, "Allowed chars are a-z, 0-9 and `.`")
 		end
 	end
 	def username_valid? str
