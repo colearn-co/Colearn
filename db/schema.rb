@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(version: 20170128213421) do
   add_index "interests_users", ["interest_id"], name: "index_interests_users_on_interest_id", using: :btree
   add_index "interests_users", ["user_id"], name: "index_interests_users_on_user_id", using: :btree
 
-
   create_table "invites", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "post_id"
@@ -226,7 +225,6 @@ ActiveRecord::Schema.define(version: 20170128213421) do
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-
 
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"
