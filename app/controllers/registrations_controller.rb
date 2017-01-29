@@ -4,13 +4,15 @@ class RegistrationsController < Devise::RegistrationsController
 
   def update
   	super
+    ints = []
     (params[:interests] || []).each do |interest|
     	begin
-    		current_user.interests.push(Interest.find_or_create_by(:title => interest.capitalize))
+    		ints.push(Interest.find_or_create_by(:title => interest.capitalize))
     	rescue ActiveRecord::RecordNotUnique => e
-    		current_user.interests.push(Interest.find_or_create_by(:title => interest.capitalize))
+    		ints.push(Interest.find_or_create_by(:title => interest.capitalize))
     	end
     end
+	current_user.interests = ints
   end
 
   protected

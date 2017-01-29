@@ -6,7 +6,11 @@
 
     }
     #interest-field {
-      width: 200px;
+      width: 100%;
+      margin-top: 12px;
+    }
+    .play-app-container {
+      display: none;
     }
   </style>
     <%= stylesheet_link_tag 'edit-user', media: 'all', 'data-turbolinks-track' => true %>
@@ -15,7 +19,6 @@
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "register-form" }) do |f| %>
-  <select name="interests[]" id="interest-field" value='[{"id":"IN","title":"India"}]'>
     
     
   </select>
@@ -38,6 +41,11 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
+    <div class="field">
+    <label>Interests</label>
+    <select name="interests[]" id="interest-field">
+      
+    </div>
 
 
     <div class="actions ">
