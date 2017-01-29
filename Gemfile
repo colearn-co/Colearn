@@ -48,6 +48,8 @@ gem 'httparty', '0.13.7'
 # push notification for gcm
 gem 'gcm', "0.1.0"
 
+gem 'haikunator'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

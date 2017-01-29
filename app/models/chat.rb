@@ -28,7 +28,7 @@ class Chat < ActiveRecord::Base
     end
 
     def username
-    	self.user.try(:name)
+    	self.user.username
     end
 
     def self.json_info

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post 'auth/verify_by_token' => 'omniauth_verifications#verify_token_token'
   
 
-  devise_for :users, :controllers => { sessions: 'sessions', :omniauth_callbacks => "omniauth_callbacks" }
+  devise_for :users, :controllers => { sessions: 'sessions', :omniauth_callbacks => "omniauth_callbacks", registrations: 'registrations'  }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -46,6 +46,12 @@ Rails.application.routes.draw do
     end
   end
   resources :topics
+
+  resources :interests do
+    collection do
+      get 'search'
+    end
+  end
       
   resources :suggestion do
     resources :votes
