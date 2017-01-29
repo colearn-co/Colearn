@@ -29,6 +29,7 @@ class PushNotification
                 elsif res["error"] == "NotRegistered"
                     devices[i].valid_token = false
                     devices[i].save
+                    ExceptionNotifier.notify_exception(Exception.new("Token not registered"), :data => {:response => response.inspect})
                 end
             end
         rescue JSON::ParserError => e
