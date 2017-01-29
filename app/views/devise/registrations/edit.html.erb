@@ -50,10 +50,6 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
     $(document).ready(function() {
-
-
-
-
       $('#interest-field').select2({
         ajax: {
           url: "<%= search_interests_path() %>",
@@ -79,12 +75,15 @@
         multiple: true,
         tags: true,
         templateResult: createMarkup, 
-        templateSelection: function(obj) {return obj.title || obj.text;},
-
-        initSelection: function (element, callback) {
-            callback(<%= raw current_user.interests.map{|v| {id: v.id, title: v.title} }.to_json %>);
-        }
+        templateSelection: function(obj) {return obj.title || obj.text;}
       });
+
+      <% current_user.interests.each do |ints| %>
+        var option = new Option("<%= escape_javascript ints.title %>", "<%= escape_javascript ints.title %>");
+        option.selected = true;
+        $("#interest-field").append(option);
+        $("#interest-field").trigger("change");
+      <% end %>
 
 
 
