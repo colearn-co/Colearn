@@ -1,6 +1,7 @@
 function User(user) {
 	this.id = user.id;
 	this.name = user.name;
+	this.username = user.username;
 	this.picture = user.picture;
 	this.status = user.online_status;
 	this.last_visited = user.last_visited;
@@ -13,7 +14,7 @@ User.prototype.getUserHTMLUserArea = function() {
 	var html = '<div id="' + this.getUserElementId() + '" class="user-display-area"><div class="user-picture">'
 	+ '<img class="' + '" src="' + 
 		this.picture +
-	'"></div><div class="chat-username"><div>' + this.name + '</div>'
+	'"></div><div class="chat-username"><div>' + this.username + '</div>'
 
 	if (this.status == 'offline' && this.last_visited) {
 		html += '<div class="last-seen-time">Active: <time class="timeago" datetime="' + new Date(this.last_visited).toISOString() + '">' 

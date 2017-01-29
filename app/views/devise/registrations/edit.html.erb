@@ -1,43 +1,106 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<% content_for :head do %>
+  <%= javascript_include_tag 'select2', 'data-turbolinks-track' => true %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+  <style type="text/css">
+    .abc {
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
+    }
+    #interest-field {
+      width: 100%;
+      margin-top: 12px;
+    }
+    .play-app-container {
+      display: none;
+    }
+  </style>
+    <%= stylesheet_link_tag 'edit-user', media: 'all', 'data-turbolinks-track' => true %>
 <% end %>
+<div class="edit-user">
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<h3>Cancel my account</h3>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "register-form" }) do |f| %>
+    
+    
+  </select>
+    <%= devise_error_messages! %>
+     <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+     <div class="field">
+      <%= f.label :username %><b> (Something cool, Careful! changing this will change your identity on the platform)</b><br />
+      <%= f.text_field :username, autofocus: true %>
+    </div>
+   
+    <% if !current_user.email? %>
+      <div class="field ">
+        <%= f.label :email %><b> (For important updates and account recovery)</b><br />
+        <%= f.email_field :email%>
+      </div>
+    <% end %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+    <div class="field interests-field-area" >
+      <label>Interests</label>
+      <select name="interests[]" id="interest-field"></select>
+    </div>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+    <div class="actions update-btn-div">
+      <%= f.submit "Update", :class => "update-btn btn btn-success" %>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Back", :back %>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#interest-field').select2({
+        ajax: {
+          url: "<%= search_interests_path() %>",
+          dataType: 'json',
+          data: function (params) {
+            return {
+              keyword: params.term
+            };
+          },
+          processResults: function (data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            params.page = params.page || 1;
+            return {
+              results: data
+            };
+          }
+        },
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 2,
+        multiple: true,
+        tags: true,
+        templateResult: createMarkup, 
+        templateSelection: function(obj) {return obj.title || obj.text;}
+      });
+
+      <% current_user.interests.each do |ints| %>
+        var option = new Option("<%= escape_javascript ints.title %>", "<%= escape_javascript ints.title %>");
+        option.selected = true;
+        $("#interest-field").append(option);
+        $("#interest-field").trigger("change");
+      <% end %>
+
+
+
+
+
+
+      function createMarkup(obj) {
+        return '<div class="abc">' + (obj.title || obj.text) + "</div>"
+      }
+
+
+    })
+  </script>
+<% end %>

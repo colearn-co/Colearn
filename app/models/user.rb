@@ -15,9 +15,13 @@ class User < ActiveRecord::Base
 	has_many :skills
 	has_many :authentications
 	has_many :invites
+	has_and_belongs_to_many :interests
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :participated_posts, through: :accepted_invites, source: :post
-	validates_uniqueness_of :email
+	validates_uniqueness_of :email, :allow_nil => true, :on => :save
+	validates_uniqueness_of :username
+	validate :validate_username
+
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
  	has_many :suggestions
@@ -30,6 +34,27 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
+	before_save :add_username_if_not_present
+	before_save :fix_cases
+	before_save :make_email_nil_if_blank
+	attr_accessor :login
+
+	def login
+	    @login || self.username || self.email 
+	end
+
+	def email_required?
+  		false
+	end
+	
+	def self.find_for_database_authentication(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        where(conditions.to_hash).where(["username = :value OR email = :value", { :value => login.downcase }]).first
+      elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+        where(conditions.to_hash).first
+      end
+    end
 
 	def is_bot?
 		self.email == BOT[:email]
@@ -42,9 +67,11 @@ class User < ActiveRecord::Base
 	end
 
 	def send_confirmation_notification
-		if !self.confirmed_at
+		if !self.confirmed_at 
 			self.update_columns(:confirmation_token => SecureRandom.base64(16))
-			UserMailer.confirmation_mail(self).deliver
+			if self.email?
+				UserMailer.confirmation_mail(self).deliver
+			end
 		end
 	end
 
@@ -76,7 +103,7 @@ class User < ActiveRecord::Base
 
 	def self.json_info
 		{
-			:only => [:id, :name],
+			:only => [:id, :name, :username],
 			:methods => [:picture, :app_status]
 		}
 	end
@@ -133,4 +160,28 @@ class User < ActiveRecord::Base
 	def is_inactive?
 		self.posts.count + self.votes.count + self.comments.count + self.suggestions.count + self.invites.count == 0
 	end
+	def fix_cases
+		self.email.try(:downcase!)
+		self.username.try(:downcase!)
+	end
+	def add_username_if_not_present
+		if !self.username?
+			self.username = Haikunator.haikunate(0, '.') #TODO: check for name conflict.
+		end
+	end
+	def validate_username
+		if self.username? && !username_valid?(self.username)
+			errors.add(:username, "Allowed chars are a-z, 0-9 and `.`")
+		end
+	end
+	def username_valid? str
+	    chars = Set.new(('a'..'z').to_a + ('0'..'9').to_a + ["."])
+	    str.chars.detect {|ch| !chars.include?(ch)}.nil?
+  	end
+  	def make_email_nil_if_blank
+  		if self.email.blank?
+  			puts "email is blank"
+  			self.email = nil;
+  		end
+  	end
 end

@@ -9,11 +9,11 @@
     <div class="login-form-sep"><span>OR</span></div>
     <h4>Sign up</h4>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "register-form"}) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "register-form register-form-with-email"}) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="field">
-        <%= f.text_field :name, autofocus: true, placeholder: 'Full Name' %>
+        <%= f.text_field :username, autofocus: true, placeholder: 'username' %>
       </div>
 
       <div class="field">
@@ -30,6 +30,28 @@
       <%= f.hidden_field :referrer, value: cookies[:referrer] %>
 
       <div class="actions">
+        <a class="more-signup-options" href="javascript:void(0)" >More sign up options</a>
+        <%= f.submit "Sign up", class: "register-action btn" %>
+      </div>
+    <% end %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "register-form register-form-no-email"}) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="field">
+        <%= f.text_field :username, autofocus: true, placeholder: 'username' %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "off", placeholder: "Password (6 characters minimum)" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password', class: 'last-login-field' %>
+      </div>
+      <%= f.hidden_field :referrer, value: cookies[:referrer] %>
+
+      <div class="actions">
+        <a class="more-signup-options" href="javascript:void(0)" >More sign up options</a>
         <%= f.submit "Sign up", class: "register-action btn" %>
       </div>
     <% end %>
@@ -58,6 +80,11 @@
         $('#sign-in-form').show();
         $('#sign-up-wrap').hide();
       }
-    })
+    });
+    $(".register-form-no-email").hide();
+    $(".more-signup-options").click(function() {
+      $(".register-form-no-email").toggle();
+      $(".register-form-with-email").toggle();
+    });
   </script>
 <% end %>

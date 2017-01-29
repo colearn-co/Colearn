@@ -52,5 +52,14 @@ class UserMailer < ApplicationMailer
         @user = user
         mail(to: @user.email, subject: "[Colearn] We have discovered a bug in our chat on safari")
     end
+
+    def mail(*args)
+        res = super *args
+        if(res.to.length == 0)
+            res.perform_deliveries = false
+        end
+        res
+    end
+
     
 end
