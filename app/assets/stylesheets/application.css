@@ -21,6 +21,7 @@
  *= require jquery.ui.chatbox.css
  *= require footer.css
  *= require search.css
+ *= require emojione.min.css
  */
 .overlay-full-page {
     opacity:    0.5; 
