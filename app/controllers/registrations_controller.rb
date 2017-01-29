@@ -12,7 +12,7 @@ class RegistrationsController < Devise::RegistrationsController
     		ints.push(Interest.find_or_create_by(:title => interest.capitalize))
     	end
     end
-	current_user.interests = ints
+	current_user.interests = ints.uniq
   end
 
   protected
