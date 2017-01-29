@@ -24,9 +24,20 @@
         <% if params[:mode] != 'embed' %> 
 
           <div class="account">
-             <%= gravatar_tag current_user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
-            
-              <a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout btn">Signout</a>
+            <div class="dropdown" style="display: inline-block;">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                <div class="user-picture" style="display: inline-block;">
+                  <img src="<%= current_user.picture %>" style="height: 30px; width: 30px; border-radius: 20px;" >
+
+                </div>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li ><a href="<%= edit_user_registration_path %>">Edit Profile</a></li>
+                <li class="leave-post" ><a  href="#">Leave</a></li>
+                <li ><a  href="<%= destroy_user_session_path %>" data-method="DELETE", class="signout">Signout</a></li>
+              </ul>
+            </div>
+              
           </div>
       <% end %>      
       </header>
@@ -54,8 +65,6 @@
    </div>
   </div>
 </div>
-
-
 
 <% content_for :scripts do %>
 <script type="text/javascript">

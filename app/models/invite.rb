@@ -2,7 +2,8 @@ class Invite < ActiveRecord::Base
 	STATUS = {
 		:requested => 1,
 		:accepted => 2,
-		:rejected => 3
+		:rejected => 3,
+		:left => 4
 		
 	}
 	belongs_to :user
