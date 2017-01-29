@@ -23,9 +23,9 @@ class PushNotification
             response["results"].each_with_index do |res, i|
                 if res["message_id"]
                     if res["registration_id"]
+                    	ExceptionNotifier.notify_exception(Exception.new("Token not registered"), :data => {:response => response.inspect})
                         devices[i].token = res["registration_id"]
                         devices[i].save!
-                    	ExceptionNotifier.notify_exception(Exception.new("Token not registered"), :data => {:response => response.inspect})
                     end
                 elsif res["error"] == "NotRegistered"
                     devices[i].valid_token = false
