@@ -11,6 +11,7 @@ class Invite < ActiveRecord::Base
 	belongs_to :post
 	scope :accepted_invites, -> {where(:status => Invite::STATUS[:accepted])}
 	scope :requested_invites, -> {where(:status => Invite::STATUS[:requested])}
+	scope :left_invites, -> {where(:status => Invite::STATUS[:left])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
 	after_create :send_notification_to_owner

@@ -83,9 +83,9 @@
         <p>
 
           <%= form_for @chatable.getUserInvite(current_user), :url => post_invite_path(@chatable, @chatable.getUserInvite(current_user), :status => Invite::STATUS[:left]), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
-            <p>Why are you leaving?</p>
+            <p>Why are you leaving? (Will not be shown publically)</p>
         <p><%= f.text_area :leave_message, :style => "width: 100%;", required: true  %></p>
-        <%= f.submit "Leave", :class => "btn btn-success js_join_req" %>
+        <%= f.submit "Leave", :class => "btn btn-danger js_join_req" %>
       <% end %>
         </p>
       </div>
