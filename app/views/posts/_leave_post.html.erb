@@ -1,0 +1,36 @@
+
+<div id="leave-request" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Leave the learning post</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+
+          <%= form_for post.getUserInvite(current_user), :url => post_invite_path(post, post.getUserInvite(current_user), :status => Invite::STATUS[:left]), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
+            <p>Why are you leaving? (This message will not be shown publically)</p>
+        <p><%= f.text_area :leave_message, :style => "width: 100%;", required: true  %></p>
+        <p>You are about to leave the learning post. You will not be able to chat with the members and participate in the learning post.</p>
+        <%= f.submit "Leave", :class => "btn btn-danger js_join_req" %>
+      <% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<%content_for :scripts do %>
+  <script type="text/javascript">
+    $(".js-leave-post").click(function() {
+      // return confirm("You are leaving the learning post. You will not be able to chat with the members.");
+      $('#leave-request').modal('show');
+    });
+  </script>
+<% end %>

@@ -92,6 +92,10 @@ class Post < ActiveRecord::Base
 		self.members.include?(user)
 	end
 
+	def member_excluding_owner?(user) 
+		return self.user.id != user.id && self.members.include?(user)
+	end
+
 	def mark_closed
 		self.update_attributes(:status => Post::STATUS[:closed])
 	end
