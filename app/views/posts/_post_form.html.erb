@@ -29,29 +29,40 @@
 		}
 	</style>
 <% end %>
-<div class="create-div" style="margin: 0px 0px 0px 162px; max-width: 750px;">
-	<h3 class="title"><%= heading %></h3>
-	<%= form_for @post, html: {class: "post-form"} do |f| %>
-		<div class="form-group">
-		  <label for="usr" style="font-size: 18px;">Title<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Write a brief title, Be specific)</span></label>
-		  <%= f.text_field :title, :class => "form-control" %>
-		</div>
-		<div class="form-group">
-			<label for="usr" style="font-size: 18px;">Description<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Describe what you want to learn, your goals etc.)</span></label>
-			<%= f.text_area :message, :"data-provide" => "markdown", :class => 'form-control' %>
-		</div>
-		<p class="desc">Description should include.<br>
-            1. Goal: what you want to learn <br>
-            2. Plan: How you want to achieve it. Ask for help from community if you are not clear<br>
-            3. Any other relevant information. </p>
-            <br>
-		<div class="form-group">
-			<label for="usr" style="font-size: 18px;">Background<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief about your background, it will help others to reach you.)</span></label>
+<div class="create-div" style="margin: 0px 0px 0px 162px;">
+	<div class="new-post-wrap">
+		<h3 class="title"><%= heading %></h3>
+		<%= form_for @post, html: {class: "post-form"} do |f| %>
+			<div class="form-group">
+			  <label for="usr" style="font-size: 18px;">Title<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Write a brief title, Be specific)</span></label>
+			  <%= f.text_field :title, :class => "form-control" %>
+			</div>
+			<div class="form-group">
+				<label for="usr" style="font-size: 18px;">Description<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Describe what you want to learn, your goals etc.)</span></label>
+				<%= f.text_area :message, :"data-provide" => "markdown", :class => 'form-control' %>
+			</div>
+			<p class="desc">Description should include.<br>
+	            1. Goal: what you want to learn <br>
+	            2. Plan: How you want to achieve it. Ask for help from community if you are not clear<br>
+	            3. Any other relevant information. </p>
+	            <br>
+			<div class="form-group">
+				<label for="usr" style="font-size: 18px;">Background<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Brief about your background, it will help others to reach you.)</span></label>
 
-			<%= f.fields_for :skills do |builder| %>
-				<%=  builder.text_area :title, :class => "form-control" %>
-			<% end %>
-		</div>
-		<%= f.submit cta_text, :class => "btn btn-info" %>
-	<% end %>
+				<%= f.fields_for :skills do |builder| %>
+					<%=  builder.text_area :title, :class => "form-control" %>
+				<% end %>
+			</div>
+			<%= f.submit cta_text, :class => "btn btn-info" %>
+		<% end %>
+	</div>
+	<div class="hiw-wrap">
+		<div class="hiw-head">How it works?</div>
+		<div class="hiw-box"><div class="hiw-content">Create new post</div></div>
+		<div class="hiw-sep"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></div>
+		<div class="hiw-box"><div class="hiw-content">Get join request from folks with similar interest</div></div>
+		<div class="hiw-sep"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></div>
+		<div class="hiw-box"><div class="hiw-content">Start chatting</div></div>
+	</div>
+	<div style="clear: both;"></div>
 </div>
