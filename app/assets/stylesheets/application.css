@@ -560,10 +560,14 @@ a.login-anchor:hover {
     padding: 10px;
     float: right;
     margin-right: 80px;
+    text-align: -moz-center;
+}
+.hiw-inner-wrap {
+    display: inline-block;
 }
 .new-post-wrap {
     float: left;
-    width: 700px;
+    width: 70%;
 }
 .hiw-head {
     padding-bottom: 10px;
@@ -573,6 +577,10 @@ a.login-anchor:hover {
             /* For mobile phones: */
     .external-links a {
       display: inline-block; width: 48%;
+    }
+    .hiw-wrap {
+        margin-right: 0;
+        width: 100%;
     }
     .new-post-wrap {
         width: 100%;
