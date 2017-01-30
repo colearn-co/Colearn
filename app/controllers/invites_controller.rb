@@ -17,7 +17,7 @@ class InvitesController < ApplicationController
 
 	def update
 		@post = Post.find params[:post_id]
-		if @post.is_member?(current_user)
+		if @post.is_member?(current_user) || @post.past_member?(current_user)
 			@invite = @post.invites.find(params[:id])
 			puts "Params:" + params.inspect
 			if params[:status] == Invite::STATUS[:left].to_s
@@ -28,6 +28,11 @@ class InvitesController < ApplicationController
 					:leave_message => params[:invite][:leave_message])
 				flash[:notice] = "You have successfully left the learning post"
 				redirect_to post_path(@post)	
+			elsif params[:status] == Invite::STATUS[:requested].to_s
+				@invite.update_attributes(:status => params[:status], 
+					:rejoin_message => params[:invite][:rejoin_message])
+				flash[:notice] = "Rejoin request sent successfully!"
+				render "/#{@post.class.name.underscore}s/invites/response".downcase
 			else	
 				@invite.update_attributes(:status => params[:status], :accepting_user => current_user, 
 					:reject_message => params[:reject_message])

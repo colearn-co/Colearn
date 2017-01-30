@@ -198,7 +198,7 @@
 										<div style="clear: both;"></div>
 									</div>
 										<div style="padding: 0px 5px; font-size: 11px; display: block;">
-											<%= i.message %>								
+											<%= i.display_message %>								
 										</div>
 									
 								</div>
@@ -229,12 +229,17 @@
 
 		<% if @post.user != current_user %>
 			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
-				<% if @post.is_closed? %>
-				<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
+				<% if @post.is_closed? || @post.past_member?(current_user) %>
+					<% if @post.is_closed? %>
+						<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
+					<% else %>
+						<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">You have left the post!</div>
+					<% end %>
                    	<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
 						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
 					</a>
-                <% else %>
+				<% end %>
+                <% if !@post.past_member?(current_user) %>
                    	<div id="invite-req" class="btn btn-primary side-float-btn" >Interested? join this post!</div>
                    	<div style="margin: 12px; text-align: center"><div>OR</div></div>
                    	<a style="text-decoration: none; color: inherit;" href="<%=  new_post_path  %>" class="<%= current_user ? '' : 'ga_post_create' %>">
@@ -324,7 +329,7 @@
 			</div>
 		</div>	
 
-		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
+		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) && !@post.past_member?(current_user) %>
 			<div style="padding: 16px; margin-top: 10px;">
 				<p>
 	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
@@ -335,6 +340,18 @@
 	        </p>
 			</div>
 		<% end %>
+		<% if !@post.is_closed? && @post.past_member?(current_user) %>
+			<div style="padding: 16px; margin-top: 10px;">
+				<p>
+	        	<%= form_for @post.getUserInvite(current_user), :url => post_invite_path(@post, @post.getUserInvite(current_user), :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
+	        		<label for="usr" style="font-size: 18px;">Interested to rejoin this learning post?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> Why you want to rejoin (Rejoin message)?</span></label>
+					<p><%= f.text_area :rejoin_message, required: true, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
+					<%= f.submit "Request to Rejoin", :class => "btn btn-success js_join_req", :disabled => current_user.blank? %>
+				<% end %>
+	        </p>
+			</div>
+		<% end %>
+
 
 
 

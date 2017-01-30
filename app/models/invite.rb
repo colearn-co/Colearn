@@ -44,6 +44,10 @@ class Invite < ActiveRecord::Base
 	def send_rejection_mail
 		
 	end
+	
+	def display_message
+		self.rejoin_message || self.message
+	end
 
 	private
 	def rejection_message_presence
@@ -51,6 +55,7 @@ class Invite < ActiveRecord::Base
 			errors.add(:reject_message, "cannot be blank")
 		end
 	end
+
 
 end
 
