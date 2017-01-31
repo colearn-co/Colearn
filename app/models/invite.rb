@@ -14,7 +14,7 @@ class Invite < ActiveRecord::Base
 	scope :left_invites, -> {where(:status => Invite::STATUS[:left])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
-	before_save :send_notification_to_owner
+	after_save :send_notification_to_owner
 	after_update :send_confirm_notification
 	validate :rejection_message_presence
 
