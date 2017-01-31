@@ -12,7 +12,7 @@
         <p>
 
           <%= form_for post.getUserInvite(current_user), :url => post_invite_path(post, post.getUserInvite(current_user), :status => Invite::STATUS[:left]), remote: true, html: {class: "ajax-loader-form js_join_req_form"} do |f| %>
-            <p>Why are you leaving? (This message will not be shown publically)</p>
+            <p>Why are you leaving? (This message will not be shown publicly)</p>
         <p><%= f.text_area :leave_message, :style => "width: 100%;", required: true  %></p>
         <p>You are about to leave the learning post. You will not be able to chat with the members and participate in the learning post.</p>
         <%= f.submit "Leave", :class => "btn btn-danger js_join_req" %>
