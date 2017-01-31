@@ -14,12 +14,12 @@ class Invite < ActiveRecord::Base
 	scope :left_invites, -> {where(:status => Invite::STATUS[:left])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
-	after_create :send_notification_to_owner
+	before_save :send_notification_to_owner
 	after_update :send_confirm_notification
 	validate :rejection_message_presence
 
 	def send_notification_to_owner
-		if self.status == STATUS[:requested]
+		if self.status == STATUS[:requested] && self.status_changed?
 			self.post.members.each do|mem|
 				UserMailer.join_request_mail(mem, self.user, self.post).deliver
 			end

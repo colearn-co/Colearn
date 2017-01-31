@@ -1,9 +1,9 @@
 <div>
-	<p>Hi <%= @to.name %>,</p>
-	<p><%= @from.name %> wants to join the learning post <a href="<%= post_url(@post) %>"><b><%= @post.title %></b></a>.
+	<p>Hi <%= @to.username %>,</p>
+	<p><%= @from.username %> wants to join the learning post <a href="<%= post_url(@post) %>"><b><%= @post.title %></b></a>.
 	</p>
-	<b><p> Message from <%= @from.name %></p></b>
-	<i><p><%= @post.getUserInvite(@from).message %></p></i>
+	<b><p> Message from <%= @from.username %></p></b>
+	<i><p><%= @post.getUserInvite(@from).display_message %></p></i>
 
 
 	<p> <a href="<%= post_url(@post) %>"> Click here </a> to <b>Accept / Reject</b> the request.</p>

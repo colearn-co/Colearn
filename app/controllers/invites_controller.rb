@@ -16,10 +16,10 @@ class InvitesController < ApplicationController
 	end
 
 	def update
+		# TODO: TO much logic here. Next time don't add more logic refactor it and try to move the logic to the model.
 		@post = Post.find params[:post_id]
 		if @post.is_member?(current_user) || @post.past_member?(current_user)
 			@invite = @post.invites.find(params[:id])
-			puts "Params:" + params.inspect
 			if params[:status] == Invite::STATUS[:left].to_s
 				if @post.user.id == current_user.id 
 					raise "User can not leave its own post."
