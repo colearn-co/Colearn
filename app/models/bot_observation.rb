@@ -11,7 +11,7 @@ class BotObservation < ActiveRecord::Observer
 			Cheers. :thumbsup: :thumbsup: :thumbsup:"
 			record.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))
 		elsif record.class == Suggestion
-			msg = "#{record.user.name} suggested: \r\n
+			msg = "#{record.user.username} suggested: \r\n
 				#{record.message}"
 			record.post.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))			
 		end
@@ -20,7 +20,7 @@ class BotObservation < ActiveRecord::Observer
 	def after_update(record)
 		if record.class == Invite
 			if record.status_changed? && record.is_accepted?
-				msg = "Welcome #{record.user.name} :sunglasses::sunglasses::sunglasses: 
+				msg = "Welcome #{record.user.username} :sunglasses::sunglasses::sunglasses: 
 				You can download colearn notification(Beta) app for instant chat notification from https://play.google.com/store/apps/details?id=xyz.colearn.colearnnotification"
 				record.post.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))				
 			end			

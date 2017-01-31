@@ -226,17 +226,6 @@ ActiveRecord::Schema.define(version: 20170128213421) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
-  create_table "versions", force: :cascade do |t|
-    t.string   "item_type",  null: false
-    t.integer  "item_id",    null: false
-    t.string   "event",      null: false
-    t.string   "whodunnit"
-    t.text     "object"
-    t.datetime "created_at"
-  end
-
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"
     t.string   "votable_type"

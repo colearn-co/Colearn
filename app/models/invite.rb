@@ -2,7 +2,8 @@ class Invite < ActiveRecord::Base
 	STATUS = {
 		:requested => 1,
 		:accepted => 2,
-		:rejected => 3
+		:rejected => 3,
+		:left => 4
 		
 	}
 	belongs_to :user
@@ -10,14 +11,15 @@ class Invite < ActiveRecord::Base
 	belongs_to :post
 	scope :accepted_invites, -> {where(:status => Invite::STATUS[:accepted])}
 	scope :requested_invites, -> {where(:status => Invite::STATUS[:requested])}
+	scope :left_invites, -> {where(:status => Invite::STATUS[:left])}
 	validates_uniqueness_of :user_id, :scope => :post_id
 
-	after_create :send_notification_to_owner
+	after_save :send_notification_to_owner
 	after_update :send_confirm_notification
 	validate :rejection_message_presence
 
 	def send_notification_to_owner
-		if self.status == STATUS[:requested]
+		if self.status == STATUS[:requested] && self.status_changed?
 			self.post.members.each do|mem|
 				UserMailer.join_request_mail(mem, self.user, self.post).deliver
 			end
@@ -42,6 +44,10 @@ class Invite < ActiveRecord::Base
 	def send_rejection_mail
 		
 	end
+	
+	def display_message
+		self.rejoin_message || self.message
+	end
 
 	private
 	def rejection_message_presence
@@ -49,6 +55,7 @@ class Invite < ActiveRecord::Base
 			errors.add(:reject_message, "cannot be blank")
 		end
 	end
+
 
 end
 

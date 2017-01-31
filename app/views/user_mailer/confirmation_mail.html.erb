@@ -1,5 +1,5 @@
 <div style="min-height: 150px;width: 100%">
-	<h2 style="">Welcome <%= @user.name %>!</h2>
+	<h2 style="">Welcome <%= @user.username %>!</h2>
 	<p>You can confirm your Colearn account email through the link below:</p>
 	<p><a href="<%= user_confirm_url(:token => @user.confirmation_token) %>">Confirm my account</a></p>
 </div>

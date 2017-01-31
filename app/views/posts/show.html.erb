@@ -198,7 +198,7 @@
 										<div style="clear: both;"></div>
 									</div>
 										<div style="padding: 0px 5px; font-size: 11px; display: block;">
-											<%= i.message %>								
+											<%= i.display_message %>								
 										</div>
 									
 								</div>
@@ -229,12 +229,17 @@
 
 		<% if @post.user != current_user %>
 			<% if !@post.user_requested?(current_user) && !@post.is_member?(current_user) %>
-				<% if @post.is_closed? %>
-				<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
+				<% if @post.is_closed? || @post.past_member?(current_user) %>
+					<% if @post.is_closed? %>
+						<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">This post is now closed!</div>
+					<% else %>
+						<div style="padding: 6px 0px 0px 4px; margin: 8px; color: #d9534f; text-align: center;">You have left the post!</div>
+					<% end %>
                    	<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
 						<div style="background-color: rgb(78, 156, 175); text-align: center; padding: 15px; color: white; font-weight: bold; font-size: 19px; border-radius: 14px;">Create new learning post</div>
 					</a>
-                <% else %>
+				<% end %>
+                <% if !@post.past_member?(current_user) %>
                    	<div id="invite-req" class="btn btn-primary side-float-btn" >Interested? join this post!</div>
                    	<div style="margin: 12px; text-align: center"><div>OR</div></div>
                    	<a style="text-decoration: none; color: inherit;" href="<%=  new_post_path  %>" class="<%= current_user ? '' : 'ga_post_create' %>">
@@ -255,6 +260,9 @@
 			<div class="post-info">
 			<% if current_user && @post.user == current_user %>
 				<a href="<%= edit_post_path(@post) %>" class="edit-post-title">Edit</a>
+			<% end %>
+			<% if @post.member_excluding_owner?(current_user) %>
+				<a href="javascript:void(0);" class="leave-post js-leave-post" style="float: right; color: red;">Leave</a>
 			<% end %>
 				<h3 style="font-weight: bold;"><%= (@post.is_closed? ? "[Closed] " : "" ) + @post.title%></h3>
 				<% if @post.user == current_user && !@post.is_closed? %>
@@ -321,7 +329,7 @@
 			</div>
 		</div>	
 
-		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) %>
+		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) && !@post.past_member?(current_user) %>
 			<div style="padding: 16px; margin-top: 10px;">
 				<p>
 	        	<%= form_for Invite.new, :url => post_invites_path(@post, :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
@@ -332,6 +340,18 @@
 	        </p>
 			</div>
 		<% end %>
+		<% if !@post.is_closed? && @post.past_member?(current_user) %>
+			<div style="padding: 16px; margin-top: 10px;">
+				<p>
+	        	<%= form_for @post.getUserInvite(current_user), :url => post_invite_path(@post, @post.getUserInvite(current_user), :status => 1), remote: true, html: {class: "ajax-loader-form"} do |f| %>
+	        		<label for="usr" style="font-size: 18px;">Interested to rejoin this learning post?<span style="color: rgb(141, 141, 141); font-size: 13px; display: block;"> Why you want to rejoin (Rejoin message)?</span></label>
+					<p><%= f.text_area :rejoin_message, required: true, :style => "width: 100%;", :class => "form-control #{current_user ? '' : 'js_join_msg'}" %></p>
+					<%= f.submit "Request to Rejoin", :class => "btn btn-success js_join_req", :disabled => current_user.blank? %>
+				<% end %>
+	        </p>
+			</div>
+		<% end %>
+
 
 
 
@@ -357,7 +377,28 @@
 
 			</div>
 		<% end %>
-
+		<% if @post.past_members.length > 0 %>
+			<div style="padding: 16px; text-align: left; margin-top: 15px;">
+				<a href="javascript:void(0);" class="past_members-info" data-toggle="collapse" data-target="#past_invites" style="text-decoration: none; color: black; display: inline-block;display: inline-block;;border-bottom: 1px solid rgb(168, 168, 168);width: 100%;">
+					<i class="fa fa-caret-down js_caret_down" aria-hidden="true"></i>
+					<span style="font-weight: bold;">Past members detail (<%= @post.past_members.length %>)</span>
+				</a>
+				<div id="past_invites" class="collapse">
+					<% @post.left_invites.each do |invite| %>
+						<div style="margin-bottom: 10px;">
+							<div style="padding: 8px;">
+									<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
+										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.username rescue "N/A" %></span>
+										<div style="padding-left: 29px; font-size: 13px;">
+											<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
+										</div>
+									
+								</div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
 
 
 
@@ -458,6 +499,9 @@
 
   </div>
 </div>
+<!-- model-->
+<%= render :partial => 'leave_post', :locals => {:post => @post} %>
+
 <% if !mobile_device? %>
 	<div class="chat-popups-container">
 		<%= render :partial => 'posts/chats/chat_pop_up', :locals=> {:post => @post, :hidden => @post.chats.count < 1} %>
