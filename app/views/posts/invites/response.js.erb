@@ -1,5 +1,5 @@
 <% if @invite.status == Invite::STATUS[:accepted] %>
 	window.location = "<%= post_chats_path(@invite.post) %>"
 <% else %>
-	location.reload();
+	window.location = "<%= post_path(@post) %>"
 <% end %>
