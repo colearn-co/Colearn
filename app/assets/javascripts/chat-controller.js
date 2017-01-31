@@ -1,7 +1,6 @@
 function chatController(postId) {
   if (!Notification) {
-    alert('Desktop notifications not available in your browser. Try Chromium.'); 
-    return;
+    console.log('Desktop notifications not available in your browser. Try Chromium.'); 
   }
   if (localStorage.getItem("desktopNotification") === null) {
     try {
@@ -17,7 +16,8 @@ function chatController(postId) {
                 localStorage.setItem("desktopNotification", permission);
             });
         } else {
-            throw error;                                                                                                                                                                                       
+           // TODO: ignore errors for now test safari 
+           // throw error;                                                                                                                                                                                       
         } 
     }
     
