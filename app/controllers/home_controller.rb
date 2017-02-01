@@ -17,6 +17,11 @@ class HomeController < ApplicationController
 		render :layout => false
 	end
 
+	def log_js_error
+        ExceptionNotifier.notify_exception(Exception.new("Client JS Error"), :data => {:params => params, :request => request.env})
+        render :json => {:success => true}
+	end
+
 	def user_confirm
 		@user = User.find_by(:confirmation_token => params[:token])
 		if @user
