@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email, :allow_nil => true, :on => :save
 	validates_uniqueness_of :username
-	validate :validate_username
+	validate :validate_username, :on => :save
 
  	has_many :user_chat_infos
  	has_and_belongs_to_many :roles
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
-	before_save :add_username_if_not_present
+	after_create :add_username_if_not_present
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
 	attr_accessor :login
@@ -169,7 +169,9 @@ class User < ActiveRecord::Base
 			self.username = Haikunator.haikunate(0, '.') #TODO: check for name conflict.
 		end
 	end
+
 	def validate_username
+		self.username.try(:downcase!)
 		if self.username? && !username_valid?(self.username)
 			errors.add(:username, "Allowed chars are a-z, 0-9 and `.`")
 		end

@@ -91,13 +91,13 @@ class Post < ActiveRecord::Base
 	def is_member?(user)
 		self.members.include?(user)
 	end
-	
+
 	def past_member?(user) 
 		self.past_members.include?(user)
 	end
 
 	def member_excluding_owner?(user) 
-		return self.user.id != user.id && self.members.include?(user)
+		return (!user.nil?) && self.user.id != user.id && self.members.include?(user)
 	end
 
 	def mark_closed
