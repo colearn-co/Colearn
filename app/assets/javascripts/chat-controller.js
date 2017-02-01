@@ -83,7 +83,7 @@ function chatController(postId) {
     function getMessagesFromChatInfo(chatsInfo, excludeMyMessages) {
       var messages = [];
       chatsInfo.chats.forEach(function(chat) {
-        if (!(excludeMyMessages && chat.user.id == current_user.id)) {
+        if (!(excludeMyMessages && chat.user.id === current_user.id)) {
           var message = new Message(chat, membersMap[chat.user.id]);
           messages.push(message);  
         } // TODO this will not work if multiple windows are open FIX
