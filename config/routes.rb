@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   end
 
   post 'feedback' => 'home#feedback'
+  post 'log_js_error' => 'home#log_js_error'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
