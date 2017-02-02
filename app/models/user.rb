@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
-	after_create :add_username_if_not_present
+	before_save :add_username_if_not_present
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
 	attr_accessor :login
