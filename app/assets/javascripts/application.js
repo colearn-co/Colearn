@@ -24,7 +24,8 @@
 		      stack: error.stack,
               url: url,
               lineNumber: lineNumber,
-              columnNumber: columnNumber
+              columnNumber: columnNumber,
+              location: window.location.href
           }
           util.emailErrors(JSON.stringify(params));
       } catch (e) {
