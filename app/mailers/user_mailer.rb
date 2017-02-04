@@ -56,7 +56,7 @@ class UserMailer < ApplicationMailer
     def send_leave_post_mail_inactive_users(post, user)
       @post = post
       @user = user
-      mail(to: @user.email, subject: '[Colearn] We have noticed you are inactive on learning post ' + post.title)
+      mail(to: @user.email, subject: '[Colearn] Inactive! on learning post ' + post.title + '?')
     end
 
     def mail(*args)
