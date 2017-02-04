@@ -159,7 +159,7 @@ class Post < ActiveRecord::Base
 
 	def send_email_to_inactive_users user
 		if self.members.include?(user)
-				UserMailer.send_leave_post_mail_inactive_users(post, user)
+				UserMailer.send_leave_post_mail_inactive_users(self, user).deliver
 		end
 	end
 
