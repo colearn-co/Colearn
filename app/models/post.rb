@@ -157,25 +157,31 @@ class Post < ActiveRecord::Base
 		end
 	end
 
-    def send_followup_mail(current_user)
-    	UserMailer.post_chat_followup(current_user, self).deliver
-    	update_last_followup_time(current_user)
-    end
+	def send_email_to_inactive_users user
+		if self.members.include?(user)
+				UserMailer.send_leave_post_mail_inactive_users(self, user).deliver
+		end
+	end
 
-    def user_followup_key(usr)
-    	"#{self.id}-#{usr.id}"
-    end
+	def send_followup_mail(current_user)
+		UserMailer.post_chat_followup(current_user, self).deliver
+		update_last_followup_time(current_user)
+	end
 
-    def last_followup_time_key
-        RedisKeys::LAST_MAIL_FOLLOWUP_TIME
-    end
+	def user_followup_key(usr)
+		"#{self.id}-#{usr.id}"
+	end
 
-    def last_followup_time(current_user)
-    	$redis.hget(self.last_followup_time_key, user_followup_key(current_user)).to_i
-    end
+	def last_followup_time_key
+			RedisKeys::LAST_MAIL_FOLLOWUP_TIME
+	end
 
-    def update_last_followup_time(current_user)
-    	$redis.hset(self.last_followup_time_key, user_followup_key(current_user), Time.now.to_i)
-    end
+	def last_followup_time(current_user)
+		$redis.hget(self.last_followup_time_key, user_followup_key(current_user)).to_i
+	end
+
+	def update_last_followup_time(current_user)
+		$redis.hset(self.last_followup_time_key, user_followup_key(current_user), Time.now.to_i)
+	end
 
 end

@@ -1,5 +1,5 @@
 <p>Hi <%= @user.username %>,</p>
-<h3>Here are some of top learning posts on colearn we thought you might be intested in. </h3>
+<h3>Here are some of top learning posts on colearn we thought you might be interested in. </h3>
 <% @posts.each do |post| %>
 	<%= render :partial => 'post_card', :locals=> {:post => post} %>
 <% end %>

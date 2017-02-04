@@ -35,4 +35,9 @@ class UserMailerPreview < ActionMailer::Preview
 		UserMailer.bug_update_mail(user);
 	end
 
+	def send_leave_post_mail_inactive_users
+		user = User.last;
+		UserMailer.send_leave_post_mail_inactive_users(Post.first, user);
+	end
+
 end
