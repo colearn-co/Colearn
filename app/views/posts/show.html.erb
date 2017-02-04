@@ -258,6 +258,15 @@
 		
 		<div class="post-detail-card">
 			<div class="post-info">
+        <div style="display: inline-block;"> <!--TODO: move this to a partial and call from here and index page. -->
+									<span class="user-post-ic"><%= gravatar_tag @post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+									</span>
+          <span class="user-info">
+										<span class="user-name"><%= @post.user.username %></span>
+										<span class="time-dist"><%= distance_of_time_in_words_to_now(@post.created_at) %></span>
+
+									</span>
+        </div>
 			<% if current_user && @post.user == current_user %>
 				<a href="<%= edit_post_path(@post) %>" class="edit-post-title">Edit</a>
 			<% end %>
