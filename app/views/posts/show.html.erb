@@ -4,6 +4,10 @@
 	.play-app-container{
 		margin-left: 37px;
 	}
+	.expert-sugg {
+		font-size: 20px;
+		cursor: pointer;
+	}
 		.user-post-ic {
 			float: left;
 		}
@@ -415,24 +419,29 @@
 
 
 		<div class="suggest-block">
-			<p style="font-weight: bold;">Learning Suggestions</p>
-			<div id="suggestion-list">
-				<% @post.suggestions.reorder(id: :asc).each do |s| %>
-					
+			<p style="font-weight: bold;" class="js_suggest_sec expert-sugg">Expert suggestions 
+						<i class="fa fa-caret-down js_sugg_down" aria-hidden="true"></i>
+						<i class="fa fa-caret-up js_sugg_up" aria-hidden="true" style="display: none;"></i>
+			</p>
+			<div class="js_all_suggestions" style="display: none;">
+				<div id="suggestion-list">
+					<% @post.suggestions.reorder(id: :asc).each do |s| %>
 						
-						<%= render :partial => 'single_suggestion', :locals => {:suggest => s} %>
+							
+							<%= render :partial => 'single_suggestion', :locals => {:suggest => s} %>
 
+					<% end %>
+				</div>
+
+
+				<%= form_for Suggestion.new, :url => suggestion_post_path(@post), remote: true do |f| %>
+						<div class="form-group">
+						<%= f.text_area :message, :class => "form-control #{current_user ? '' : 'js_join_msg'}", :id => "suggestion", :style => "display: inline; min-height: 60px; font-size: 18px;", :placeholder => "Write your suggestion here as an expert of this learning domain.", :"data-provide" => "markdown" %>
+						<%= f.submit "Submit", :class => "btn-primary ajax-loader", :style => "display: block;", :disabled => current_user.blank? %>
+						</div>
+					
 				<% end %>
 			</div>
-
-
-			<%= form_for Suggestion.new, :url => suggestion_post_path(@post), remote: true do |f| %>
-					<div class="form-group">
-					<%= f.text_area :message, :class => "form-control #{current_user ? '' : 'js_join_msg'}", :id => "suggestion", :style => "display: inline; min-height: 60px;", :placeholder => "Any suggestion relevant to this learning interest?", :"data-provide" => "markdown" %>
-					<%= f.submit "Submit", :class => "btn-primary ajax-loader", :style => "display: block;", :disabled => current_user.blank? %>
-					</div>
-				
-			<% end %>
 		</div>
 
 
@@ -565,6 +574,19 @@
 			$('.js_caret_up').show();
 			$('.js_caret_down').hide();
 			$('.js_all_comments').slideDown(500);
+		}
+
+	})
+	$('.js_suggest_sec').click(function() {
+		if ($('.js_all_suggestions').is(':visible')) {
+			$('.js_sugg_up').hide();
+			$('.js_sugg_down').show();
+			$('.js_all_suggestions').slideUp(500);
+		}
+		else {
+			$('.js_sugg_up').show();
+			$('.js_sugg_down').hide();
+			$('.js_all_suggestions').slideDown(500);
 		}
 
 	})
