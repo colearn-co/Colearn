@@ -38,7 +38,7 @@
 										<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
 										</span>
 										<span class="user-info">
-											<span class="user-name"><%= post.user.name %></span>
+											<span class="user-name"><%= post.user.username %></span>
 											<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
 
 										</span>

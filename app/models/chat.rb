@@ -47,7 +47,7 @@ class Chat < ActiveRecord::Base
     end
 
     def notify_text
-        "#{self.user.name.split(' ').first}: #{self.message}"
+        "#{self.user.username}: #{self.message}"
     end
 
     def send_notifications

@@ -2,7 +2,7 @@
 	<b>All Posts</b>
 	<ul>
 		<% @posts.each do |post| %>
-			<li><a href="<%= post_path(post) %>"><%= post.title %>-<%= post.message %> - <%= post.user.name %></a>
+			<li><a href="<%= post_path(post) %>"><%= post.title %>-<%= post.message %> - <%= post.user.username %></a>
 
 				
 			</li>

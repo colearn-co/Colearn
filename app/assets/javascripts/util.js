@@ -29,6 +29,14 @@ util.hideFullPageOverlay = function() {
 	$("#overlay-full-page-div").removeClass("overlay-full-page");
 }
 
+util.emailErrors = function (message) {
+    var req = new XMLHttpRequest();
+    var params = "message=" + encodeURIComponent(message);
+    req.open("POST", "/log_js_error", true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(params);
+}
+
 
 
 
