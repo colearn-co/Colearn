@@ -17,13 +17,14 @@ function chatController(postId) {
                         localStorage.setItem("desktopNotification", permission);
                     });
                 } catch (e) {
-
+                    util.emailErrors("Error while requesting notification(Without promise API): " + e.toString());
                     // ignore
                 }
 
             } else {
                 // TODO: ignore errors for now test safari
                 // throw error;
+                util.emailErrors("Error while requesting notification(Promise API): " + error.toString());
             }
         }
 

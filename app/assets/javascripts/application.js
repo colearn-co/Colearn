@@ -19,13 +19,14 @@
 
  window.onerror = function(message, url, lineNumber, columnNumber, error) {
       try {
-      		var req = new XMLHttpRequest();
-		  var params = "stack=" + encodeURIComponent(error.stack) + '&url=' + encodeURIComponent(url)  + '&msg=' + encodeURIComponent(message) + "&line=" + lineNumber;
-		  req.open("POST", "/log_js_error", true);
-		  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-		  req.send(params);
-
+		  var params = {
+		      message: message,
+		      stack: error.stack,
+              url: url,
+              lineNumber: lineNumber,
+              columnNumber: columnNumber
+          }
+          util.emailErrors(JSON.stringify(params));
       } catch (e) {
         // Don't allow for infinitely recursively unhandled errors
         return true;
