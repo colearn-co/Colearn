@@ -12,9 +12,15 @@ function chatController(postId) {
             // throws a TypeError. It takes a callback as the first argument
             // instead.
             if (error instanceof TypeError) {
-                Notification.requestPermission(function (permission) {
-                    localStorage.setItem("desktopNotification", permission);
-                });
+                try {
+                    Notification.requestPermission(function (permission) {
+                        localStorage.setItem("desktopNotification", permission);
+                    });
+                } catch (e) {
+
+                    // ignore
+                }
+
             } else {
                 // TODO: ignore errors for now test safari
                 // throw error;
