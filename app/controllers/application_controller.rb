@@ -25,7 +25,9 @@ class ApplicationController < ActionController::Base
   end
 
   def auto_login
-    if current_user && params[:uid] && params[:auth_key]
+    if current_user && request.host == 'colearn.xyz'
+      redirect_to url_for(params.merge(:auth_key => current_user.user_auth_key, :uid => current_user.id, :host => "colearn.co"))
+    elsif current_user && params[:uid] && params[:auth_key]
       redirect_to url_for(params.except(:uid, :auth_key).merge(only_path: true))
     else !current_user && params[:uid] && params[:auth_key]
       u = User.find_by_id(params[:uid])
