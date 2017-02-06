@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="<%= asset_url('col-small.png') %>" property="og:image">
-<meta property="og:title"  content="Find people to learn with" />
-<meta property="og:description" content="Start collaborative learning! Find or create your learning post and participate actively!" />
-
+<% if content_for?(:og_metatags) %>
+    <%= yield(:og_metatags) %>
+<% else %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="<%= asset_url('og-image.png') %>" property="og:image">
+    <meta property="og:title"  content="[Colearn] Find people to learn with" />
+    <meta property="og:description" content="Start collaborative learning! Find or create your learning post and participate actively!" />
+<% end %>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
