@@ -57,6 +57,12 @@ Rails.application.routes.draw do
     resources :votes
   end
 
+  resources :users do
+    collection do
+      post 'update_time_zone'
+    end
+  end
+
   post 'feedback' => 'home#feedback'
   post 'log_js_error' => 'home#log_js_error'
 

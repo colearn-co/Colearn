@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 	validate :validate_username, :on => :save
 
  	has_many :user_chat_infos
+ 	has_one :user_profile
  	has_and_belongs_to_many :roles
  	has_many :suggestions
  	has_many :device_tokens
@@ -37,6 +38,16 @@ class User < ActiveRecord::Base
 	before_save :add_username_if_not_present
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
+	has_attached_file :display_pic,
+						styles: { small: "50x50", medium: "100x100", large: "500x500"},
+	                    :s3_credentials => "#{Rails.root}/config/s3.yml",
+	                    :path => ":class/:attachment/:id_partition/:style/:filename",
+      					:s3_permissions => :"public-read",
+  						:url => ":s3_domain_url"
+
+	validates_attachment_content_type :display_pic, content_type: /\Aimage\/.*\Z/
+  	validates_attachment_size :display_pic, :less_than => 10.megabytes
+  	accepts_nested_attributes_for :user_profile, :allow_destroy => true
 	attr_accessor :login
 
 	def login
@@ -83,6 +94,28 @@ class User < ActiveRecord::Base
 		Unsubscribe.where(:email => self.email).count > 0
 	end
 
+	def time_zone_diff(user)
+		if self.time_zone_offset && user.time_zone_offset
+			self.time_zone_offset - user.time_zone_offset
+		else
+			return nil			
+		end
+	end
+
+
+	def time_zone_diff_in_hours(user)
+		diff = time_zone_diff(user)
+		if diff
+			return diff / 60.0
+		else
+			return nil
+		end
+	end
+
+	def time_zone_diff_in_hours
+		self.time_zone_offset * -1 / 60.0;
+	end
+
 	def user_auth_key
 		Digest::MD5.hexdigest(self.email + self.created_at.to_i.to_s)
 	end
@@ -109,7 +142,7 @@ class User < ActiveRecord::Base
 	end
 
 	def picture
-		gravatar_url(self.email, :d => :monsterid)
+		self.display_pic.present? ? self.display_pic.url(:small) : gravatar_url(self.email, :d => :monsterid)
 	end
 
 	def online_status(post)

@@ -212,6 +212,7 @@
         ga("send", "event", "Login/signup", "signout", location.pathname);
      });      
     </script>
+    <%= render :partial => 'shared/time_zone_sync' %>
 
     <%= yield(:scripts) %>
 </body>
