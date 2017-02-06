@@ -22,6 +22,7 @@
  *= require footer.css
  *= require search.css
  *= require emojione.min.css
+ *= require colearn-notify.css
  */
 .overlay-full-page {
     opacity:    0.5; 

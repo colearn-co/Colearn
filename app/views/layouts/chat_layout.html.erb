@@ -70,6 +70,10 @@
 <body style="overflow: hidden">
 
 <div class="content">
+      <% if params[:mode] != 'embed' && !mobile_device? %>
+        <%= render :partial => 'shared/colearn_notify' %>
+      <% end %>
+
 	<%= yield %>
 </div>
 

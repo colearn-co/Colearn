@@ -126,6 +126,10 @@ class User < ActiveRecord::Base
 		self.device_tokens.count == 0 ? 'absent' : 'present'
 	end
 
+	def on_app?
+		self.device_tokens.count > 0
+	end
+
 	def last_visited(post)
 		self.user_chat_infos.where(:post => post).first.last_visited rescue nil
 	end

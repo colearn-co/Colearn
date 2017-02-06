@@ -6,6 +6,9 @@ class ChatsController < ApplicationController
 	layout "chat_layout"
 
 	def index
+		if !current_user.on_app?
+			@imp_notice = "You can <a href=\"#{Constants::APP_URL}\">download colearn notification(Beta)</a> app for instant chat notification!"
+		end
 		@chatable = find_chatable
 		@chats = @chatable.chats.get_by_params(params)
 

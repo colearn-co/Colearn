@@ -4,4 +4,5 @@ module Constants
 		:default => 'v0',
 		:v1 => 'v1'
 	}
+	APP_URL = "https://play.google.com/store/apps/details?id=xyz.colearn.colearnnotification"
 end
