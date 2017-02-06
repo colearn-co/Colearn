@@ -1,5 +1,13 @@
+<% content_for(:og_metatags) do %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="<%= asset_url('og-image.png') %>" property="og:image">
+  <meta property="og:title"  content="<%= @post.title.html_safe %>" />
+  <meta property="og:description" content="<%= @post.message.html_safe %>" />
+<% end %>
+
 <% content_for(:head) do %>
 	<title>Colearn - <%= @post.title %></title>
+
 	<style type="text/css">
 	.play-app-container{
 		margin-left: 37px;
@@ -448,15 +456,6 @@
         <i class="fa fa-share-alt"></i> Share
       </button>
     </h3>
-
-
-
-
-
-
-
-
-
 
 		</div>
 
