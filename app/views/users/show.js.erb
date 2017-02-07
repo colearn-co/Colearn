@@ -1,0 +1,3 @@
+$('#user-prof-modal').remove();
+$('body').append("<%= escape_javascript(render(:partial => 'users/user_info_modal', :locals => {:user => @user, :basic_only => true})) %>")
+$('#user-prof-modal').modal('show');

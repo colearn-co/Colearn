@@ -2,27 +2,7 @@
 	<%= stylesheet_link_tag  'public', media: 'all', 'data-turbolinks-track' => true %>
 <% end %>
 <div class="prof-main">
-	<div class="prof-head">
-		<div class="public-pic">
-			<img style="height: 100%;" src="<%= @user.medium_large_picture %>">			
-		</div>
-		<div class="public-basic">
-			<div class="public-username">
-				<%= @user.username %>
-			</div>
-			<div>
-				<span>Timezone: </span> <span><%= "GMT#{signed_float(@user.time_zone_diff_in_hours, 2)}" %></span> <span><%= time_zone_diff_text(current_user, @user) %></span>
-			</div>
-			<div>
-				<span>Location: </span> <span><%= @user.location_text || '---' %></span>
-			</div>
-			<div>
-				<span>Member since: </span> <span><%= time_ago_in_words(@user.created_at) %></span>
-			</div>
-			 
-		</div>
-		<div style="clear: both;"></div>
-	</div>
+	<%= render :partial => 'basic_profile', :locals => {:user => @user} %>
 	<div class="prof-content">
 
 		<div>
@@ -54,3 +34,4 @@
 		
 	</div>
 </div>
+

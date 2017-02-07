@@ -657,3 +657,39 @@ a.login-anchor:hover {
     }
 
 }
+.public-pic {
+    float: left;
+    height: 123px;
+}
+.public-basic {
+    float: left;
+    margin-left: 13px;
+    text-align: left;
+}
+.public-username {
+    font-size: 30px;
+    font-weight: bold;
+}
+.prof-head {
+    background-color: #eef0f3;
+    padding: 11px;
+}
+.modal.user-prof-modal {
+    text-align: center;
+}
+
+.modal .user-basic-prof-info {
+    display: inline-block;
+    width: auto;
+}
+
+.modal.user-prof-modal .modal-body {
+    padding: 18px;
+}
+
+.user-prof-modal .close {
+    position: absolute;
+    right: 3px;
+    z-index: 1;
+
+}

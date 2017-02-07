@@ -1,0 +1,15 @@
+
+<div class="modal fade user-prof-modal" id="user-prof-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  	<div class="modal-dialog modal-sm user-basic-prof-info" role="document">
+    	<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+      		
+      		<div class="modal-body">
+        		<div class="row text-center">
+					<%= render :partial => 'basic_profile', :locals => {:user => user, :basic_only => true} %>
+		    	</div>
+		    </div>
+			
+			</div>
+	</div>
+</div>

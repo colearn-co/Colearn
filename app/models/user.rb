@@ -103,6 +103,10 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def to_param
+		self.username
+	end
+
 
 	def time_zone_diff_in_hours(user = nil)
 		return self.time_zone_offset * -1 / 60.0 if user.nil?
