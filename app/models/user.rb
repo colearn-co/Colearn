@@ -170,7 +170,7 @@ class User < ActiveRecord::Base
 	end
 	def add_username_if_not_present
 		if !self.username?
-			self.username = Haikunator.haikunate(0, '.') #TODO: check for name conflict.
+			self.username = Haikunator.haikunate(9999, '.') #TODO: check for name conflict.
 		end
 	end
 
