@@ -164,6 +164,10 @@
     <%= f.fields_for :user_profile do |builder| %>
       <%= builder.hidden_field :id %>
       <div class="field field-border" >
+        <label>Location</label>
+        <%= builder.text_field :location %>
+      </div>
+      <div class="field field-border" >
         <label>About me</label>
         <%= builder.text_area :about_me, :class => "register-text-area" %>
       </div>

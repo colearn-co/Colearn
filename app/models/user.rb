@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
+	before_save :create_basic_user_profile
 	before_save :add_username_if_not_present
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
@@ -217,6 +218,26 @@ class User < ActiveRecord::Base
   		if self.email.blank?
   			puts "email is blank"
   			self.email = nil;
+  		end
+  	end
+
+  	def create_basic_user_profile
+  		begin
+  			self.build_user_profile if self.user_profile.blank?
+  			if self.user_profile.location.blank?
+	  			self.user_profile.location = Geocoder.search(self.last_sign_in_ip.to_s).first.try(:address)
+	  			self.user_profile.save!
+	  		end
+
+	  		if self.time_zone_offset.blank?
+	  			geo = Geocoder.search(self.last_sign_in_ip.to_s).first.try(:data) || {}
+	  			time = Timezone[geo['time_zone']]
+	  			if time.valid?
+	  				self.update_attributes(:time_zone_offset => time.utc_offset/60)
+	  			end
+	  		end
+  		rescue => e
+            ExceptionNotifier.notify_exception(e)
   		end
   	end
 end
