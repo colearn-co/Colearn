@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
 	has_attached_file :display_pic,
-						styles: { small: "50x50", medium: "100x100", large: "500x500"},
+						styles: { small: "50x50", medium: "200x200", large: "500x500"},
 	                    :s3_credentials => "#{Rails.root}/config/s3.yml",
 	                    :path => ":class/:attachment/:id_partition/:style/:filename",
       					:s3_permissions => :"public-read",
@@ -104,17 +104,14 @@ class User < ActiveRecord::Base
 	end
 
 
-	def time_zone_diff_in_hours(user)
+	def time_zone_diff_in_hours(user = nil)
+		return self.time_zone_offset * -1 / 60.0 if user.nil?
 		diff = time_zone_diff(user)
 		if diff
 			return diff / 60.0
 		else
 			return nil
 		end
-	end
-
-	def time_zone_diff_in_hours
-		self.time_zone_offset * -1 / 60.0;
 	end
 
 	def user_auth_key
@@ -144,6 +141,14 @@ class User < ActiveRecord::Base
 
 	def picture
 		self.display_pic.present? ? self.display_pic.url(:small) : gravatar_url(self.email, :d => :monsterid)
+	end
+
+	def location_text
+		self.user_profile.location.presence rescue nil
+	end
+
+	def medium_large_picture
+		self.display_pic.present? ? self.display_pic.url(:medium) : gravatar_url(self.email, :d => :monsterid, :s => 200)
 	end
 
 	def online_status(post)

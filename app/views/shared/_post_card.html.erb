@@ -1,0 +1,44 @@
+<div style="    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    margin: 9px 0;
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 3px;
+    padding: 16px;">
+	<div>
+		<div style="display: inline-block;">
+			<span style="float: left;">
+				<img style= "height: 30px; width: 30px; border-radius: 20px;" src="<%=post.user.picture %>">						
+			</span>
+			<span style="display: inline-block;
+    				line-height: 19px;
+    				margin-left: 6px;">
+				<span style="color: rgb(88, 88, 88);
+    						font-size: 14px;">
+    						<%= post.user.username %></span>
+				<span style="line-height: 10px;
+    						display: block;
+    						color: rgb(134, 134, 134);
+    						font-size: 10px;">
+    				<%= distance_of_time_in_words_to_now(post.created_at) %>
+    							
+    			</span>
+
+			</span>
+		</div>
+	
+		
+	</div>
+	<h3 style="display: block;
+			   font-weight: bold;
+			   font-size: 20px;
+			   margin-bottom: 6px;">
+	    <a href="<%= post_url(post) %>" style="color: #000; text-decoration: none;"><%= post.title %>
+	    </a>
+	</h3>
+	<a style="color: #333; text-decoration: none;     display: block;
+    	margin-top: 12px;
+    	font-size: 15px;">
+    	<%= markdown post.message.truncate(205) %>
+    </a>
+
+</div>

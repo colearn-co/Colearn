@@ -41,5 +41,23 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def time_zone_diff_text(from, to)
+    return "" if from.nil?
+    diff = from.time_zone_diff_in_hours(to)
+    if diff == 0
+      "(In your timezone)"
+    elsif diff > 0
+      "(#{diff} hours ahead of you)"
+    elsif diff < 0
+      "(#{diff} hours behind you)"
+    else
+      nil
+    end
+  end
+
+  def signed_float(val, dec = 0)
+    "#{val >= 0 ? '+' : '-'}#{val.round(dec)}"
+  end
 	   
 end
