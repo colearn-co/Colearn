@@ -59,7 +59,7 @@ module ApplicationHelper
   end
 
   def signed_float(val, dec = 0)
-    "#{val >= 0 ? '+' : '-'}#{val.round(dec)}"
+    "#{val >= 0 ? '+' : ''}#{val.round(dec)}"
   end
 	   
 end
