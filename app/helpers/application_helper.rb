@@ -50,9 +50,9 @@ module ApplicationHelper
     elsif diff == 0
       "(In your timezone)"
     elsif diff > 0
-      "(#{diff} hours ahead of you)"
+      "(#{diff.abs} hours ahead of you)"
     elsif diff < 0
-      "(#{diff} hours behind you)"
+      "(#{diff.abs} hours behind you)"
     else
       nil
     end
