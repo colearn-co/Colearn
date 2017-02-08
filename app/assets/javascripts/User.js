@@ -22,7 +22,9 @@ User.prototype.getUserHTMLUserArea = function() {
 	}
 	html += '</div><i class="fa fa-mobile phone-sym ' + this.app_status + '" aria-hidden="true"></i><span class="' + getStatusClass(this.status) + '"></span></div>';
 	//console.log("html:" + html);
-	html = '<a class="user-anchor" href="/users/' + this.username + '/public.js" data-remote="true">' + html + '</a>'
+	if (this.username !== "colearnbot") {
+		html = '<a class="user-anchor" href="/users/' + this.username + '/public.js" data-remote="true">' + html + '</a>';
+	}
 	return html;
 	function getStatusClass(status) {
 		return 'status ' + status;
