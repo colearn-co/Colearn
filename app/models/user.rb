@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 	validate :validate_username, :on => :save
 
  	has_many :user_chat_infos
+ 	has_one :user_profile
  	has_and_belongs_to_many :roles
  	has_many :suggestions
  	has_many :device_tokens
@@ -34,9 +35,20 @@ class User < ActiveRecord::Base
 	include Gravatarify::Base
 	after_create :send_welcome_notification, :unless => :welcome_mail_discard
 	after_create :send_confirmation_notification
+	before_save :create_basic_user_profile
 	before_save :add_username_if_not_present
 	before_save :fix_cases
 	before_save :make_email_nil_if_blank
+	has_attached_file :display_pic,
+						styles: { small: "50x50", medium: "200x200", large: "500x500"},
+	                    :s3_credentials => "#{Rails.root}/config/s3.yml",
+	                    :path => ":class/:attachment/:id_partition/:style/:filename",
+      					:s3_permissions => :"public-read",
+  						:url => ":s3_domain_url"
+
+	validates_attachment_content_type :display_pic, content_type: /\Aimage\/.*\Z/
+  	validates_attachment_size :display_pic, :less_than => 10.megabytes
+  	accepts_nested_attributes_for :user_profile, :allow_destroy => true
 	attr_accessor :login
 
 	def login
@@ -83,6 +95,29 @@ class User < ActiveRecord::Base
 		Unsubscribe.where(:email => self.email).count > 0
 	end
 
+	def time_zone_diff(user)
+		if self.time_zone_offset && user.time_zone_offset
+			self.time_zone_offset - user.time_zone_offset
+		else
+			return nil			
+		end
+	end
+
+	def to_param
+		self.username
+	end
+
+
+	def time_zone_diff_in_hours(user = nil)
+		return self.time_zone_offset * -1 / 60.0 if user.nil?
+		diff = time_zone_diff(user)
+		if diff
+			return diff / 60.0
+		else
+			return nil
+		end
+	end
+
 	def user_auth_key
 		Digest::MD5.hexdigest(self.email + self.created_at.to_i.to_s)
 	end
@@ -109,7 +144,15 @@ class User < ActiveRecord::Base
 	end
 
 	def picture
-		gravatar_url(self.email, :d => :monsterid)
+		self.display_pic.present? ? self.display_pic.url(:small) : gravatar_url(self.email, :d => :monsterid)
+	end
+
+	def location_text
+		self.user_profile.location.presence rescue nil
+	end
+
+	def medium_large_picture
+		self.display_pic.present? ? self.display_pic.url(:medium) : gravatar_url(self.email, :d => :monsterid, :s => 200)
 	end
 
 	def online_status(post)
@@ -188,6 +231,26 @@ class User < ActiveRecord::Base
   		if self.email.blank?
   			puts "email is blank"
   			self.email = nil;
+  		end
+  	end
+
+  	def create_basic_user_profile
+  		begin
+  			self.build_user_profile if self.user_profile.blank?
+  			if self.user_profile.location.blank?
+	  			self.user_profile.location = Geocoder.search(self.last_sign_in_ip.to_s).first.try(:address)
+	  			self.user_profile.save!
+	  		end
+
+	  		if self.time_zone_offset.blank?
+	  			geo = Geocoder.search(self.last_sign_in_ip.to_s).first.try(:data) || {}
+	  			time = Timezone[geo['time_zone']]
+	  			if time.valid?
+	  				self.update_attributes(:time_zone_offset => time.utc_offset/60)
+	  			end
+	  		end
+  		rescue => e
+            ExceptionNotifier.notify_exception(e)
   		end
   	end
 end

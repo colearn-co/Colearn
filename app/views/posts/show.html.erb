@@ -151,6 +151,13 @@
 			display: inline-block;
 			float: left;
 		}
+		.user-detail {
+			text-decoration: none;
+			color: inherit;
+		}
+		.user-detail:hover {
+			text-decoration: none;
+		}
 
 		@media only screen and (max-width: 768px) {
 			/* For mobile phones: */
@@ -235,8 +242,10 @@
 
 						<% @post.members.each do |u| %>
 							<div style="background-color: rgb(249, 249, 250); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.07); padding: 8px;">
-								<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
-									<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= u.username %></span>
+								<a class="user-detail" href="<%= user_path(u) %>">
+									<%= gravatar_tag u.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>
+										<span style="color: rgb(68, 68, 68); font-size: 16px;"><%= u.username %></span>
+								</a>
 								
 							</div>
 						<% end %>
@@ -393,11 +402,13 @@
 					<% @post.accepted_invites.each do |invite| %>
 						<div style="margin-bottom: 10px;">
 							<div style="padding: 8px;">
+								<a class="user-detail" href="<%= user_path(invite.user) %>">
 									<%= gravatar_tag invite.user.email, :d => :monsterid, :html => {:style => "height: 25px; width: 25px; border-radius: 20px;"} %>
 										<span style="color: rgb(68, 68, 68); font-size: 14px; font-weight: bold;"><%= invite.user.username rescue "N/A" %></span>
 										<div style="padding-left: 29px; font-size: 13px;">
 											<%= @post.user == invite.user ? @post.skills.first.title : invite.message %>
 										</div>
+								</a>
 									
 								</div>
 						</div>

@@ -57,6 +57,15 @@ Rails.application.routes.draw do
     resources :votes
   end
 
+  resources :users, constraints: { id: /[^\/]+/ } do
+    collection do
+      post 'update_time_zone'
+    end
+    member do
+      get 'public', :action => 'show'
+    end
+  end
+
   post 'feedback' => 'home#feedback'
   post 'log_js_error' => 'home#log_js_error'
 

@@ -1,1 +1,37 @@
-<%= @user.email %>
+<% content_for :head do %>
+	<%= stylesheet_link_tag  'public', media: 'all', 'data-turbolinks-track' => true %>
+<% end %>
+<div class="prof-main">
+	<%= render :partial => 'basic_profile', :locals => {:user => @user} %>
+	<div class="prof-content">
+
+		<div>
+			<div class="info-head">
+				About me			
+			</div>
+			<div class="info-content">
+				<%= @user.user_profile.try(:about_me).presence || '---' %>
+			</div>
+		</div>
+		<div class="prof-block">
+			<div class="info-head">
+				Github Profile		
+			</div>
+			<div class="info-content">
+				<%= @user.user_profile.try(:github).presence || '---' %>
+			</div>
+		</div>
+		<div class="prof-block">
+			<div class="info-head">
+				Participated Learnings		
+			</div>
+			<div class="info-content inc-margin">
+				<% @user.participated_posts.each do |p| %>
+					<%= render :partial => 'shared/post_card', :locals => {:post => p} %>
+				<% end %>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
