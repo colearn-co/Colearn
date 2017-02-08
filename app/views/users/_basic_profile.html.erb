@@ -7,7 +7,7 @@
 			<%= user.username %>
 		</div>
 		<div>
-			<span>Timezone: </span> <span><%= "GMT#{signed_float(user.time_zone_diff_in_hours, 2)}" %></span> <span><%= time_zone_diff_text(current_user, user) %></span>
+			<span>Timezone: </span> <span><%= user.time_zone_diff_in_hours ? "GMT#{signed_float(user.time_zone_diff_in_hours, 2)}" : '---' %></span> <span><%= time_zone_diff_text(current_user, user) %></span>
 		</div>
 		<div>
 			<span>Location: </span> <span><%= user.location_text || '---' %></span>
