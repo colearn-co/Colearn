@@ -69,7 +69,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :message, :skills_attributes => [:title, :id])
+		params.require(:post).permit(:title, :message, :max_members, :skills_attributes => [:title, :id])
 	end
 	def suggestion_params
 		params.require(:suggestion).permit(:message)

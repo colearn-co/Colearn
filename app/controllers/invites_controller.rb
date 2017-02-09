@@ -2,7 +2,9 @@ class InvitesController < ApplicationController
 	before_filter :authenticate_user!
 	def create
 		@post = Post.find(params[:post_id])
-		if !@post.is_closed?
+		if @post.invite_threshold_reached?
+			render :json => {:error => "No more members are allowed"}
+		elsif !@post.is_closed?
 	  		@invite = @post.invites.build
 	  		@invite.status = params[:status]
 	  		@invite.message = params[:invite][:message]
