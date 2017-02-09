@@ -1,9 +1,13 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion, :edit, :update]
+	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion, :edit, :update, :my_posts]
 	load_and_authorize_resource
 	
 	def index
 		@posts = Post.all
+	end
+
+	def my_participation
+		@posts = current_user.participated_posts
 	end
 
 	def search
