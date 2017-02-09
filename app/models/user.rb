@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 	has_many :participated_posts, through: :accepted_invites, source: :post
 	validates_uniqueness_of :email, :allow_nil => true, :on => :save
 	validates_uniqueness_of :username
-	validate :validate_username, :on => :save
+	validate :validate_username
 
  	has_many :user_chat_infos
  	has_one :user_profile
@@ -220,11 +220,11 @@ class User < ActiveRecord::Base
 	def validate_username
 		self.username.try(:downcase!)
 		if self.username? && !username_valid?(self.username)
-			errors.add(:username, "Allowed chars are a-z, 0-9 and `.`")
+			errors.add(:username, "Allowed chars are a-z, 0-9 and '.', '_'")
 		end
 	end
 	def username_valid? str
-	    chars = Set.new(('a'..'z').to_a + ('0'..'9').to_a + ["."])
+	    chars = Set.new(('a'..'z').to_a + ('0'..'9').to_a + [".", "_"] )
 	    str.chars.detect {|ch| !chars.include?(ch)}.nil?
   	end
   	def make_email_nil_if_blank
