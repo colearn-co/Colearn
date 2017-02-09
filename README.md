@@ -25,6 +25,10 @@
 ### Links ###
 1. http://thelazylog.com/twitter-bootstrap-3-rails-4-fix-issue-which-prevents-fonts-from-loading/
 
+### Helper method ###
+```  User.where("referrer like '%codeforces%'").first.is_inactive? ```
+
+
 ## Notice ##
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at
