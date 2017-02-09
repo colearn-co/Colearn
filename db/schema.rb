@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207070833) do
+ActiveRecord::Schema.define(version: 20170209050627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20170207070833) do
     t.integer  "status"
     t.integer  "publish_status"
     t.integer  "popularity"
+    t.integer  "max_members"
   end
 
   create_table "posts_tags", id: false, force: :cascade do |t|
