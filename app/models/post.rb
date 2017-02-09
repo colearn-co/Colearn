@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
 		:unpublished => 1,
 		:published => 2
 	}
-	MAX_ALLOWED_MEMBERS = [2, 4, 16, 20]
+	MAX_ALLOWED_MEMBERS = [2, 4, 8, 16, 20]
 	belongs_to :user
 	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
