@@ -7,12 +7,14 @@ class Post < ActiveRecord::Base
 		:unpublished => 1,
 		:published => 2
 	}
+	MAX_ALLOWED_MEMBERS = [2, 4, 8, 16, 20]
 	belongs_to :user
 	has_many :chats,:as => :chatable
 	has_many :votes, :as => :votable
 	has_many :invites
 	has_many :accepted_invites, lambda { accepted_invites }, class_name: 'Invite'
 	has_many :requested_invites, lambda { requested_invites }, class_name: 'Invite'
+	has_many :available_invites, lambda { accepted_or_requested }, class_name: 'Invite'
 	has_many :left_invites, lambda { left_invites }, class_name: 'Invite'
 	has_many :upvotes, lambda { upvotes }, class_name: 'Vote', :as => :votable
 	has_many :downvotes, lambda { downvotes }, class_name: 'Vote', :as => :votable
@@ -53,6 +55,10 @@ class Post < ActiveRecord::Base
 		24.hours.to_i
 	end
 	
+	def invite_threshold_reached?
+		self.available_invites.count >= self.max_members
+	end
+
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end
