@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
 
 	def time_zone_diff(user)
 		if self.time_zone_offset && user.time_zone_offset
-			self.time_zone_offset - user.time_zone_offset
+			user.time_zone_offset - self.time_zone_offset
 		else
 			return nil			
 		end
@@ -109,7 +109,8 @@ class User < ActiveRecord::Base
 
 
 	def time_zone_diff_in_hours(user = nil)
-		return self.time_zone_offset * -1 / 60.0 if user.nil?
+		return nil if self.time_zone_offset.nil?
+		return self.time_zone_offset / 60.0 if user.nil?
 		diff = time_zone_diff(user)
 		if diff
 			return diff / 60.0

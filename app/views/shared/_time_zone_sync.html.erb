@@ -1,5 +1,5 @@
 <% if current_user && current_user.time_zone_offset.blank? %>
 	<script type="text/javascript">
-		$.post( "<%= update_time_zone_users_path %>", { offset: new Date().getTimezoneOffset() } );
+		$.post( "<%= update_time_zone_users_path %>", { offset: -new Date().getTimezoneOffset() } );
 	</script>
 <% end %>
