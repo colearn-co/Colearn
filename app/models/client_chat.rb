@@ -16,6 +16,7 @@ class ClientChat
 	def client_chats_json(post)
 		{
 			:members => members.map{|v| v.json_info(post)},
+			:past_members => post.past_members.map{|v| v.json_info(post)},
 			:chats => chats.as_json(Chat.json_info)
 		}
 	end

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion, :edit, :update, :my_posts]
+	before_filter :authenticate_user!, :only => [:close, :fetch_chat_info, :suggestion, :edit, :update, :my_participation]
 	load_and_authorize_resource
 	
 	def index
