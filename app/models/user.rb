@@ -133,14 +133,23 @@ class User < ActiveRecord::Base
 	def json_info(post)
 		self.as_json(User.json_info).merge({
 			:online_status => online_status(post),
-			:last_visited => last_visited(post)
+			:last_visited => last_visited(post).to_i * 1000
 		})
+	end
+
+	def user_after_sign_in_info
+		self.as_json(:only => [:id, :username], :methods => [:small_pic])
+
+	end
+
+	def small_pic
+		self.display_pic.present? ? self.display_pic.url(:small) : gravatar_url(self.email, :d => :monsterid)
 	end
 
 	def self.json_info
 		{
 			:only => [:id, :name, :username],
-			:methods => [:picture, :app_status]
+			:methods => [:small_pic, :app_status]
 		}
 	end
 

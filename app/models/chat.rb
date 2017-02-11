@@ -42,10 +42,13 @@ class Chat < ActiveRecord::Base
                     :only => [:avatar_content_type, :avatar_file_name],
                     :methods => [:private_resource_url] 
                 }
-            }
+            },
+            :methods => [:epoch_created_at]
         }
     end
-
+    def epoch_created_at
+        self.created_at.to_i * 1000
+    end
     def notify_text
         "#{self.user.username}: #{self.message}"
     end
