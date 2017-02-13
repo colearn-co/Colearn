@@ -2,7 +2,7 @@ function User(user) {
 	this.id = user.id;
 	this.name = user.name;
 	this.username = user.username;
-	this.picture = user.picture;
+	this.picture = user.picture || user.small_pic;
 	this.status = user.online_status;
 	this.last_visited = user.last_visited;
 	this.app_status = user.app_status;

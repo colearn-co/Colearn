@@ -10,6 +10,20 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :posts do
+        collection do
+          get 'my_participation'
+        end
+        member do
+          get 'fetch_chat_info'
+        end
+        resources :chats do
+          member do
+            get 'resource_download_url'
+          end
+        end
+      end
+
     end
   end
 

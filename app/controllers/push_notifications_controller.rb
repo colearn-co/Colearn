@@ -2,6 +2,7 @@ class PushNotificationsController < ApplicationController
 	def register_device
 		d = DeviceToken.find_or_create_by(token: params[:token])
 		d.valid_token = true
+		d.version = params[:version] if params[:version]
 		if d.valid?
 			if current_user
 				current_user.device_tokens << d

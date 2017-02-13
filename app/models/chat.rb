@@ -31,9 +31,18 @@ class Chat < ActiveRecord::Base
     	self.user.username
     end
 
+    def chat_notification_json
+        {
+            :message => self.message.truncate(150),
+            :username => self.user.username,
+            :post_title => self.chatable.title,
+            :post_id => self.chatable.id
+        }
+    end
+
     def self.json_info
         {
-            :only => [:id, :message, :created_at],
+            :only => [:id, :message, :created_at, :src_device_id],
             :include => {
                 :user => {
                     :only => [:id]
@@ -42,10 +51,13 @@ class Chat < ActiveRecord::Base
                     :only => [:avatar_content_type, :avatar_file_name],
                     :methods => [:private_resource_url] 
                 }
-            }
+            },
+            :methods => [:epoch_created_at]
         }
     end
-
+    def epoch_created_at
+        self.created_at.to_i * 1000
+    end
     def notify_text
         "#{self.user.username}: #{self.message}"
     end
@@ -59,6 +71,6 @@ class Chat < ActiveRecord::Base
     end
 
     def self.chat_params(params)
-      params.require(:chat).permit(:message)
+      params.require(:chat).permit(:message, :src_device_id)
     end
 end

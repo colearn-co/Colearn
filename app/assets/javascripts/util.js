@@ -37,7 +37,16 @@ util.emailErrors = function (message) {
     req.send(params);
 }
 
+util.generateRandomString = function stringGen(len) { //TODO: this is not secure random so probabilities of collision is not gaunted.
+    var text = [];
 
+    var charset = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for( var i=0; i < len; i++ )
+        text.push(charset.charAt(Math.floor(Math.random() * charset.length)));
+
+    return text.join("");
+}
 
 
 
