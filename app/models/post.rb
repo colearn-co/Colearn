@@ -59,6 +59,10 @@ class Post < ActiveRecord::Base
 		self.available_invites.count >= self.max_members
 	end
 
+	def post_card_json
+		self.as_json(:only => [:id, :title, :message])
+	end
+
 	def add_own_user
 		Invite.create(:user => self.user, :post => self, :status => Invite::STATUS[:accepted])
 	end

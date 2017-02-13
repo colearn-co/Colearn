@@ -1,1 +1,1 @@
-<%= raw @posts.as_json(:only => ["id", "title"]).to_json %>
+<%= raw @posts.map(&:post_card_json).to_json %>

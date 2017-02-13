@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   
   before_filter do
-    sign_in(:user, User.find(38))
+    # sign_in(:user, User.find(38))
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
     params[resource] &&= send(method) if respond_to?(method, true)
