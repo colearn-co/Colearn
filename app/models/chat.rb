@@ -31,6 +31,15 @@ class Chat < ActiveRecord::Base
     	self.user.username
     end
 
+    def chat_notification_json
+        {
+            :message => self.message.truncate(150),
+            :username => self.user.username,
+            :post_title => self.chatable.title,
+            :post_id => self.chatable.id
+        }
+    end
+
     def self.json_info
         {
             :only => [:id, :message, :created_at, :src_device_id],

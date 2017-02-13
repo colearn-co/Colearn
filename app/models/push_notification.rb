@@ -8,8 +8,7 @@ class PushNotification
 			devices = mem.device_tokens
 			tokens = devices.map{|t| t.token}
 			if !tokens.blank?
-				response = gcm.send(tokens, {:data => {:message => chat.notify_text, 
-					:redirect_url => Rails.application.routes.url_helpers.post_chats_path(chat.chatable, :auth_key => mem.user_auth_key, :uid => mem.id)}})
+				response = gcm.send(tokens, {:data => chat.chat_notification_json})
 				Rails.logger.info "gcm log: notification sent to #{mem.name}(#{mem.id}) with #{tokens.length} devices"
 				self.process_gcm_response(response, devices)
 			end
