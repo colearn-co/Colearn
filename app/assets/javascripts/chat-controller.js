@@ -91,7 +91,8 @@ function chatController(postId) {
         function getMessagesFromChatInfo(chatsInfo, excludeMyMessages) {
             var messages = [];
             chatsInfo.chats.forEach(function (chat) {
-                if (!(excludeMyMessages && chat.user.id === current_user.id && chat.src_device_id == deviceId)) {
+                if (!(excludeMyMessages && chat.user.id === current_user.id 
+                    && chat.src_device_id === deviceId)) {
                     var message = new Message(chat, membersMap[chat.user.id]);
                     messages.push(message);
                 } // TODO this will not work if multiple windows are open FIX
