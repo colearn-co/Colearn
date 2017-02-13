@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   
   before_filter do
+    #sign_out current_user
     # sign_in(:user, User.find(38))
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"

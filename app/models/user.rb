@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
 	def online_status(post)
 		return 'online' if self.is_bot?
 		time = self.user_chat_infos.where(:post => post).first.last_visited rescue nil
-		Time.now.to_i - time.to_i <= 30 ? ONLINE_STATUS[:online] : ONLINE_STATUS[:offline]
+		Time.now.to_i - time.to_i <= 12 ? ONLINE_STATUS[:online] : ONLINE_STATUS[:offline]
 	end
 
 	def is_online?(post)
