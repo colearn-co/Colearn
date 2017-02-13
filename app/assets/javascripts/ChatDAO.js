@@ -15,8 +15,9 @@ ChatDAO.prototype.getChatsInfo = function(query, callback) {
 	});
 };
 
-ChatDAO.prototype.sendMessage = function(message, callback) {
+ChatDAO.prototype.sendMessage = function(msgObj, callback) {
 	$.post("/posts/" + this.postId + "/chats", {
-		"chat[message]": message
+		"chat[message]": msgObj.message,
+		"chat[src_device_id": msgObj.src_device_id
 	}, callback);
 };

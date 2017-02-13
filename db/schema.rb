@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209050627) do
+ActiveRecord::Schema.define(version: 20170213050842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170209050627) do
     t.text     "message"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "src_device_id"
   end
 
   add_index "chats", ["chatable_type", "chatable_id"], name: "index_chats_on_chatable_type_and_chatable_id", using: :btree

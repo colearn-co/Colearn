@@ -33,7 +33,7 @@ class Chat < ActiveRecord::Base
 
     def self.json_info
         {
-            :only => [:id, :message, :created_at],
+            :only => [:id, :message, :created_at, :src_device_id],
             :include => {
                 :user => {
                     :only => [:id]
@@ -62,6 +62,6 @@ class Chat < ActiveRecord::Base
     end
 
     def self.chat_params(params)
-      params.require(:chat).permit(:message)
+      params.require(:chat).permit(:message, :src_device_id)
     end
 end

@@ -34,6 +34,8 @@ function chatController(postId) {
     var firstChatId;
     var isScrollingUp;
     var isWindowActive = true;
+    var deviceId = "web:" + util.generateRandomString(16)
+
     $(window).blur(function () {
         isWindowActive = false;
     });
@@ -50,8 +52,7 @@ function chatController(postId) {
         });
 
         var chat = new Chat(new User(current_user), members, {}, function (message, callback) {
-            myMessageSent = true;
-            chatDAO.sendMessage(message, function (error, data) {
+            chatDAO.sendMessage({message: message, src_device_id: deviceId}, function (error, data) {
                 if (callback) {
                     callback(error, data);
                 }
@@ -90,7 +91,7 @@ function chatController(postId) {
         function getMessagesFromChatInfo(chatsInfo, excludeMyMessages) {
             var messages = [];
             chatsInfo.chats.forEach(function (chat) {
-                if (!(excludeMyMessages && chat.user.id === current_user.id)) {
+                if (!(excludeMyMessages && chat.user.id === current_user.id && chat.src_device_id == deviceId)) {
                     var message = new Message(chat, membersMap[chat.user.id]);
                     messages.push(message);
                 } // TODO this will not work if multiple windows are open FIX
