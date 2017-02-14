@@ -31,10 +31,10 @@ class UserMailer < ApplicationMailer
         mail(to: @user.email, subject: 'Confirmation instructions')
     end
 
-    def post_chat_followup(user, post, subject)
+    def post_chat_followup(user, post)
     	@user = user
     	@post = post
-    	mail(to: @user.email, subject: subject || '[Colearn] New chat messages from learning post ' + post.title)
+    	mail(to: @user.email, subject:  '[Colearn] New chat messages from learning post ' + post.title)
     end
 
     def posts_summary(user, posts) 
