@@ -77,7 +77,7 @@
 
 				<%= f.select :max_members, "", {}, :class => "form-control max-member" do %>
 				  <% Post::MAX_ALLOWED_MEMBERS.each do |p| -%>
-				    <%= content_tag(:option, p, value: p, selected: p == 4) %>
+				    <%= content_tag(:option, p, value: p, selected: p == (@post.max_members || 4)) %>
 				  <% end %>
 				<% end %>
 			</div>
