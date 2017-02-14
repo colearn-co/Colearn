@@ -58,6 +58,20 @@
 				<% end %>
 			</div>
 
+			<div>
+				<div class="form-group">
+					<%= f.check_box :project_oriented, {}, true, false %>
+					<label style="font-size: 18px;">Any releated project for learning?</label>
+					
+				</div>
+				<div class="form-group js_project_detail" style="margin-left: 50px; display: <%= @post.project_oriented ? 'block' : 'none'; %>;">
+					<label style="font-size: 16px;">Project Title</label>					
+					<%= f.text_field :project_title, :class => "form-control" %>
+					<label style="font-size: 16px;">Project description</label>					
+					<%= f.text_area :project_desc, :class => "form-control", :style => "min-height: 150px;" %>
+				</div>
+			</div>
+
 			<div class="form-group">
 				<label for="usr" style="font-size: 18px;">Max allowed colearners (including you)</label>
 
@@ -82,3 +96,19 @@
 	</div>
 	<div style="clear: both;"></div>
 </div>
+
+<% content_for :scripts do %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#post_project_oriented').on('change', function() {
+				if ($(this).prop("checked")) {
+					$('.js_project_detail').slideDown(500);
+				}
+				else {
+					$('.js_project_detail').slideUp(500);
+				}
+
+			})
+		})
+	</script>
+<% end %>
