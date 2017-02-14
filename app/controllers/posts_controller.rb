@@ -31,6 +31,7 @@ class PostsController < ApplicationController
 			$redis.del(dummy_post_key)
 		else
 			@post = Post.new(:title => params[:title])
+			@post.project_oriented = true
 		end
 		@post.skills.build if @post.skills.blank?
 	end
@@ -73,7 +74,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :message, :max_members, :skills_attributes => [:title, :id])
+		params.require(:post).permit(:title, :message, :max_members, :project_oriented, :project_title, :project_desc, :skills_attributes => [:title, :id])
 	end
 	def suggestion_params
 		params.require(:suggestion).permit(:message)

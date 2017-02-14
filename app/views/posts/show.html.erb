@@ -370,6 +370,22 @@
 					<% end %>
 				</div>
 			</div>
+
+
+			<% if @post.project_oriented %>
+				<div class="post-info">					
+					<h4>
+						<div style="font-weight: bold; padding-bottom: 8px">Target Project</div>
+						<div style="font-size: 16px;"><%= @post.project_title %></div>
+					</h4>
+					<hr>
+					<div>
+						<%= @post.project_desc %>
+					</div>
+
+					
+				</div>
+			<% end %>
 		</div>	
 
 		<% if !@post.is_closed? && !@post.is_member?(current_user) && !@post.user_requested?(current_user) && !@post.past_member?(current_user) && !@post.invite_threshold_reached? %>
