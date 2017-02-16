@@ -36,6 +36,9 @@
 <div class="create-div" style="margin: 0px 0px 0px 162px;">
 	<div class="new-post-wrap">
 		<h3 class="title"><%= heading %></h3>
+		<% if @udacity %>
+			<p> Create new learning post and find people to learn and practice this udacity course together</p>  
+		<% end %>
 		<%= form_for @post, html: {class: "post-form"} do |f| %>
 			<% if @udacity %>
 				<%= f.hidden_field :udacity_id %>

@@ -33,7 +33,7 @@ class PostsController < ApplicationController
 		elsif @udacity
 			@post.udacity = @udacity
 			@post.title = @udacity.title + " on Udacity"
-			@post.message = "Looking for someone to learn [" + @udacity.title + "] (" + @udacity.homepage + ")" + " course on Udacity." + "\n\n Here is the summary of course:" + "\n\n" + @udacity.summary + "\n\n" + @udacity.expected_learning				
+			@post.message = "Looking for someone to learn [" + @udacity.title + "] (" + @udacity.homepage + ")" + " course on Udacity."				
 		else
 			@post = Post.new(:title => params[:title])
 			@post.project_oriented = true
