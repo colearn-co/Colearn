@@ -27,13 +27,13 @@ class PostsController < ApplicationController
 
 	def new
 		@udacity = Udacity.find_by(id: params[:udacity])
-		if @udacity
+		if $redis.get(dummy_post_key)
+			@post = Post.new(JSON.parse($redis.get(dummy_post_key)))
+			$redis.del(dummy_post_key)
+		elsif @udacity
 			@post.udacity = @udacity
 			@post.title = @udacity.title + " on Udacity"
 			@post.message = "Looking for someone to learn [" + @udacity.title + "] (" + @udacity.homepage + ")" + " course on Udacity." + "\n\n Here is the summary of course:" + "\n\n" + @udacity.summary + "\n\n" + @udacity.expected_learning				
-		elsif $redis.get(dummy_post_key)
-			@post = Post.new(JSON.parse($redis.get(dummy_post_key)))
-			$redis.del(dummy_post_key)
 		else
 			@post = Post.new(:title => params[:title])
 			@post.project_oriented = true
