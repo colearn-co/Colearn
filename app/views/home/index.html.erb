@@ -1,3 +1,4 @@
+
 <% content_for :head do %>
 		<%= stylesheet_link_tag    'landing', media: 'all', 'data-turbolinks-track' => true %>
 	
@@ -116,6 +117,7 @@
 			<div id="udacity-post" class="tab-pane fade in active">
 
 				<div>
+					<h3> Find people to learn udacity courses with you<h3>
 					<% Udacity.all.each do |ud| %>
 
 
