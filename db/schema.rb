@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214081921) do
+ActiveRecord::Schema.define(version: 20170216110918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20170214081921) do
     t.text     "project_title"
     t.text     "project_desc"
     t.boolean  "project_oriented"
+    t.integer  "udacity_id"
   end
 
   create_table "posts_tags", id: false, force: :cascade do |t|
@@ -178,6 +179,18 @@ ActiveRecord::Schema.define(version: 20170214081921) do
   end
 
   add_index "topics", ["title"], name: "index_topics_on_title", using: :btree
+
+  create_table "udacities", force: :cascade do |t|
+    t.string   "title"
+    t.text     "expected_learning"
+    t.text     "summary"
+    t.string   "level"
+    t.string   "image"
+    t.string   "homepage"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.text     "short_summary"
+  end
 
   create_table "unsubscribes", force: :cascade do |t|
     t.string   "email"

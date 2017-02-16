@@ -183,8 +183,21 @@
 	padding: 6px;
 	font-size: 13px;
 }
+.udacity-img {
+	float: left; width: 23%;
+}
+.udacity-content {
+	float: right; width: 76%;
+}
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
+
+	.udacity-img {
+		float: unset; width: 100%;
+	}
+	.udacity-content {
+		float: unset; width: 100%;
+	}
 	.participated {
 		width: 100% !important; 
 		position: unset !important;

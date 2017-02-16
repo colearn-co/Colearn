@@ -26,6 +26,7 @@ class Post < ActiveRecord::Base
 	has_and_belongs_to_many :tags
 	has_many :user_chat_infos
 	has_many :suggestions
+	belongs_to :udacity
 	scope :order_by_recency, -> {order(id: :desc)}
 	scope :order_by_popularity, -> {order(popularity: :desc)}
 	scope :published, -> { where.not(:publish_status => PUBLISH_STATUS[:unpublished]) }

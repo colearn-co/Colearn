@@ -26,9 +26,14 @@ class PostsController < ApplicationController
 	end
 
 	def new
+		@udacity = Udacity.find_by(id: params[:udacity])
 		if $redis.get(dummy_post_key)
 			@post = Post.new(JSON.parse($redis.get(dummy_post_key)))
 			$redis.del(dummy_post_key)
+		elsif @udacity
+			@post.udacity = @udacity
+			@post.title = @udacity.title + " on Udacity"
+			@post.message = "Looking for someone to learn [" + @udacity.title + "] (" + @udacity.homepage + ")" + " course on Udacity." + "\n\n Here is the summary of course:" + "\n\n" + @udacity.summary + "\n\n" + @udacity.expected_learning				
 		else
 			@post = Post.new(:title => params[:title])
 			@post.project_oriented = true
@@ -74,7 +79,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :message, :max_members, :project_oriented, :project_title, :project_desc, :skills_attributes => [:title, :id])
+		params.require(:post).permit(:title, :message, :max_members, :project_oriented, :project_title, :project_desc, :udacity_id, :skills_attributes => [:title, :id])
 	end
 	def suggestion_params
 		params.require(:suggestion).permit(:message)

@@ -59,7 +59,11 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
-  resources :topics
+  resources :topics do
+    collection do
+      get 'udacity_posts'
+    end
+  end
 
   resources :interests do
     collection do
