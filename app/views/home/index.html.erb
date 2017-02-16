@@ -131,7 +131,7 @@
 									<div style="display: inline-block; float: right; color: #525c65; font-size: 14px;"><%= ud.level.capitalize %></div>
 								</h3>
 
-								<a href="<%= udacity_posts_topics_path(:id => ud.id) %>" style="color: #333;" class="post-message"><%= ud.summary.truncate(500) %></a>
+								<a href="<%= udacity_posts_topics_path(:id => ud.id) %>" style="color: #333;" class="post-message"><%= markdown(ud.short_summary) %></a>
 							</div>
 							<div style="clear: both;"></div>
 

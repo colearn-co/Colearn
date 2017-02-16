@@ -26,7 +26,7 @@ class AddDataToUdacity < ActiveRecord::Migration
 		"Applied Cryptography",
 		"Machine Learning"]
 
-	fields = ["title", "expected_learning", "summary", "level", "image", "homepage"]
+	fields = ["title", "expected_learning", "summary", "level", "image", "homepage", "short_summary"]
 	data["courses"].each do|d|
 		if titles.include?(d["title"])
 			ud = Udacity.new(d.select{|k,v| fields.include?(k.to_s) })
