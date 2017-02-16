@@ -105,14 +105,46 @@
 
 			<div style="padding: 16px 0; font-size: 20px;">
 				<ul class="nav nav-tabs" role="tablist">
-				  <li class="active"><a data-toggle="tab" class="post-list-head" href="#popular-post">Popular</a></li>
+				  <li class="active"><a data-toggle="tab" class="udacity-post" href="#udacity-post">Udacity</a></li>
+				  <li><a data-toggle="tab" class="post-list-head" href="#popular-post">Popular</a></li>
 				  <li><a data-toggle="tab" class="post-list-head" href="#recent-post">Recent</a></li>
 				</ul>
 				
 			</div>
 
 		<div class="tab-content">
-			<div id="popular-post" class="tab-pane fade in active">
+			<div id="udacity-post" class="tab-pane fade in active">
+
+				<div>
+					<% Udacity.all.each do |ud| %>
+
+
+						<div class="single-post-card">
+							<div class="udacity-img">
+								<div style="display: inline-block;">
+									<img width="100%" src="<%= ud.image %>">
+								</div>
+							</div>
+							<div class="udacity-content">
+								<h3 class="post-title" style="margin-top: 0;"><a href="<%= udacity_posts_topics_path(:id => ud.id) %>" style="color: #000;"><%= ud.title %></a>
+
+									<div style="display: inline-block; float: right; color: #525c65; font-size: 14px;"><%= ud.level.capitalize %></div>
+								</h3>
+
+								<a href="<%= udacity_posts_topics_path(:id => ud.id) %>" style="color: #333;" class="post-message"><%= ud.summary.truncate(500) %></a>
+							</div>
+							<div style="clear: both;"></div>
+
+						</div>
+
+
+						
+					<% end %>
+				</div>
+			</div>
+
+
+			<div id="popular-post" class="tab-pane fade in">
 
 				<div>
 					<% Post.all.published.order_by_popularity.order(id: :desc).limit(10).each do |post| %>

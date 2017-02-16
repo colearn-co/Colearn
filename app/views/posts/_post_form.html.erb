@@ -37,6 +37,9 @@
 	<div class="new-post-wrap">
 		<h3 class="title"><%= heading %></h3>
 		<%= form_for @post, html: {class: "post-form"} do |f| %>
+			<% if @udacity %>
+				<%= f.hidden_field :udacity_id %>
+			<% end %>
 			<div class="form-group">
 			  <label for="usr" style="font-size: 18px;">Title<span style="color: rgb(141, 141, 141); font-size: 13px;"> (Write a brief title, Be specific)</span></label>
 			  <%= f.text_field :title, :class => "form-control", :required => true %>

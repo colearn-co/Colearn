@@ -1,0 +1,78 @@
+<% content_for :head do %>
+		<%= stylesheet_link_tag    'landing', media: 'all', 'data-turbolinks-track' => true %>
+		<%= stylesheet_link_tag    'topic-show', media: 'all', 'data-turbolinks-track' => true %>
+	
+<% end %>
+<div class="category">
+	<div class="margin-div">
+		<div class="category-title">
+			<p>Learning post for "<%= @udacity.title %>" on Udacity</p>
+			
+		</div>
+		<div class="add-post">
+				<div class="quick-links">
+					<p class="pop-topic">Popular topics</p>
+					<div>
+						<% Topic.all.each do |cat| %>
+							<a class="cat-title" href="<%= topic_path(cat) %>"><%= cat.title %></a>
+						<% end %>
+					</div>
+				</div>
+
+				<a style="text-decoration: none; color: inherit;" href="<%= new_post_path %>" class="<%= current_user ? '' : 'ga_post_create' %>">
+				<div class="add-post-btn btn btn-primary">Create new learning post</div></a>
+			</div>		
+
+			<div class="all-posts" id="all-post" style="width: 69%;">
+
+
+				<div id="popular-post" class="tab-pane fade in active">
+
+					<div>
+						<% @udacity.posts.each do |post| %>
+
+
+							<div class="single-post-card">
+								<div>
+									<div style="display: inline-block;">
+										<span class="user-post-ic"><%= gravatar_tag post.user.email, :d => :monsterid, :html => {:style => "height: 30px; width: 30px; border-radius: 20px;"} %>						
+										</span>
+										<span class="user-info">
+											<span class="user-name"><%= post.user.username %></span>
+											<span class="time-dist"><%= distance_of_time_in_words_to_now(post.created_at) %></span>
+
+										</span>
+									</div>
+									<div class="post-extra-info">
+										<span class="post-info" title="<%= post.upvotes.count %> Upvotes"><i class="fa fa-arrow-up post-action-icon" aria-hidden="true"></i><span><%= post.upvotes.count %></span></span>
+										<span class="post-info" title="<%= post.members.count %> Participating members"><i class="fa fa-user post-action-icon" aria-hidden="true"></i> <span><%= post.members.count %></span></span>
+									</div>
+								</div>
+								<h3 class="post-title"><a href="<%= post_path(post) %>" style="color: #000;"><%= post.title %></a></h3>
+								<a href="<%= post_path(post) %>" style="color: #333;" class="post-message"><%= markdown post.message.truncate(205) %></a>
+
+								<span style="display: block; margin-top: 28px;">
+									<span class="post-skills"></span>
+										<span class="skill-wrap">
+											<span class="background">
+												<span class="back-text">Background</span>
+											</span>
+											<span class="main-skills">
+												<%= post.skills.first.title rescue "NA" %>
+											</span>
+										</span>			
+										
+								</span>
+
+							</div>
+
+
+							
+						<% end %>
+					</div>
+				</div>
+
+
+		</div>
+	</div>
+</div>
