@@ -4,7 +4,7 @@ class BotObservation < ActiveRecord::Observer
 
 	def after_create(record)
 		if record.class == Post
-			msg = "Hi there #{record.user.name} :joy: . Your learning post (#{post_url(record)}) is created successfully  :book:\n" + "I am default member of all chats :stuck_out_tongue_winking_eye:\n" + "Cheers. :thumbsup: :thumbsup: :thumbsup:"
+			msg = "Hi there #{record.user.username} :joy: . Your learning post (#{post_url(record)}) is created successfully  :book:\n" + "I am default member of all chats :stuck_out_tongue_winking_eye:\n" + "Cheers. :thumbsup: :thumbsup: :thumbsup:"
 			record.create_user_chat(User.colearn_bot, ActionController::Parameters.new(chat: {:message => msg}))
 		elsif record.class == Suggestion
 			msg = "#{record.user.username} suggested: \r\n
