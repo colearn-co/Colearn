@@ -1,7 +1,5 @@
 function chatController(postId) {
-    if (!Notification) {
-        console.log('Desktop notifications not available in your browser. Try Chromium.');
-    }
+    
     if (localStorage.getItem("desktopNotification") === null) {
         try {
             Notification.requestPermission().then(function (permission) { // denied, granted
