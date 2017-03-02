@@ -1,0 +1,8 @@
+development:
+  api_key: key
+test:
+  api_key: key
+production:
+  api_key: key
+staging:
+  api_key: key
