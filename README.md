@@ -1,5 +1,11 @@
 == README ===
 
+## Contribution ##
+We storgly believe in building stuff together thats why we have open sourced colearn.
+Please feel free to suggest new features and and file bugs. If you want to add new features or fix bugs/ issues and having trouble starting up feel free to contect us at colearn.xyz@gmail.com or better use github issues to discuss.
+
+
+
 ## Installation ##
 
 ``` sudo apt-get install libpq-dev```
