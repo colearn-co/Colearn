@@ -1,5 +1,6 @@
 == README ===
-
+### Note:
+colearn.co is no longer avialable/mantained now. If you would like to host/maintain it, contact us at colearn.xyz@gmail.com or [twitter](https://twitter.com/kamalkishor1991)
 ## Contribution ##
 We created the open source colearn because we strongly believe in building things together.
 Please feel free to suggest new features and file bugs. If you want to contribute and are having trouble starting up, feel free to contact us at colearn.xyz@gmail.com or create an issue to start the discussion!
